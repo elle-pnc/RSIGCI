@@ -7,6 +7,7 @@
     <title>Admin Dashboard | RSIGCI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
@@ -210,6 +211,26 @@
         word-break: break-word;
         overflow-x: hidden;
       }
+      .animate-fade-in { animation: fadeInModal 0.5s cubic-bezier(0.4,0,0.2,1); }
+      @keyframes fadeInModal {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #1e40af;
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 24px rgba(30,64,175,0.15);
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .toast.show { opacity: 1; pointer-events: auto; }
     </style>
   </head>
   <body class="bg-gray-50 text-gray-800">
@@ -222,262 +243,305 @@
       </div>
     </div>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 md:translate-x-0">
-      <div class="p-6">
-        <div class="flex items-center mb-8">
-          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-            <i class="fas fa-building text-white text-xl"></i>
-          </div>
-          <div>
-            <h1 class="text-xl font-bold text-gray-800">RSIGCI</h1>
-            <p class="text-sm text-gray-500">Admin Dashboard</p>
-          </div>
+    <!-- Login Form (hidden when logged in) -->
+    <div id="loginSection" class="flex items-center justify-center min-h-screen bg-gray-50 animate-fade-in" style="display:none;">
+      <form id="loginForm" class="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+        <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+        <div class="mb-4">
+          <input type="email" id="loginEmail" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Email" required />
         </div>
-        
-        <nav class="space-y-2">
-          <button onclick="showTab('dashboard')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
-            <i class="fas fa-tachometer-alt mr-3"></i>
-            Dashboard
-          </button>
-          <button onclick="showTab('jobs')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
-            <i class="fas fa-briefcase mr-3"></i>
-            Job Postings
-          </button>
-          <button onclick="showTab('applications')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
-            <i class="fas fa-users mr-3"></i>
-            Applications
-          </button>
-          <button onclick="showTab('new-job')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
-            <i class="fas fa-plus mr-3"></i>
-            Post New Job
-          </button>
-        </nav>
-      </div>
+        <div class="mb-6">
+          <input type="password" id="loginPassword" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Password" required />
+        </div>
+        <button type="submit" id="loginBtn" class="btn-primary w-full py-3 rounded-lg text-lg font-semibold flex items-center justify-center">
+          <span id="loginBtnText">Login</span>
+          <span id="loginSpinner" class="ml-2 hidden"><i class="fas fa-spinner fa-spin"></i></span>
+        </button>
+        <p id="loginError" class="text-red-600 text-center mt-4 hidden flex items-center justify-center"><i class="fas fa-exclamation-circle mr-2"></i><span id="loginErrorMsg"></span></p>
+        <p class="text-center mt-4">
+          <a href="#" id="forgotPasswordLink" class="text-blue-600 hover:underline">Forgot Password?</a>
+        </p>
+        <a href="index.html" class="block mt-6 text-center btn-primary py-3 rounded-lg text-lg font-semibold text-white">Back to Home</a>
+      </form>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <div class="md:hidden fixed top-4 left-4 z-50">
-      <button onclick="toggleSidebar()" class="bg-white p-2 rounded-lg shadow-lg">
-        <i class="fas fa-bars text-gray-600"></i>
-      </button>
+    <!-- Password Reset Section (hidden by default) -->
+    <div id="resetSection" class="flex items-center justify-center min-h-screen bg-gray-50 animate-fade-in" style="display:none;">
+      <form id="resetForm" class="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+        <h2 class="text-2xl font-bold mb-6 text-center">Reset Password</h2>
+        <div class="mb-4">
+          <input type="email" id="resetEmail" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter your email" required />
+        </div>
+        <button type="submit" id="resetBtn" class="btn-primary w-full py-3 rounded-lg text-lg font-semibold flex items-center justify-center">Reset My Password</button>
+        <p id="resetMsg" class="text-green-600 text-center mt-4 hidden"></p>
+        <p id="resetError" class="text-red-600 text-center mt-4 hidden"></p>
+        <p class="text-center mt-4">
+          <a href="#" id="backToLoginLink" class="text-blue-600 hover:underline">Back to Login</a>
+        </p>
+        <a href="index.html" class="block mt-6 text-center btn-primary py-3 rounded-lg text-lg font-semibold text-white">Back to Home</a>
+      </form>
     </div>
+    <div id="toast" class="toast"></div>
 
-    <!-- Main Content -->
-    <div class="md:ml-64 min-h-screen">
-      <!-- Header -->
-      <header class="gradient-bg text-white p-6">
-        <div class="flex justify-between items-center">
-          <div>
-            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
-            <p class="text-blue-100">Manage job postings and applications</p>
-          </div>
-          <div class="flex items-center space-x-4">
-            <div class="text-right">
-              <p class="text-sm text-blue-100">Welcome back</p>
-              <p class="font-semibold">HR Manager</p>
+    <!-- Sidebar and Main Content Wrapper -->
+    <div id="dashboardContent" style="display:none;">
+      <!-- Sidebar -->
+      <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 md:translate-x-0">
+        <div class="p-6">
+          <div class="flex items-center mb-8">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-building text-white text-xl"></i>
             </div>
-            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-              <i class="fas fa-user text-white"></i>
-            </div>
-            <a href="index.html" target="_blank" class="ml-4 bg-white bg-opacity-20 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg font-semibold transition-colors">Go to Homepage</a>
-          </div>
-        </div>
-      </header>
-
-      <!-- Content Area -->
-      <main class="p-6">
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content fade-in">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                  <i class="fas fa-briefcase text-blue-600 text-xl"></i>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500">Active Jobs</p>
-                  <p class="text-2xl font-bold text-gray-800" id="activeJobsCount">0</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                  <i class="fas fa-users text-green-600 text-xl"></i>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500">Total Applications</p>
-                  <p class="text-2xl font-bold text-gray-800" id="totalApplicationsCount">0</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
-                  <i class="fas fa-clock text-orange-600 text-xl"></i>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500">New Applications</p>
-                  <p class="text-2xl font-bold text-gray-800" id="newApplicationsCount">0</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-                  <i class="fas fa-check-circle text-purple-600 text-xl"></i>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500">Approved</p>
-                  <p class="text-2xl font-bold text-gray-800" id="approvedCount">0</p>
-                </div>
-              </div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-800">RSIGCI</h1>
+              <p class="text-sm text-gray-500">Admin Dashboard</p>
             </div>
           </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-xl shadow-sm">
-              <h3 class="text-lg font-semibold mb-4">Recent Applications</h3>
-              <div id="recentApplications" class="space-y-3">
-                <!-- Recent applications will be populated here -->
-              </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm">
-              <h3 class="text-lg font-semibold mb-4">Active Job Postings</h3>
-              <div id="activeJobs" class="space-y-3">
-                <!-- Active jobs will be populated here -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Jobs Tab -->
-        <div id="jobs" class="tab-content hidden">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold">Job Postings</h2>
-            <button onclick="showTab('new-job')" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">
-              <i class="fas fa-plus mr-2"></i>Post New Job
+          
+          <nav class="space-y-2">
+            <button onclick="showTab('dashboard')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
+              <i class="fas fa-tachometer-alt mr-3"></i>
+              Dashboard
             </button>
-          </div>
-          
-          <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
-              <table class="w-full">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applications</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="jobsTableBody" class="bg-white divide-y divide-gray-200">
-                  <!-- Jobs will be populated here -->
-                </tbody>
-              </table>
+            <button onclick="showTab('jobs')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
+              <i class="fas fa-briefcase mr-3"></i>
+              Job Postings
+            </button>
+            <button onclick="showTab('applications')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
+              <i class="fas fa-users mr-3"></i>
+              Applications
+            </button>
+            <button onclick="showTab('new-job')" class="tab-btn w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
+              <i class="fas fa-plus mr-3"></i>
+              Post New Job
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden fixed top-4 left-4 z-50">
+        <button onclick="toggleSidebar()" class="bg-white p-2 rounded-lg shadow-lg">
+          <i class="fas fa-bars text-gray-600"></i>
+        </button>
+      </div>
+
+      <!-- Main Content -->
+      <div class="md:ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="gradient-bg text-white p-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+              <p class="text-blue-100">Manage job postings and applications</p>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="text-right">
+                <p class="text-sm text-blue-100">Welcome back</p>
+                <p class="font-semibold" id="adminUserEmail"></p>
+              </div>
+              <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-white"></i>
+              </div>
+              <button id="logoutBtn" class="ml-4 bg-red-500 text-white px-4 py-2 rounded-lg">Logout</button>
+              <a href="index.html" target="_blank" class="ml-4 bg-white bg-opacity-20 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg font-semibold transition-colors">Go to Homepage</a>
             </div>
           </div>
-        </div>
+        </header>
 
-        <!-- Applications Tab -->
-        <div id="applications" class="tab-content hidden">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold">Applications</h2>
-            <div class="flex space-x-2">
-              <select id="statusFilter" class="form-input px-4 py-2 border border-gray-300 rounded-lg">
-                <option value="">All Status</option>
-                <option value="new">New</option>
-                <option value="reviewing">Reviewing</option>
-                <option value="approved">Approved</option>
-                <option value="rejected">Rejected</option>
-              </select>
-              <select id="positionFilter" class="form-input px-4 py-2 border border-gray-300 rounded-lg">
-                <option value="">All Positions</option>
-                <!-- Positions will be populated dynamically -->
-              </select>
-            </div>
-          </div>
-          
-          <div id="applicationsList" class="grid gap-6">
-            <!-- Applications will be populated here -->
-          </div>
-        </div>
-
-        <!-- New Job Tab -->
-        <div id="new-job" class="tab-content hidden">
-          <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-6">Post New Job Position</h2>
-            
-            <form id="newJobForm" class="bg-white p-8 rounded-xl shadow-sm">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Job Title *</label>
-                  <input type="text" id="jobTitle" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
-                  <input type="text" id="jobLocation" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required />
-                </div>
-              </div>
-              
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Employment Type *</label>
-                  <select id="jobType" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required>
-                    <option value="">Select type</option>
-                    <option value="Full-time">Full-time</option>
-                    <option value="Part-time">Part-time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Commission-based">Commission-based</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Department</label>
-                  <input type="text" id="jobDepartment" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" />
-                </div>
-              </div>
-              
-              <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Job Description *</label>
-                <textarea id="jobDescription" rows="6" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
-              </div>
-              
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Requirements</label>
-                  <div id="requirementsList">
-                    <div class="flex mb-2 requirement-item">
-                      <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter a requirement" />
-                      <button type="button" class="remove-req-btn ml-2 text-red-500 hover:text-red-700" title="Remove"><i class="fas fa-minus-circle"></i></button>
-                    </div>
+        <!-- Content Area -->
+        <main class="p-6">
+          <!-- Dashboard Tab -->
+          <div id="dashboard" class="tab-content fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-briefcase text-blue-600 text-xl"></i>
                   </div>
-                  <button type="button" id="addRequirementBtn" class="mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 text-sm"><i class="fas fa-plus mr-1"></i>Add Requirement</button>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Benefits</label>
-                  <textarea id="jobBenefits" rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="List benefits and perks..."></textarea>
+                  <div>
+                    <p class="text-sm text-gray-500">Active Jobs</p>
+                    <p class="text-2xl font-bold text-gray-800" id="activeJobsCount">0</p>
+                  </div>
                 </div>
               </div>
               
-              <div class="flex justify-end space-x-4">
-                <button type="button" onclick="showTab('jobs')" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-                  Cancel
-                </button>
-                <button type="submit" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">
-                  <i class="fas fa-save mr-2"></i>Post Job
-                </button>
+              <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-users text-green-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Total Applications</p>
+                    <p class="text-2xl font-bold text-gray-800" id="totalApplicationsCount">0</p>
+                  </div>
+                </div>
               </div>
-            </form>
+              
+              <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-clock text-orange-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">New Applications</p>
+                    <p class="text-2xl font-bold text-gray-800" id="newApplicationsCount">0</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="bg-white p-6 rounded-xl shadow-sm hover-lift">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                    <i class="fas fa-check-circle text-purple-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-500">Approved</p>
+                    <p class="text-2xl font-bold text-gray-800" id="approvedCount">0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Recent Applications</h3>
+                <div id="recentApplications" class="space-y-3">
+                  <!-- Recent applications will be populated here -->
+                </div>
+              </div>
+              
+              <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold mb-4">Active Job Postings</h3>
+                <div id="activeJobs" class="space-y-3">
+                  <!-- Active jobs will be populated here -->
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </main>
+
+          <!-- Jobs Tab -->
+          <div id="jobs" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-bold">Job Postings</h2>
+              <button onclick="showTab('new-job')" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">
+                <i class="fas fa-plus mr-2"></i>Post New Job
+              </button>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applications</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="jobsTableBody" class="bg-white divide-y divide-gray-200">
+                    <!-- Jobs will be populated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Applications Tab -->
+          <div id="applications" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-bold">Applications</h2>
+              <div class="flex space-x-2">
+                <select id="statusFilter" class="form-input px-4 py-2 border border-gray-300 rounded-lg">
+                  <option value="">All Status</option>
+                  <option value="new">New</option>
+                  <option value="reviewing">Reviewing</option>
+                  <option value="approved">Approved</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                <select id="positionFilter" class="form-input px-4 py-2 border border-gray-300 rounded-lg">
+                  <option value="">All Positions</option>
+                  <!-- Positions will be populated dynamically -->
+                </select>
+              </div>
+            </div>
+            
+            <div id="applicationsList" class="grid gap-6">
+              <!-- Applications will be populated here -->
+            </div>
+          </div>
+
+          <!-- New Job Tab -->
+          <div id="new-job" class="tab-content hidden">
+            <div class="max-w-4xl mx-auto">
+              <h2 class="text-2xl font-bold mb-6">Post New Job Position</h2>
+              
+              <form id="newJobForm" class="bg-white p-8 rounded-xl shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Job Title *</label>
+                    <input type="text" id="jobTitle" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                    <input type="text" id="jobLocation" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required />
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Employment Type *</label>
+                    <select id="jobType" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" required>
+                      <option value="">Select type</option>
+                      <option value="Full-time">Full-time</option>
+                      <option value="Part-time">Part-time</option>
+                      <option value="Contract">Contract</option>
+                      <option value="Commission-based">Commission-based</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Department</label>
+                    <input type="text" id="jobDepartment" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" />
+                  </div>
+                </div>
+                
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Job Description *</label>
+                  <textarea id="jobDescription" rows="6" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Requirements</label>
+                    <div id="requirementsList">
+                      <div class="flex mb-2 requirement-item">
+                        <input type="text" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter a requirement" />
+                        <button type="button" class="remove-req-btn ml-2 text-red-500 hover:text-red-700" title="Remove"><i class="fas fa-minus-circle"></i></button>
+                      </div>
+                    </div>
+                    <button type="button" id="addRequirementBtn" class="mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 text-sm"><i class="fas fa-plus mr-1"></i>Add Requirement</button>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Benefits</label>
+                    <textarea id="jobBenefits" rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="List benefits and perks..."></textarea>
+                  </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4">
+                  <button type="button" onclick="showTab('jobs')" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">
+                    <i class="fas fa-save mr-2"></i>Post Job
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
     <!-- Application Detail Modal -->
@@ -507,6 +571,177 @@
       </div>
     </div>
 
+    <!-- Custom Logout Confirmation Modal -->
+    <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center transition-opacity duration-300">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center relative animate-fade-in">
+        <div id="logoutModalContent">
+          <div class="mb-4">
+            <i class="fas fa-sign-out-alt text-blue-600 text-4xl"></i>
+          </div>
+          <h2 class="text-xl font-bold mb-2">Confirm Logout</h2>
+          <p class="text-gray-700 mb-6">Are you sure you want to log out?</p>
+          <div class="flex justify-center gap-4">
+            <button id="confirmLogoutBtn" class="btn-primary px-4 py-2 rounded-lg text-white font-medium text-base">Yes, Logout</button>
+            <button id="cancelLogoutBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-base">Cancel</button>
+          </div>
+        </div>
+        <div id="logoutLoading" class="hidden flex flex-col items-center justify-center">
+          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mb-4"></div>
+          <p class="text-lg font-semibold text-gray-800">Logging out...</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script>
+      // Initialize Firebase Auth
+      const auth = firebase.auth();
+
+      // Show/hide dashboard or login form based on auth state
+      function updateUI(user) {
+        const loginSection = document.getElementById('loginSection');
+        const resetSection = document.getElementById('resetSection');
+        const dashboardContent = document.getElementById('dashboardContent');
+        const adminUserEmail = document.getElementById('adminUserEmail');
+        if (user) {
+          if (loginSection) loginSection.style.display = 'none';
+          if (resetSection) resetSection.style.display = 'none';
+          if (dashboardContent) dashboardContent.style.display = '';
+          if (adminUserEmail) adminUserEmail.textContent = user.email;
+        } else {
+          if (loginSection) loginSection.style.display = '';
+          if (resetSection) resetSection.style.display = 'none';
+          if (dashboardContent) dashboardContent.style.display = 'none';
+          if (adminUserEmail) adminUserEmail.textContent = '';
+        }
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+
+      // Listen for auth state changes
+      auth.onAuthStateChanged(user => {
+        updateUI(user);
+      });
+
+      // Friendly error message mapping
+      function getFriendlyAuthError(error) {
+        if (!error || !error.code) return 'An unexpected error occurred. Please try again later.';
+        switch (error.code) {
+          case 'auth/user-not-found':
+            return 'No account found with that email address.';
+          case 'auth/wrong-password':
+            return 'Incorrect password. Please try again.';
+          case 'auth/invalid-email':
+            return 'Please enter a valid email address.';
+          case 'auth/too-many-requests':
+            return 'Too many attempts. Please wait and try again later.';
+          case 'auth/network-request-failed':
+            return 'Network error. Please check your connection and try again.';
+          default:
+            return 'An unexpected error occurred. Please try again or contact support.';
+        }
+      }
+
+      // Handle login form submit
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const errorEl = document.getElementById('loginError');
+        const errorMsg = document.getElementById('loginErrorMsg');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        errorMsg.textContent = '';
+        errorEl.classList.add('hidden');
+        loginBtn.disabled = true;
+        loginSpinner.classList.remove('hidden');
+        loginBtnText.textContent = 'Logging in...';
+        try {
+          await auth.signInWithEmailAndPassword(email, password);
+          // Success: UI will update automatically
+          showToast('Login successful!');
+        } catch (error) {
+          errorMsg.textContent = getFriendlyAuthError(error);
+          errorEl.classList.remove('hidden');
+        } finally {
+          loginBtn.disabled = false;
+          loginSpinner.classList.add('hidden');
+          loginBtnText.textContent = 'Login';
+        }
+      });
+
+      // Logout button logic with custom modal and loading
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        const modal = document.getElementById('logoutModal');
+        const modalContent = document.getElementById('logoutModalContent');
+        const loading = document.getElementById('logoutLoading');
+        modal.classList.remove('hidden');
+        modalContent.style.display = '';
+        loading.classList.add('hidden');
+      });
+      document.getElementById('cancelLogoutBtn').addEventListener('click', function() {
+        document.getElementById('logoutModal').classList.add('hidden');
+      });
+      document.getElementById('confirmLogoutBtn').addEventListener('click', function() {
+        const modalContent = document.getElementById('logoutModalContent');
+        const loading = document.getElementById('logoutLoading');
+        modalContent.style.display = 'none';
+        loading.classList.remove('hidden');
+        setTimeout(() => {
+          firebase.auth().signOut();
+          document.getElementById('logoutModal').classList.add('hidden');
+          showToast('Logged out successfully.');
+        }, 1500);
+      });
+
+      // Show/hide login and reset sections
+      function showLoginSection() {
+        document.getElementById('loginSection').style.display = '';
+        document.getElementById('resetSection').style.display = 'none';
+      }
+      function showResetSection() {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('resetSection').style.display = '';
+        document.getElementById('resetEmail').value = '';
+        document.getElementById('resetMsg').classList.add('hidden');
+        document.getElementById('resetError').classList.add('hidden');
+      }
+      // Forgot Password link logic
+      document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        showResetSection();
+      });
+      // Back to Login link logic
+      document.getElementById('backToLoginLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginSection();
+      });
+      // Password Reset Form Submit
+      document.getElementById('resetForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
+        const msg = document.getElementById('resetMsg');
+        const error = document.getElementById('resetError');
+        msg.classList.add('hidden');
+        error.classList.add('hidden');
+        firebase.auth().sendPasswordResetEmail(email)
+          .then(() => {
+            msg.textContent = 'If an account with that email exists, a password reset link has been sent. Please check your inbox.';
+            msg.classList.remove('hidden');
+          })
+          .catch(() => {
+            msg.textContent = 'If an account with that email exists, a password reset link has been sent. Please check your inbox.';
+            msg.classList.remove('hidden');
+          });
+      });
+    </script>
     <script>
       // Firebase data variables
       let jobs = [];
