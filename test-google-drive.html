@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="google-drive-service.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">Google Drive Integration Test</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Connection Status</h2>
+            <div id="connectionStatus" class="mb-4">
+                <p class="text-gray-600">Checking connection...</p>
+            </div>
+            <button id="testConnection" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Test Connection
+            </button>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">File Upload Test</h2>
+            <input type="file" id="testFile" class="mb-4 w-full" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+            <button id="testUpload" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                Test Upload
+            </button>
+            <div id="uploadResult" class="mt-4 p-4 rounded hidden"></div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Instructions</h2>
+            <ol class="list-decimal list-inside space-y-2 text-sm">
+                <li>Click "Test Connection" to verify Google Drive API is working</li>
+                <li>Select a file and click "Test Upload" to test file upload</li>
+                <li>Check the browser console for detailed logs</li>
+                <li>If successful, the file should appear in your Google Drive</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Test connection
+        document.getElementById('testConnection').addEventListener('click', async function() {
+            const statusDiv = document.getElementById('connectionStatus');
+            this.disabled = true;
+            this.textContent = 'Testing...';
+            
+            try {
+                console.log('Testing Google Drive connection...');
+                
+                // Check if service is available
+                if (typeof GoogleDriveService === 'undefined') {
+                    throw new Error('GoogleDriveService is not loaded. Check if google-drive-service.js is included.');
+                }
+                
+                // Check if Google APIs are loaded
+                if (typeof gapi === 'undefined') {
+                    throw new Error('Google API (gapi) not loaded. Check if the Google API script is included.');
+                }
+                
+                if (typeof google === 'undefined' || typeof google.accounts === 'undefined') {
+                    throw new Error('Google Identity Services not loaded. Check if the Google Identity script is included.');
+                }
+                
+                console.log('Google APIs are loaded, initializing service...');
+                const initialized = await GoogleDriveService.initialize();
+                
+                if (initialized) {
+                    statusDiv.innerHTML = `
+                        <div class="text-green-600 font-semibold">
+                            ✅ Google Drive API Connected Successfully
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Ready for file uploads</p>
+                        <p class="text-xs text-gray-500 mt-1">Service initialized and ready to use</p>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="text-red-600 font-semibold">
+                            ❌ Google Drive API Connection Failed
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Check console for detailed errors</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Connection test failed:', error);
+                statusDiv.innerHTML = `
+                    <div class="text-red-600 font-semibold">
+                        ❌ Connection Error
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">${error.message}</p>
+                    <p class="text-xs text-gray-500 mt-1">Check browser console for more details</p>
+                `;
+            } finally {
+                this.disabled = false;
+                this.textContent = 'Test Connection';
+            }
+        });
+        
+        // Test file upload
+        document.getElementById('testUpload').addEventListener('click', async function() {
+            const fileInput = document.getElementById('testFile');
+            const resultDiv = document.getElementById('uploadResult');
+            
+            if (!fileInput.files.length) {
+                alert('Please select a file first');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            resultDiv.className = 'mt-4 p-4 rounded';
+            resultDiv.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-700', 'text-red-700');
+            
+            this.disabled = true;
+            this.textContent = 'Uploading...';
+            
+            try {
+                console.log('Starting file upload test...');
+                console.log('File details:', { name: file.name, size: file.size, type: file.type });
+                
+                const result = await GoogleDriveService.uploadFile(file);
+                
+                resultDiv.classList.add('bg-green-100', 'text-green-700');
+                resultDiv.innerHTML = `
+                    <h3 class="font-semibold">✅ Upload Successful</h3>
+                    <p><strong>File:</strong> ${result.name}</p>
+                    <p><strong>Size:</strong> ${(result.size / 1024 / 1024).toFixed(2)} MB</p>
+                    <p><strong>Drive ID:</strong> ${result.id}</p>
+                    <div class="mt-2">
+                        <a href="${result.url}" target="_blank" class="text-blue-600 underline mr-4">View in Google Drive</a>
+                        <a href="${result.downloadUrl}" target="_blank" class="text-green-600 underline">Download</a>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Upload test failed:', error);
+                resultDiv.classList.add('bg-red-100', 'text-red-700');
+                resultDiv.innerHTML = `
+                    <h3 class="font-semibold">❌ Upload Failed</h3>
+                    <p><strong>File:</strong> ${file.name}</p>
+                    <p><strong>Size:</strong> ${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p class="text-xs text-gray-500 mt-2">Check browser console for detailed error information</p>
+                `;
+            } finally {
+                this.disabled = false;
+                this.textContent = 'Test Upload';
+            }
+        });
+        
+        // Auto-test connection on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Google Drive test page loaded');
+            console.log('GoogleDriveService available:', typeof GoogleDriveService !== 'undefined');
+            console.log('gapi available:', typeof gapi !== 'undefined');
+            console.log('google.accounts available:', typeof google !== 'undefined' && typeof google.accounts !== 'undefined');
+            
+            if (typeof GoogleDriveService === 'undefined') {
+                document.getElementById('connectionStatus').innerHTML = `
+                    <div class="text-red-600 font-semibold">
+                        ❌ GoogleDriveService not loaded
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Check if google-drive-service.js is loaded</p>
+                `;
+            } else if (typeof gapi === 'undefined') {
+                document.getElementById('connectionStatus').innerHTML = `
+                    <div class="text-red-600 font-semibold">
+                        ❌ Google API not loaded
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Check if Google API script is included</p>
+                `;
+            } else if (typeof google === 'undefined' || typeof google.accounts === 'undefined') {
+                document.getElementById('connectionStatus').innerHTML = `
+                    <div class="text-red-600 font-semibold">
+                        ❌ Google Identity Services not loaded
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Check if Google Identity script is included</p>
+                `;
+            } else {
+                document.getElementById('connectionStatus').innerHTML = `
+                    <div class="text-blue-600 font-semibold">
+                        🔄 Ready to test
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">Click "Test Connection" to verify Google Drive integration</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html> 
