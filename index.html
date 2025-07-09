@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
     <title>Join Our Team | RSIGCI.</title>
-    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
@@ -16,6 +18,309 @@
     <script src="https://accounts.google.com/gsi/client"></script>
     <script src="google-drive-service.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%);
+      }
+      
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .glass-effect-dark {
+        background: rgba(30, 41, 59, 0.85); /* dark blue with opacity */
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      
+      .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .slide-in-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        animation: slideInLeft 0.8s ease-out forwards;
+      }
+      
+      @keyframes slideInLeft {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      .slide-in-right {
+        opacity: 0;
+        transform: translateX(30px);
+        animation: slideInRight 0.8s ease-out forwards;
+      }
+      
+      @keyframes slideInRight {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      .stagger-1 { animation-delay: 0.1s; }
+      .stagger-2 { animation-delay: 0.2s; }
+      .stagger-3 { animation-delay: 0.3s; }
+      .stagger-4 { animation-delay: 0.4s; }
+      
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+      
+      @keyframes floating {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      .pulse-glow {
+        animation: pulseGlow 2s ease-in-out infinite alternate;
+      }
+      
+      @keyframes pulseGlow {
+        from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+      }
+      
+      .form-input {
+        transition: all 0.3s ease;
+        border: 2px solid #e5e7eb;
+        background-color: #ffffff;
+      }
+      
+      .form-input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        outline: none;
+      }
+      
+      .form-input:hover {
+        border-color: #d1d5db;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+      }
+      
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+      }
+      
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+      
+      .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: bounce 2s infinite;
+      }
+      
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-10px); }
+        60% { transform: translateX(-50%) translateY(-5px); }
+      }
+      
+      .job-card {
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+      }
+      
+      .job-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+      
+      .progress-bar {
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+      
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .loading-overlay {
+        backdrop-filter: blur(5px);
+      }
+      
+      .form-input-error {
+        border-color: #dc2626 !important;
+        background-color: #fef2f2 !important;
+      }
+      .error-message {
+        color: #dc2626;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .file-error {
+        color: #dc2626;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+      .recaptcha-error {
+        color: #dc2626;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+      .success-checkmark svg {
+        display: block;
+        margin: 0 auto;
+      }
+      .animate-fade-in { animation: fadeInModal 0.5s cubic-bezier(0.4,0,0.2,1); }
+      @keyframes fadeInModal {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Mobile optimizations */
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      
+      @media (max-width: 640px) {
+        .job-card {
+          margin-bottom: 1rem;
+        }
+        
+        .job-card h3 {
+          font-size: 1.125rem;
+          line-height: 1.5;
+        }
+        
+        .job-card p {
+          font-size: 0.875rem;
+          line-height: 1.4;
+        }
+      }
+      
+      .toast {
+        /* Add your toast styles here */
+      }
+      
+      /* Carousel Styles */
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      
+      .carousel-slide.active {
+        opacity: 1;
+      }
+      
+      .carousel-dot.active {
+        background-color: #f97316 !important;
+        transform: scale(1.2);
+      }
+      
+      .carousel-control {
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        padding: 1rem;
+        border-radius: 50%;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      
+      .carousel-control:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: scale(1.1);
+      }
+      
+      @media (max-width: 768px) {
+        .carousel-control {
+          padding: 0.75rem;
+        }
+      }
+      .carousel-dots-mobile-fix {
+        margin-bottom: 3.5rem;
+      }
+      @media (min-width: 768px) {
+        .carousel-dots-mobile-fix {
+          margin-bottom: 2rem;
+        }
+      }
+    </style>
   </head>
   <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
     <!-- Loading Overlay -->
@@ -528,6 +833,1047 @@
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script>
+      // Mobile menu functionality
+      function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('translate-x-full');
+      }
+      
+      function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.add('translate-x-full');
+      }
+      
+      // Go to homepage function
+      function goToHomepage() {
+        // Clear any hash and show the hero section
+        window.location.hash = '';
+        showTab('hero');
+        window.scrollTo(0, 0);
+      }
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+      
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, observerOptions);
+      
+      // Observe all animated elements
+      document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+      });
+      
+      // Handle form submission
+      async function submitApplication(event) {
+        event.preventDefault();
+        
+        // Remove previous error states
+        [
+          'fullName', 'email', 'phone', 'position', 'coverLetter', 'resume', 'recaptcha', 'otherPosition'
+        ].forEach(id => {
+          const input = document.getElementById(id);
+          if (input) input.classList.remove('form-input-error');
+          const error = document.getElementById(id + 'Error');
+          if (error) error.style.display = 'none';
+        });
+        let hasError = false;
+        // Check reCAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+          const recaptchaError = document.getElementById('recaptchaError');
+          recaptchaError.textContent = 'Please complete the reCAPTCHA to submit your application.';
+          recaptchaError.style.display = 'block';
+          hasError = true;
+        } else {
+          document.getElementById('recaptchaError').style.display = 'none';
+        }
+        
+        if (hasError) {
+          return;
+        }
+        
+        // Get form data
+        const form = document.getElementById('applicationForm');
+        if (!form) {
+          console.error('Form not found!');
+          return;
+        }
+        const fullName = form.querySelector('input[type="text"]').value.trim();
+        const email = form.querySelector('input[type="email"]').value.trim();
+        const phone = form.querySelector('input[type="tel"]').value.trim();
+        const position = form.querySelector('select').value;
+        const otherPosition = document.getElementById('otherPosition').value.trim();
+        const coverLetterValue = form.querySelector('textarea').value.trim();
+        // File check
+        let fileInput = document.getElementById('resumeFile');
+        let file = (fileInput && fileInput.files.length > 0) ? fileInput.files[0] : window.uploadedFile;
+
+        // Validate all fields with visual feedback
+        if (!fullName) {
+          document.getElementById('fullName').classList.add('form-input-error');
+          document.getElementById('fullNameError').textContent = 'Full name is required.';
+          document.getElementById('fullNameError').style.display = 'block';
+          hasError = true;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+          document.getElementById('email').classList.add('form-input-error');
+          document.getElementById('emailError').textContent = 'Email is required.';
+          document.getElementById('emailError').style.display = 'block';
+          hasError = true;
+        } else if (!emailRegex.test(email)) {
+          document.getElementById('email').classList.add('form-input-error');
+          document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+          document.getElementById('emailError').style.display = 'block';
+          hasError = true;
+        }
+        if (!phone) {
+          document.getElementById('phone').classList.add('form-input-error');
+          document.getElementById('phoneError').textContent = 'Phone number is required.';
+          document.getElementById('phoneError').style.display = 'block';
+          hasError = true;
+        }
+        if (!position) {
+          document.getElementById('position').classList.add('form-input-error');
+          document.getElementById('positionError').textContent = 'Please select a position.';
+          document.getElementById('positionError').style.display = 'block';
+          hasError = true;
+        } else if (position === 'Other' && !otherPosition) {
+          document.getElementById('otherPosition').classList.add('form-input-error');
+          document.getElementById('otherPositionError').textContent = 'Please specify the position.';
+          document.getElementById('otherPositionError').style.display = 'block';
+          hasError = true;
+        }
+        if (!coverLetterValue) {
+          document.getElementById('coverLetter').classList.add('form-input-error');
+          document.getElementById('coverLetterError').textContent = 'Cover letter is required.';
+          document.getElementById('coverLetterError').style.display = 'block';
+          hasError = true;
+        }
+        if (!file) {
+          document.getElementById('resumeError').textContent = 'Please upload your resume or CV.';
+          document.getElementById('resumeError').style.display = 'block';
+          hasError = true;
+        }
+        // Privacy/Terms agreement validation
+        const policyAgreement = document.getElementById('policyAgreement');
+        if (!policyAgreement.checked) {
+          document.getElementById('policyAgreementError').textContent = 'You must agree to the Privacy Policy and Terms of Service.';
+          document.getElementById('policyAgreementError').style.display = 'block';
+          hasError = true;
+        } else {
+          document.getElementById('policyAgreementError').style.display = 'none';
+        }
+        if (hasError) {
+          return;
+        }
+
+        // Construct application object with basic info
+        let application = {
+          fullName,
+          email,
+          phone,
+          position: position === 'Other' ? otherPosition : position,
+          coverLetter: coverLetterValue,
+          resume: file.name
+        };
+
+        // Show loading overlay
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.classList.remove('hidden');
+
+        // Show loading state on button
+        const button = document.getElementById('submitBtn');
+        const originalText = button.innerHTML;
+        const originalClasses = button.className;
+        
+        button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting Application...';
+        button.disabled = true;
+        button.className = originalClasses.replace('pulse-glow', '') + ' bg-gray-500';
+
+        try {
+          console.log('Submitting application with file upload to Google Drive:', application);
+          console.log('File to upload:', file);
+          
+          // Update loading message to indicate file upload
+          if (file) {
+            loadingOverlay.querySelector('p').textContent = 'Uploading file to Google Drive and submitting application...';
+            
+            // Create progress indicator for file upload
+            const progressContainer = document.createElement('div');
+            progressContainer.className = 'mt-4';
+            progressContainer.innerHTML = `
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="upload-progress bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <p class="text-sm text-gray-600 mt-2">Uploading to Google Drive... 0%</p>
+            `;
+            loadingOverlay.querySelector('.bg-white').appendChild(progressContainer);
+            
+            const progressBar = progressContainer.querySelector('.upload-progress');
+            const progressText = progressContainer.querySelector('p');
+            
+            try {
+              // Upload file to Google Drive
+              const driveResult = await GoogleDriveService.uploadFile(file);
+              console.log('File uploaded to Google Drive:', driveResult);
+              
+              // Add Google Drive file info to application
+              application.resumeURL = driveResult.url;
+              application.resumeFileName = file.name;
+              application.driveFileId = driveResult.id;
+              application.driveDownloadUrl = driveResult.downloadUrl;
+              
+              // Remove progress indicator
+              progressContainer.remove();
+              
+            } catch (uploadError) {
+              console.error('Google Drive upload failed:', uploadError);
+              
+              // Remove progress indicator
+              progressContainer.remove();
+              
+              // Add error info to application
+              application.resumeUploadError = uploadError.message;
+              application.resumeFileName = file.name;
+              application.resumeUploadAttempted = true;
+            }
+          }
+          
+          // Save application to Firebase (without the file object)
+          const appId = await FirebaseService.addApplication(application);
+          console.log('Application submitted successfully with ID:', appId);
+
+          // Clear the uploaded file
+          window.uploadedFile = null;
+
+          // Show success modal
+          showSuccessModal();
+          // Hide loading overlay
+          loadingOverlay.classList.add('hidden');
+          // Hide the form
+          form.style.display = 'none';
+          // Reset form
+          form.reset();
+          // Reset file upload area
+          const dropZone = document.getElementById('dropZone');
+          if (dropZone) {
+            dropZone.innerHTML = `
+              <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+              <p class="text-gray-600">Drag and drop your resume here, or <span class="text-blue-600 cursor-pointer">browse files</span></p>
+              <input type="file" id="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+            `;
+            // Re-setup file upload listeners
+            setupFileUpload();
+          }
+          // After 2.5s, close modal and refresh to top
+          setTimeout(() => {
+            closeSuccessModal();
+            window.location.hash = "";
+            window.scrollTo(0, 0);
+            window.location.reload();
+          }, 2500);
+          return;
+        } catch (error) {
+          console.error('Error submitting application:', error);
+          
+          // Hide loading overlay
+          loadingOverlay.classList.add('hidden');
+          
+          // Show error message
+          button.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Submission Failed! Try Again';
+          button.className = originalClasses.replace('pulse-glow', '') + ' bg-red-600';
+          
+          // Show error alert with more details and troubleshooting tips
+          let errorMessage = `Failed to submit application: ${error.message}`;
+          
+          if (error.message.includes('timeout') || error.message.includes('network')) {
+            errorMessage += '\n\nTroubleshooting tips:\n';
+            errorMessage += '• Check your internet connection\n';
+            errorMessage += '• Try uploading a smaller file (under 1MB)\n';
+            errorMessage += '• Try again in a few minutes\n';
+            errorMessage += '• If the problem persists, try without a file upload';
+          }
+          
+          alert(errorMessage);
+          
+          // Reset button after 3 seconds
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.className = originalClasses;
+            button.disabled = false;
+          }, 3000);
+        }
+      }
+      
+      // Setup file upload with progress
+      function setupFileUpload() {
+        const fileInput = document.getElementById('resumeFile');
+        const dropZone = document.getElementById('dropZone');
+        
+        if (!fileInput || !dropZone) return;
+        
+        // Store original drop zone content
+        const originalContent = dropZone.innerHTML;
+        
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropZone.classList.add('border-blue-400', 'bg-blue-50');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+          dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+          const files = e.dataTransfer.files;
+          if (files.length > 0) {
+            handleFileUpload(files[0]);
+          }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+          if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+          }
+        });
+        
+        function handleFileUpload(file) {
+          // Validate file type
+          const allowedTypes = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
+          const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+          
+          if (!allowedTypes.includes(fileExtension)) {
+            alert('Please upload a PDF, DOC, DOCX, JPG, or PNG file.');
+            return;
+          }
+          
+          // Reduce file size limit to 5MB for faster uploads
+          const maxSize = 5 * 1024 * 1024; // 5MB
+          if (file.size > maxSize) {
+            alert('File size too large. Please upload a file smaller than 5MB for faster processing.');
+            return;
+          }
+          
+          // Show progress bar
+          const progressContainer = document.createElement('div');
+          progressContainer.className = 'mt-4';
+          progressContainer.innerHTML = `
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="progress-bar bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">Preparing file...</p>
+          `;
+          
+          dropZone.appendChild(progressContainer);
+          
+          const progressBar = progressContainer.querySelector('.progress-bar');
+          const statusText = progressContainer.querySelector('p');
+          
+          // Store the file for later use in form submission
+          window.uploadedFile = file;
+          
+          // Simulate upload progress (we'll do actual upload during form submission)
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += Math.random() * 20; // Faster progress simulation
+            if (progress >= 100) {
+              progress = 100;
+              clearInterval(interval);
+              statusText.textContent = 'File ready!';
+              
+              // Update drop zone with success state
+              setTimeout(() => {
+                dropZone.innerHTML = `
+                  <i class="fas fa-check text-3xl text-green-500 mb-2"></i>
+                  <p class="text-green-600 font-medium">${file.name}</p>
+                  <p class="text-sm text-gray-500">File ready for upload (${(file.size / 1024 / 1024).toFixed(1)}MB)</p>
+                  <p class="text-xs text-gray-400 mt-1">Will upload during form submission</p>
+                `;
+              }, 500); // Faster transition
+            } else {
+              progressBar.style.width = progress + '%';
+              statusText.textContent = `Preparing... ${Math.round(progress)}%`;
+            }
+          }, 100); // Faster updates
+        }
+      }
+      
+      // Load jobs from Firebase
+      async function loadJobs() {
+        try {
+          const jobs = await FirebaseService.getJobs();
+          const container = document.getElementById('jobsContainer');
+          const paginationControls = document.getElementById('paginationControls');
+          
+          if (jobs.length === 0) {
+            container.innerHTML = `
+              <div class="col-span-2 text-center py-12">
+                <i class="fas fa-briefcase text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500 text-lg">No open positions at the moment</p>
+                <p class="text-gray-400">Check back soon for new opportunities!</p>
+              </div>
+            `;
+            paginationControls.classList.add('hidden');
+            return;
+          }
+
+          const activeJobs = jobs.filter(job => job.status === 'active');
+          
+          if (activeJobs.length === 0) {
+            container.innerHTML = `
+              <div class="col-span-2 text-center py-12">
+                <i class="fas fa-briefcase text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500 text-lg">No open positions at the moment</p>
+                <p class="text-gray-400">Check back soon for new opportunities!</p>
+              </div>
+            `;
+            paginationControls.classList.add('hidden');
+            return;
+          }
+
+          // Pagination logic
+          const jobsPerPage = 6;
+          const totalPages = Math.ceil(activeJobs.length / jobsPerPage);
+          
+          // Get current page from URL hash or default to 1
+          const urlParams = new URLSearchParams(window.location.search);
+          const currentPage = parseInt(urlParams.get('page')) || 1;
+          
+          // Calculate start and end indices
+          const startIndex = (currentPage - 1) * jobsPerPage;
+          const endIndex = startIndex + jobsPerPage;
+          const currentJobs = activeJobs.slice(startIndex, endIndex);
+
+          // Display current page jobs
+          container.innerHTML = currentJobs.map((job, index) => `
+            <div class="slide-in-right stagger-${index + 1} job-card bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm">
+              <div class="flex items-start justify-between mb-3 md:mb-4">
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-lg md:text-2xl font-semibold mb-2 text-gray-800 truncate">${job.title}</h3>
+                  <p class="text-sm md:text-base text-gray-600 mb-2 md:mb-4">
+                    <i class="fas fa-map-marker-alt mr-1 md:mr-2 text-orange-500"></i>
+                    <span class="truncate">${job.location}</span>
+                  </p>
+                </div>
+                <div class="bg-orange-100 text-orange-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium ml-2 flex-shrink-0">
+                  ${job.type}
+                </div>
+              </div>
+              <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed" id="jobDesc-${job.id}">
+                ${job.description && job.description.length > 150 ? 
+                  `<span id="jobDescPreview-${job.id}">${job.description.substring(0, 150)}... <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium" id="toggleBtn-${job.id}">See more</button></span>
+                  <span id="jobDescFull-${job.id}" class="hidden">${job.description} <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium">See less</button></span>` 
+                  : (job.description || 'No description available')
+                }
+              </p>
+              ${job.requirements && Array.isArray(job.requirements) && job.requirements.length > 0 ? `
+                <div class="mb-4 md:mb-6">
+                  <h4 class="text-sm md:text-base font-semibold text-gray-800 mb-2">Requirements:</h4>
+                  <ul class="list-disc list-inside text-sm md:text-base text-gray-600 space-y-1">
+                    ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : ''}
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                <div class="flex items-center space-x-4">
+                  <span class="text-xs md:text-sm text-gray-500">
+                    <i class="fas fa-clock mr-1"></i>Posted ${getTimeAgo(job.postedAt)}
+                  </span>
+                </div>
+                <button onclick="applyForJob('${job.id}')" class="btn-primary px-4 md:px-6 py-2 md:py-3 rounded-lg text-sm md:text-base font-medium w-full sm:w-auto">
+                  Apply Now
+                </button>
+              </div>
+            </div>
+          `).join('');
+
+          // Setup pagination controls
+          setupPagination(currentPage, totalPages, activeJobs.length);
+          
+        } catch (error) {
+          console.error('Error loading jobs:', error);
+          const container = document.getElementById('jobsContainer');
+          const paginationControls = document.getElementById('paginationControls');
+          container.innerHTML = `
+            <div class="col-span-2 text-center py-12">
+              <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+              <p class="text-gray-500 text-lg">Error loading jobs</p>
+              <p class="text-gray-400">Please try again later</p>
+            </div>
+          `;
+          paginationControls.classList.add('hidden');
+        }
+      }
+
+      // Setup pagination controls
+      function setupPagination(currentPage, totalPages, totalJobs) {
+        const paginationControls = document.getElementById('paginationControls');
+        const pageNumbers = document.getElementById('pageNumbers');
+        const prevBtn = document.getElementById('prevPageBtn');
+        const nextBtn = document.getElementById('nextPageBtn');
+        
+        // Show pagination if more than 6 jobs
+        if (totalJobs > 6) {
+          paginationControls.classList.remove('hidden');
+          
+          // Update Previous/Next buttons
+          prevBtn.disabled = currentPage === 1;
+          nextBtn.disabled = currentPage === totalPages;
+          
+          // Generate page numbers
+          pageNumbers.innerHTML = '';
+          const maxVisiblePages = 5;
+          let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+          let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+          
+          if (endPage - startPage + 1 < maxVisiblePages) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+          }
+          
+          for (let i = startPage; i <= endPage; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.className = `px-3 py-2 border rounded-lg transition-colors ${
+              i === currentPage 
+                ? 'bg-blue-600 text-white border-blue-600' 
+                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`;
+            pageBtn.textContent = i;
+            pageBtn.onclick = () => goToPage(i);
+            pageNumbers.appendChild(pageBtn);
+          }
+          
+          // Add event listeners
+          prevBtn.onclick = () => goToPage(currentPage - 1);
+          nextBtn.onclick = () => goToPage(currentPage + 1);
+        } else {
+          paginationControls.classList.add('hidden');
+        }
+      }
+
+      // Navigate to specific page
+      function goToPage(page) {
+        const url = new URL(window.location);
+        url.searchParams.set('page', page);
+        window.history.pushState({}, '', url);
+        loadJobs();
+      }
+
+      // Toggle job description expand/collapse
+      function toggleJobDescription(jobId) {
+        const preview = document.getElementById(`jobDescPreview-${jobId}`);
+        const full = document.getElementById(`jobDescFull-${jobId}`);
+        
+        if (preview && full) {
+          if (preview.classList.contains('hidden')) {
+            // Show preview, hide full
+            preview.classList.remove('hidden');
+            full.classList.add('hidden');
+          } else {
+            // Show full, hide preview
+            preview.classList.add('hidden');
+            full.classList.remove('hidden');
+          }
+        }
+      }
+
+      // Get time ago string
+      function getTimeAgo(dateValue) {
+        // Handle Firestore Timestamp objects
+        let date;
+        if (dateValue && typeof dateValue.toDate === 'function') {
+          // It's a Firestore Timestamp
+          date = dateValue.toDate();
+        } else if (dateValue) {
+          // It's a regular date string or Date object
+          date = new Date(dateValue);
+        } else {
+          return 'Recently';
+        }
+        
+        const now = new Date();
+        const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+        
+        if (diffInDays === 0) return 'Today';
+        if (diffInDays === 1) return 'Yesterday';
+        if (diffInDays < 7) return `${diffInDays} days ago`;
+        if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+        return `${Math.floor(diffInDays / 30)} months ago`;
+      }
+
+      // Apply for a specific job
+      async function applyForJob(jobId) {
+        try {
+          // Show the application form tab
+          if (typeof showTab === 'function') showTab('apply');
+          const jobs = await FirebaseService.getJobs();
+          const job = jobs.find(j => j.id === jobId);
+          
+          if (job) {
+            // Set the position in the form
+            const positionSelect = document.querySelector('select');
+            if (positionSelect) {
+              positionSelect.value = job.title;
+            }
+            
+            // Scroll to application form
+            document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+          }
+        } catch (error) {
+          console.error('Error finding job:', error);
+        }
+      }
+
+      // Load jobs when page loads
+      document.addEventListener('DOMContentLoaded', async function() {
+        console.log('DOM loaded, testing Firebase and Google Drive connection...');
+        
+        // Setup file upload
+        setupFileUpload();
+        
+        // Test if FirebaseService is available
+        if (typeof FirebaseService === 'undefined') {
+          console.error('FirebaseService is not defined! Check if firebase-config.js is loaded.');
+          document.getElementById('jobsContainer').innerHTML = `
+            <div class="col-span-2 text-center py-12">
+              <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+              <p class="text-gray-500 text-lg">Firebase not connected</p>
+              <p class="text-gray-400">Please check the console for errors</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // Test if GoogleDriveService is available
+        if (typeof GoogleDriveService === 'undefined') {
+          console.error('GoogleDriveService is not defined! Check if google-drive-service.js is loaded.');
+          // Continue anyway since we can still submit applications without file uploads
+        }
+        
+        console.log('FirebaseService is available, loading jobs...');
+        
+        try {
+          await loadJobs();
+          
+          // Update position options in form
+          const jobs = await FirebaseService.getJobs();
+          const positionSelect = document.querySelector('select');
+          if (positionSelect && jobs.length > 0) {
+            const activeJobs = jobs.filter(job => job.status === 'active');
+            positionSelect.innerHTML = '<option value="">Select a position</option>' + 
+              activeJobs.map(job => `<option value="${job.title}">${job.title}</option>`).join('') +
+              '<option value="Other">Other</option>';
+          }
+        } catch (error) {
+          console.error('Error loading jobs:', error);
+          document.getElementById('jobsContainer').innerHTML = `
+            <div class="col-span-2 text-center py-12">
+              <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+              <p class="text-gray-500 text-lg">Error loading jobs</p>
+              <p class="text-gray-400">${error.message}</p>
+            </div>
+          `;
+        }
+      });
+
+      const coverLetter = document.getElementById('coverLetter');
+      const wordCount = document.getElementById('coverLetterWordCount');
+      const limitWarning = document.getElementById('coverLetterLimitWarning');
+      const WORD_LIMIT = 400;
+
+      function updateCoverLetterWordCount() {
+        const words = coverLetter.value.trim().split(/\s+/).filter(Boolean);
+        wordCount.textContent = `${words.length}/${WORD_LIMIT} words`;
+        if (words.length > WORD_LIMIT) {
+          // Trim to word limit
+          coverLetter.value = words.slice(0, WORD_LIMIT).join(' ');
+          wordCount.textContent = `${WORD_LIMIT}/${WORD_LIMIT} words`;
+          limitWarning.classList.remove('hidden');
+        } else {
+          limitWarning.classList.add('hidden');
+        }
+      }
+      coverLetter.addEventListener('input', updateCoverLetterWordCount);
+      coverLetter.addEventListener('blur', updateCoverLetterWordCount);
+
+      // Add listeners to remove error state on input
+      ['fullName', 'email', 'phone', 'position', 'coverLetter'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', function() {
+            el.classList.remove('form-input-error');
+            const error = document.getElementById(id + 'Error');
+            if (error) error.style.display = 'none';
+          });
+        }
+      });
+      // Remove file error on file select
+      const resumeFile = document.getElementById('resumeFile');
+      if (resumeFile) {
+        resumeFile.addEventListener('change', function() {
+          document.getElementById('resumeError').style.display = 'none';
+        });
+      }
+      // Show/hide otherPosition input
+      const positionSelect = document.getElementById('position');
+      const otherPositionInput = document.getElementById('otherPosition');
+      positionSelect.addEventListener('change', function() {
+        if (positionSelect.value === 'Other') {
+          otherPositionInput.style.display = 'block';
+        } else {
+          otherPositionInput.style.display = 'none';
+          otherPositionInput.value = '';
+          document.getElementById('otherPositionError').style.display = 'none';
+          otherPositionInput.classList.remove('form-input-error');
+        }
+      });
+      // Remove error on input for otherPosition
+      otherPositionInput.addEventListener('input', function() {
+        otherPositionInput.classList.remove('form-input-error');
+        document.getElementById('otherPositionError').style.display = 'none';
+      });
+
+      // Phone number copy-to-clipboard logic (with SVG copy icon)
+      const phoneNumber = document.getElementById('phoneNumber');
+      const copyClipboard = document.getElementById('copyClipboard');
+      function copyPhoneNumber() {
+        navigator.clipboard.writeText(phoneNumber.textContent.trim());
+      }
+      if (phoneNumber) {
+        phoneNumber.addEventListener('click', copyPhoneNumber);
+      }
+      if (copyClipboard) {
+        copyClipboard.addEventListener('click', copyPhoneNumber);
+      }
+
+      // Tab logic for Open Positions
+      const openPositionsTab = document.getElementById('openPositionsTab');
+      const backToHomeBtn = document.getElementById('backToHomeBtn');
+      const heroSection = document.getElementById('heroSection');
+      const aboutSection = document.getElementById('about');
+      const applySection = document.getElementById('apply');
+      backToHomeBtn.addEventListener('click', function() {
+        showTab('hero');
+      });
+
+      // Simple Success Modal logic
+      function showSuccessModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.remove('hidden');
+      }
+      function closeSuccessModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.add('hidden');
+        // Show the form again for next submission
+        const form = document.getElementById('applicationForm');
+        if (form) form.style.display = '';
+      }
+      document.getElementById('successBackBtn').addEventListener('click', function() {
+        closeSuccessModal();
+        window.location.hash = "";
+        window.scrollTo(0, 0);
+        window.location.reload();
+      });
+
+      // Header Careers button opens Open Positions tab
+      const headerCareersBtn = document.getElementById('headerCareersBtn');
+      if (headerCareersBtn) {
+        headerCareersBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('openPositions');
+        });
+      }
+
+      // Products & Services tab logic
+      const headerProductsBtn = document.getElementById('headerProductsBtn');
+      const productsTab = document.getElementById('productsTab');
+      const backToHomeProductsBtn = document.getElementById('backToHomeProductsBtn');
+      if (headerProductsBtn) {
+        headerProductsBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('products');
+        });
+      }
+      if (backToHomeProductsBtn) {
+        backToHomeProductsBtn.addEventListener('click', function() {
+          showTab('hero');
+        });
+      }
+
+      // Explore Opportunities button in hero opens Open Positions tab
+      const exploreOpportunitiesBtn = document.getElementById('exploreOpportunitiesBtn');
+      if (exploreOpportunitiesBtn) {
+        exploreOpportunitiesBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('openPositions');
+        });
+      }
+
+      // Apply Now button in hero navigates to apply tab
+      const applyNowBtn = document.getElementById('applyNowBtn');
+      if (applyNowBtn) {
+        applyNowBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('apply');
+        });
+      }
+
+      // Centralized tab logic
+      function showTab(tabName, skipHashUpdate) {
+        // List all main sections/tabs
+        const sections = [
+          heroSection,
+          aboutSection,
+          applySection,
+          openPositionsTab,
+          productsTab
+        ];
+        // Hide all by default
+        sections.forEach(sec => { if (sec) sec.style.display = 'none'; if (sec && sec.classList) sec.classList.add('hidden'); });
+        // Hide homepage sections by default
+        const homepageSections = document.getElementById('homepageSections');
+        if (homepageSections) homepageSections.style.display = 'none';
+        if (tabName === 'hero') {
+          // Show hero, about, and apply for home
+          if (heroSection) { heroSection.style.display = ''; heroSection.classList.remove('hidden'); }
+          if (aboutSection) { aboutSection.style.display = ''; aboutSection.classList.remove('hidden'); }
+          if (applySection) { applySection.style.display = 'none'; applySection.classList.add('hidden'); } // Hide apply by default
+          if (!skipHashUpdate) window.location.hash = '#about';
+          // Show homepage sections
+          if (homepageSections) homepageSections.style.display = '';
+        } else {
+          // Show only the requested tab/section
+          let tabEl = null;
+          let hash = '';
+          switch(tabName) {
+            case 'about': tabEl = aboutSection; hash = '#about'; break;
+            case 'apply': tabEl = applySection; hash = '#apply'; break;
+            case 'openPositions': tabEl = openPositionsTab; hash = '#openPositions'; break;
+            case 'products': tabEl = productsTab; hash = '#products'; break;
+          }
+          if (tabEl) {
+            tabEl.style.display = '';
+            if (tabEl.classList) tabEl.classList.remove('hidden');
+          }
+          if (!skipHashUpdate && hash) window.location.hash = hash;
+        }
+        window.scrollTo(0, 0);
+      }
+
+      // Handle hash navigation on page load and hash change
+      function handleHashNavigation() {
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        switch(hash) {
+          case 'about':
+          case '':
+            showTab('hero', true);
+            break;
+          case 'apply':
+            showTab('apply', true);
+            break;
+          case 'openpositions':
+            showTab('openPositions', true);
+            break;
+          case 'products':
+            showTab('products', true);
+            break;
+          default:
+            showTab('hero', true);
+        }
+      }
+      window.addEventListener('hashchange', handleHashNavigation);
+      // On initial load
+      handleHashNavigation();
+
+      // About and Apply header buttons logic
+      const headerAboutBtn = document.getElementById('headerAboutBtn');
+      if (headerAboutBtn) {
+        headerAboutBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('hero');
+        });
+      }
+      const headerApplyBtn = document.getElementById('headerApplyBtn');
+      if (headerApplyBtn) {
+        headerApplyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('apply');
+        });
+      }
+
+      // Mobile menu event listeners for navigation
+      const mobileAboutBtn = document.getElementById('mobileAboutBtn');
+      if (mobileAboutBtn) {
+        mobileAboutBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('hero');
+        });
+      }
+      const mobileCareersBtn = document.getElementById('mobileCareersBtn');
+      if (mobileCareersBtn) {
+        mobileCareersBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('openPositions');
+        });
+      }
+      const mobileApplyBtn = document.getElementById('mobileApplyBtn');
+      if (mobileApplyBtn) {
+        mobileApplyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('apply');
+        });
+      }
+
+      // Setup the main "See More" button for homepage sections
+      function setupSeeMoreButton() {
+        const seeMoreBtn = document.getElementById('seeMoreBtn');
+        const homepageSections = document.getElementById('homepageSections');
+        const seeMoreText = document.getElementById('seeMoreText');
+        const seeMoreIcon = document.getElementById('seeMoreIcon');
+        
+        if (seeMoreBtn && homepageSections) {
+          seeMoreBtn.addEventListener('click', function() {
+            const isExpanded = !homepageSections.classList.contains('hidden');
+            
+            if (isExpanded) {
+              // Hide sections
+              homepageSections.classList.add('hidden');
+              seeMoreText.textContent = 'See More About Our Company';
+              seeMoreIcon.className = 'fas fa-chevron-down ml-2';
+              
+              // Scroll back to top
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              // Show sections
+              homepageSections.classList.remove('hidden');
+              seeMoreText.textContent = 'See Less';
+              seeMoreIcon.className = 'fas fa-chevron-up ml-2';
+              
+              // Smooth scroll to the revealed sections
+              setTimeout(() => {
+                homepageSections.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
+            }
+          });
+        }
+      }
+
+      // Ensure See More button is always initialized after all DOM is ready
+      function ensureSeeMoreButtonInit() {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setupSeeMoreButton);
+        } else {
+          setupSeeMoreButton();
+        }
+      }
+      ensureSeeMoreButtonInit();
+      
+      // Carousel functionality
+      class Carousel {
+        constructor() {
+          this.currentSlide = 0;
+          this.slides = document.querySelectorAll('.carousel-slide');
+          this.dots = document.querySelectorAll('.carousel-dot');
+          this.prevBtn = document.querySelector('.carousel-control.prev');
+          this.nextBtn = document.querySelector('.carousel-control.next');
+          this.autoPlayInterval = null;
+          
+          this.init();
+        }
+        
+        init() {
+          if (this.slides.length === 0) return;
+          
+          // Add event listeners
+          this.prevBtn?.addEventListener('click', () => this.prevSlide());
+          this.nextBtn?.addEventListener('click', () => this.nextSlide());
+          
+          // Add dot navigation
+          this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+          });
+          
+          // Start auto-play
+          this.startAutoPlay();
+          
+          // Pause auto-play on hover
+          const carouselContainer = document.querySelector('.carousel-container');
+          if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', () => this.stopAutoPlay());
+            carouselContainer.addEventListener('mouseleave', () => this.startAutoPlay());
+          }
+        }
+        
+        goToSlide(index) {
+          // Remove active class from current slide and dot
+          this.slides[this.currentSlide].classList.remove('active');
+          this.dots[this.currentSlide].classList.remove('active');
+          
+          // Update current slide
+          this.currentSlide = index;
+          
+          // Add active class to new slide and dot
+          this.slides[this.currentSlide].classList.add('active');
+          this.dots[this.currentSlide].classList.add('active');
+        }
+        
+        nextSlide() {
+          const nextIndex = (this.currentSlide + 1) % this.slides.length;
+          this.goToSlide(nextIndex);
+        }
+        
+        prevSlide() {
+          const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+          this.goToSlide(prevIndex);
+        }
+        
+        startAutoPlay() {
+          this.stopAutoPlay(); // Clear any existing interval
+          this.autoPlayInterval = setInterval(() => {
+            this.nextSlide();
+          }, 5000); // Change slide every 5 seconds
+        }
+        
+        stopAutoPlay() {
+          if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+          }
+        }
+      }
+      
+      // Initialize carousel when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        new Carousel();
+      });
+    </script>
   </body>
 </html>
