@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Google Drive Test</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="google-drive-service.js"></script>
+</head>
+<body>
+    <h1>Simple Google Drive Test</h1>
+    <div id="status">Loading...</div>
+    <button onclick="testService()">Test Service</button>
+    <div id="result"></div>
+
+    <script>
+        function testService() {
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+            
+            statusDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('Testing Google Drive Service...');
+                console.log('GoogleDriveService:', typeof GoogleDriveService);
+                console.log('GoogleDriveService object:', GoogleDriveService);
+                
+                // Check if service exists
+                if (typeof GoogleDriveService === 'undefined') {
+                    throw new Error('GoogleDriveService is not defined');
+                }
+                
+                // Check if it's an object
+                if (typeof GoogleDriveService !== 'object') {
+                    throw new Error('GoogleDriveService is not an object');
+                }
+                
+                // Check if methods exist
+                if (typeof GoogleDriveService.initialize !== 'function') {
+                    throw new Error('GoogleDriveService.initialize is not a function');
+                }
+                
+                if (typeof GoogleDriveService.uploadFile !== 'function') {
+                    throw new Error('GoogleDriveService.uploadFile is not a function');
+                }
+                
+                // Check if constructor properties exist
+                if (!GoogleDriveService.API_KEY) {
+                    throw new Error('GoogleDriveService.API_KEY is not defined');
+                }
+                
+                if (!GoogleDriveService.CLIENT_ID) {
+                    throw new Error('GoogleDriveService.CLIENT_ID is not defined');
+                }
+                
+                statusDiv.innerHTML = '✅ Service loaded successfully!';
+                resultDiv.innerHTML = `
+                    <p>✅ GoogleDriveService is defined</p>
+                    <p>✅ GoogleDriveService is an object</p>
+                    <p>✅ initialize() method exists</p>
+                    <p>✅ uploadFile() method exists</p>
+                    <p>✅ API_KEY is defined: ${GoogleDriveService.API_KEY.substring(0, 10)}...</p>
+                    <p>✅ CLIENT_ID is defined: ${GoogleDriveService.CLIENT_ID.substring(0, 20)}...</p>
+                    <p>✅ Service is ready to use</p>
+                `;
+                
+            } catch (error) {
+                console.error('Service test failed:', error);
+                statusDiv.innerHTML = '❌ Service test failed';
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Auto-test on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+            console.log('GoogleDriveService:', typeof GoogleDriveService);
+            console.log('gapi:', typeof gapi);
+            console.log('google:', typeof google);
+            
+            if (typeof GoogleDriveService !== 'undefined') {
+                console.log('GoogleDriveService object:', GoogleDriveService);
+                console.log('GoogleDriveService.initialize:', typeof GoogleDriveService.initialize);
+                console.log('GoogleDriveService.uploadFile:', typeof GoogleDriveService.uploadFile);
+            }
+            
+            setTimeout(testService, 1000);
+        });
+    </script>
+</body>
+</html> 
