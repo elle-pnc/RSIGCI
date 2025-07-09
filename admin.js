@@ -20,6 +20,10 @@ let positionFilter = '';
 let searchTimeout = null;
 let isInitialized = false;
 
+// Pagination state for applications
+let applicationsCurrentPage = 1;
+const applicationsPerPage = 10;
+
 // ===== PERFORMANCE OPTIMIZATIONS =====
 
 // Debounced search function
@@ -466,6 +470,10 @@ function loadApplications() {
     const selectedPosition = positionFilter ? positionFilter.value : '';
     
     let filteredApplications = applications;
+    // Only exclude deleted applications if not filtering for deleted
+    if (statusFilter !== 'deleted') {
+      filteredApplications = filteredApplications.filter(app => app.status !== 'deleted');
+    }
     
     // Apply search filter
     if (searchTerm) {
@@ -487,16 +495,23 @@ function loadApplications() {
       filteredApplications = filteredApplications.filter(app => app.position === selectedPosition);
     }
 
+    // Pagination logic for applications
+    const totalApplications = filteredApplications.length;
+    const totalPages = Math.ceil(totalApplications / applicationsPerPage) || 1;
+    const currentPage = Math.min(applicationsCurrentPage, totalPages);
+    const startIndex = (currentPage - 1) * applicationsPerPage;
+    const endIndex = startIndex + applicationsPerPage;
+    const currentApplications = filteredApplications.slice(startIndex, endIndex);
     // --- Bulk selection: Add Select All checkbox above grid ---
     let selectAllHtml = '';
-    if (filteredApplications.length > 0) {
+    if (currentApplications.length > 0) {
       selectAllHtml = `<div class="mb-2 flex items-center"><input type="checkbox" id="selectAllApplications" class="mr-2" onchange="toggleSelectAllApplications(this)"><label for="selectAllApplications" class="text-sm text-gray-700 cursor-pointer">Select All</label></div>`;
     }
 
-    container.innerHTML = (filteredApplications.length === 0 ? 
+    container.innerHTML = (totalApplications === 0 ? 
       '<div class="text-center py-12"><p class="text-gray-500">No applications found</p></div>' :
       selectAllHtml +
-      filteredApplications.map(app => {
+      currentApplications.map(app => {
         // Handle Firestore Timestamp for appliedAt
         let appliedDate = 'Recently';
         if (app.appliedAt) {
@@ -506,9 +521,16 @@ function loadApplications() {
             appliedDate = new Date(app.appliedAt).toLocaleDateString();
           }
         }
+        // Add Restore button if status is deleted
+        let restoreBtn = '';
+        if (app.status === 'deleted') {
+          restoreBtn = `<button class="absolute top-4 right-4 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full font-medium shadow-lg z-10 transition-transform transform hover:scale-105 focus:outline-none" title="Restore Application" onclick="restoreApplication('${app.id}')"><i class='fas fa-undo'></i></button>`;
+        }
         return `
           <div class="application-card bg-white p-6 rounded-xl shadow-sm relative" id="appCard-${app.id}">
             <input type="checkbox" class="bulk-app-checkbox absolute top-4 left-4" data-app-id="${app.id}" onchange="onBulkAppCheckboxChange()">
+            <button class="absolute bottom-4 left-4 text-red-500 hover:text-red-700 focus:outline-none" title="Delete Application" onclick="showDeleteApplicationModal('${app.id}', () => deleteApplication('${app.id}'))"><i class="fas fa-trash"></i></button>
+            ${restoreBtn}
             <div class="flex items-start justify-between mb-4">
               <div style="padding-left: 2rem;">
                 <h3 class="text-xl font-semibold text-gray-800">${safe(app.fullName)}</h3>
@@ -561,6 +583,7 @@ function loadApplications() {
                     <option value="reviewing" ${app.status === 'reviewing' ? 'selected' : ''}>Reviewing</option>
                     <option value="approved" ${app.status === 'approved' ? 'selected' : ''}>Approved</option>
                     <option value="rejected" ${app.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                    <option value="deleted" ${app.status === 'deleted' ? 'selected' : ''}>Deleted</option>
                   </select>
                   <button onclick="viewApplication('${app.id}')" class="btn-primary view-btn" title="View">View</button>
                 </div>
@@ -569,6 +592,8 @@ function loadApplications() {
           </div>
         `;
       }).join(''));
+    // Setup pagination controls
+    setupApplicationsPagination(currentPage, totalPages, totalApplications);
     // Setup copy phone numbers after loading applications
     setupCopyPhoneNumbers();
   } catch (error) {
@@ -630,10 +655,17 @@ async function bulkUpdateStatus(newStatus) {
   const loadingOverlay = document.getElementById('loadingOverlay');
   loadingOverlay.querySelector('p').textContent = `Updating application status to ${newStatus}...`;
   loadingOverlay.classList.remove('hidden');
+  const prevStatuses = [];
+  const affectedApps = [];
   try {
     for (const cb of checked) {
       const appId = cb.getAttribute('data-app-id');
-      await FirebaseService.updateApplicationStatus(appId, newStatus);
+      const app = applications.find(a => a.id === appId);
+      if (app) {
+        prevStatuses.push({ id: appId, prevStatus: app.status });
+        affectedApps.push(app);
+        await FirebaseService.updateApplicationStatus(appId, newStatus);
+      }
     }
     loadingOverlay.querySelector('p').textContent = `Status updated to ${newStatus}!`;
     showToast(`Application status updated to ${newStatus}`);
@@ -642,10 +674,55 @@ async function bulkUpdateStatus(newStatus) {
       deselectAllApplications();
       loadApplications();
     }, 1000);
+    // Show undo snackbar with affected apps
+    showUndoSnackbar({
+      type: 'bulk-status',
+      newStatus,
+      prevStatuses,
+      count: checked.length,
+      affectedApps
+    });
   } catch (error) {
     loadingOverlay.classList.add('hidden');
     showToast('Bulk update failed: ' + error.message);
   }
+}
+
+let lastBulkUndo = null;
+function showUndoSnackbar(action) {
+  const snackbar = document.getElementById('undoSnackbar');
+  const msg = document.getElementById('undoSnackbarMsg');
+  const btn = document.getElementById('undoSnackbarBtn');
+  if (!snackbar || !msg || !btn) return;
+  let summary = '';
+  if (action.type === 'bulk-status') {
+    // Show up to 2 names/emails, then '+N more' if needed
+    let names = (action.affectedApps || []).map(a => a.fullName || a.email || a.id);
+    let displayNames = names.slice(0, 2).join(', ');
+    if (names.length > 2) displayNames += `, +${names.length - 2} more`;
+    summary = `${action.count} application${action.count > 1 ? 's' : ''} set to '${action.newStatus}'`;
+    if (displayNames) summary += `: ${displayNames}.`;
+  }
+  msg.textContent = summary;
+  snackbar.classList.remove('hidden');
+  let undoTimeout = setTimeout(() => {
+    snackbar.classList.add('hidden');
+    lastBulkUndo = null;
+  }, 5000);
+  lastBulkUndo = { ...action, undoTimeout };
+  btn.onclick = async function() {
+    snackbar.classList.add('hidden');
+    clearTimeout(undoTimeout);
+    if (action.type === 'bulk-status') {
+      // Revert statuses
+      for (const item of action.prevStatuses) {
+        await FirebaseService.updateApplicationStatus(item.id, item.prevStatus);
+      }
+      showToast('Bulk status change undone');
+      loadApplications();
+    }
+    lastBulkUndo = null;
+  };
 }
 
 // Custom modal for confirming application deletion
@@ -654,22 +731,22 @@ function showDeleteApplicationsModal(count, onConfirm) {
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'deleteApplicationsModal';
-    modal.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center';
-    modal.innerHTML = `
-      <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center relative animate-fade-in">
-        <div class="mb-4">
-          <i class="fas fa-trash-alt text-red-600 text-4xl"></i>
-        </div>
-        <h2 class="text-xl font-bold mb-2">Delete Application${count > 1 ? 's' : ''}</h2>
-        <p class="text-gray-700 mb-6">Are you sure you want to delete ${count} application${count > 1 ? 's' : ''}? This cannot be undone.</p>
-        <div class="flex justify-center gap-4">
-          <button id="confirmDeleteApplicationsBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white font-medium text-base">Delete</button>
-          <button id="cancelDeleteApplicationsBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-base">Cancel</button>
-        </div>
-      </div>
-    `;
     document.body.appendChild(modal);
   }
+  modal.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center';
+  modal.innerHTML = `
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center relative animate-fade-in">
+      <div class="mb-4">
+        <i class="fas fa-trash-alt text-red-600 text-4xl"></i>
+      </div>
+      <h2 class="text-xl font-bold mb-2">Delete Application${count > 1 ? 's' : ''}</h2>
+      <p class="text-gray-700 mb-6">Are you sure you want to delete ${count} application${count > 1 ? 's' : ''}? This cannot be undone.</p>
+      <div class="flex justify-center gap-4">
+        <button id="confirmDeleteApplicationsBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white font-medium text-base">Delete</button>
+        <button id="cancelDeleteApplicationsBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-base">Cancel</button>
+      </div>
+    </div>
+  `;
   modal.style.display = '';
   document.getElementById('confirmDeleteApplicationsBtn').onclick = function() {
     modal.style.display = 'none';
@@ -689,7 +766,7 @@ async function bulkDeleteApplications() {
     try {
       for (const cb of checked) {
         const appId = cb.getAttribute('data-app-id');
-        await deleteApplication(appId, true); // true = silent
+        await FirebaseService.updateApplicationStatus(appId, 'deleted');
       }
       showToast(`Deleted ${checked.length} applications.`);
       deselectAllApplications();
@@ -714,11 +791,12 @@ updateAppStatus = async function(appId, newStatus, silent) {
   }
 };
 
-// Patch deleteApplication for silent mode
+// Update delete logic to set status to 'deleted'
 async function deleteApplication(appId, silent) {
   try {
-    await FirebaseService.deleteApplication(appId);
+    await FirebaseService.updateApplicationStatus(appId, 'deleted');
     if (!silent) showToast('Application deleted.');
+    loadApplications();
   } catch (error) {
     if (!silent) showToast('Failed to delete application: ' + error.message);
     throw error;
@@ -942,6 +1020,76 @@ function toggleExpandApp(appId) {
   }
 }
 
+// Add a helper to show a custom delete modal for a single application
+function showDeleteApplicationModal(appId, onConfirm) {
+  let modal = document.getElementById('deleteApplicationModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'deleteApplicationModal';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center';
+    modal.innerHTML = `
+      <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center relative animate-fade-in">
+        <div class="mb-4">
+          <i class="fas fa-trash-alt text-red-600 text-4xl"></i>
+        </div>
+        <h2 class="text-xl font-bold mb-2">Delete Application</h2>
+        <p class="text-gray-700 mb-6">Are you sure you want to delete this application? This cannot be undone.</p>
+        <div class="flex justify-center gap-4">
+          <button id="confirmDeleteApplicationBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white font-medium text-base">Delete</button>
+          <button id="cancelDeleteApplicationBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-base">Cancel</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  modal.style.display = '';
+  document.getElementById('confirmDeleteApplicationBtn').onclick = function() {
+    modal.style.display = 'none';
+    onConfirm();
+  };
+  document.getElementById('cancelDeleteApplicationBtn').onclick = function() {
+    modal.style.display = 'none';
+  };
+}
+
+// Add restore and permanent delete logic
+async function restoreApplication(appId) {
+  try {
+    await FirebaseService.updateApplicationStatus(appId, 'new');
+    await firebase.firestore().collection('applications').doc(appId).update({ trashed: firebase.firestore.FieldValue.delete(), trashedAt: firebase.firestore.FieldValue.delete() });
+    showToast('Application restored.');
+    loadApplications(true);
+    loadApplications(false);
+  } catch (error) {
+    showToast('Failed to restore: ' + error.message);
+  }
+}
+async function permanentDeleteApplication(appId) {
+  if (!confirm('Permanently delete this application? This cannot be undone.')) return;
+  try {
+    await FirebaseService.permanentDeleteApplication(appId);
+    showToast('Application permanently deleted.');
+    loadApplications(true);
+  } catch (error) {
+    showToast('Failed to delete: ' + error.message);
+  }
+}
+
+// Utility to show/hide the loading overlay with a custom message
+function showLoadingOverlay(show, message) {
+  const overlay = document.getElementById('loadingOverlay');
+  if (!overlay) return;
+  if (show) {
+    overlay.classList.remove('hidden');
+    if (message) {
+      const msgEls = overlay.querySelectorAll('p');
+      if (msgEls && msgEls.length > 0) msgEls[0].textContent = message;
+    }
+  } else {
+    overlay.classList.add('hidden');
+  }
+}
+
 // ===== UTILITY FUNCTIONS =====
 
 // Copy phone number logic for applicants
@@ -976,6 +1124,47 @@ function updateRemoveReqBtns() {
   } catch (error) {
     console.error('Error updating remove requirement buttons:', error);
   }
+}
+
+// Pagination state for applications
+function setupApplicationsPagination(currentPage, totalPages, totalApplications) {
+  const paginationControls = document.getElementById('applicationsPaginationControls');
+  const pageNumbers = document.getElementById('applicationsPageNumbers');
+  const prevBtn = document.getElementById('applicationsPrevPageBtn');
+  const nextBtn = document.getElementById('applicationsNextPageBtn');
+
+  if (totalApplications > applicationsPerPage) {
+    paginationControls.classList.remove('hidden');
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+    pageNumbers.innerHTML = '';
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.className = `px-3 py-2 border rounded-lg transition-colors ${
+        i === currentPage 
+          ? 'bg-blue-600 text-white border-blue-600' 
+          : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+      }`;
+      pageBtn.textContent = i;
+      pageBtn.onclick = () => goToApplicationsPage(i);
+      pageNumbers.appendChild(pageBtn);
+    }
+    prevBtn.onclick = () => goToApplicationsPage(currentPage - 1);
+    nextBtn.onclick = () => goToApplicationsPage(currentPage + 1);
+  } else {
+    paginationControls.classList.add('hidden');
+  }
+}
+
+function goToApplicationsPage(page) {
+  applicationsCurrentPage = page;
+  loadApplications();
 }
 
 // ===== DATA EXPORT FUNCTIONS =====

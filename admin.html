@@ -70,6 +70,12 @@
     </div>
     <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
+    <!-- Undo Snackbar -->
+    <div id="undoSnackbar" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-4 rounded-xl shadow-lg flex items-center space-x-4 hidden transition-all duration-300" style="min-width:220px;max-width:90vw;">
+      <span id="undoSnackbarMsg" class="flex-1"></span>
+      <button id="undoSnackbarBtn" class="bg-white text-gray-900 font-semibold px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">Undo</button>
+    </div>
+
     <!-- Sidebar and Main Content Wrapper -->
     <div id="dashboardContent" style="display:none;">
       <!-- Sidebar Overlay for Mobile -->
@@ -120,16 +126,16 @@
                   <i class="fas fa-bars text-gray-600" aria-hidden="true"></i>
                 </button>
               </div>
-              <div>
+            <div>
                 <h1 class="text-xl md:text-2xl font-bold">Admin Dashboard</h1>
                 <p class="text-sm md:text-base text-blue-100">Manage job postings and applications</p>
-              </div>
             </div>
+              </div>
             <div class="relative">
               <button id="userCardBtn" class="flex items-center space-x-2 md:space-x-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg px-3 md:px-4 py-2 transition-all duration-200" aria-label="User menu" aria-expanded="false" aria-haspopup="true">
                 <div class="w-6 h-6 md:w-8 md:h-8 bg-white bg-opacity-30 rounded-full flex items-center justify-center" aria-hidden="true">
                   <i class="fas fa-user text-white text-xs md:text-sm"></i>
-                </div>
+              </div>
                 <div class="text-left hidden sm:block">
                   <p class="text-xs text-blue-100">Welcome back</p>
                   <p class="font-semibold text-xs md:text-sm" id="adminUserEmail"></p>
@@ -243,7 +249,7 @@
                 </button>
                 <button onclick="exportJobsPDF()" class="px-4 py-2 border border-red-500 text-red-700 rounded hover:bg-red-50 text-sm font-medium" aria-label="Export jobs as PDF">
                   <i class="fas fa-file-pdf mr-2" aria-hidden="true"></i>Export PDF
-                </button>
+              </button>
               </div>
             </div>
             
@@ -279,6 +285,7 @@
                   <option value="reviewing">Reviewing</option>
                   <option value="approved">Approved</option>
                   <option value="rejected">Rejected</option>
+                  <option value="deleted">Deleted</option>
                 </select>
                 <select id="positionFilter" class="form-input px-3 py-3 border border-gray-300 rounded-lg text-sm w-full sm:w-auto min-w-0 max-w-full" aria-label="Filter by position">
                   <option value="">All Positions</option>
@@ -308,6 +315,18 @@
             
             <div id="applicationsList" class="grid gap-4 md:gap-6" aria-live="polite">
               <!-- Applications will be populated here -->
+            </div>
+            <!-- Pagination Controls for Applications -->
+            <div id="applicationsPaginationControls" class="flex justify-center items-center mt-6 md:mt-10 space-x-1 md:space-x-2 hidden">
+              <button id="applicationsPrevPageBtn" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
+                <i class="fas fa-chevron-left mr-1 md:mr-2"></i><span class="hidden md:inline">Previous</span>
+              </button>
+              <div id="applicationsPageNumbers" class="flex space-x-1">
+                <!-- Page numbers will be generated here -->
+              </div>
+              <button id="applicationsNextPageBtn" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
+                <span class="hidden md:inline">Next</span><i class="fas fa-chevron-right ml-1 md:ml-2"></i>
+              </button>
             </div>
           </div>
 
@@ -440,22 +459,22 @@
     <div id="deleteJobModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center transition-opacity duration-300">
       <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center relative animate-fade-in">
         <div id="deleteJobModalContent">
-          <div class="mb-4">
+                <div class="mb-4">
             <i class="fas fa-trash-alt text-red-600 text-4xl"></i>
-          </div>
+                </div>
           <h2 class="text-xl font-bold mb-2">Delete Job Posting</h2>
           <p class="text-gray-700 mb-6">Are you sure you want to delete this job posting?</p>
           <div class="flex justify-center gap-4">
             <button id="confirmDeleteJobBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white font-medium text-base">Delete</button>
             <button id="cancelDeleteJobBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-base">Cancel</button>
-          </div>
-        </div>
+                          </div>
+                  </div>
         <div id="deleteJobLoading" class="hidden flex flex-col items-center justify-center">
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600 mb-4"></div>
           <p class="text-lg font-semibold text-gray-800">Deleting job...</p>
-        </div>
-      </div>
-    </div>
+                </div>
+              </div>
+            </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.min.js"></script>

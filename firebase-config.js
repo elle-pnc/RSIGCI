@@ -169,6 +169,27 @@ class FirebaseService {
     }
   }
 
+  static async deleteApplication(applicationId) {
+    try {
+      await db.collection('applications').doc(applicationId).update({
+        trashed: true,
+        trashedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (error) {
+      console.error('Error trashing application:', error);
+      throw error;
+    }
+  }
+
+  static async permanentDeleteApplication(applicationId) {
+    try {
+      await db.collection('applications').doc(applicationId).delete();
+    } catch (error) {
+      console.error('Error permanently deleting application:', error);
+      throw error;
+    }
+  }
+
   // Real-time listeners
   static onJobsSnapshot(callback) {
     return db.collection('jobs')
