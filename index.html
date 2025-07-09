@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
-    <title>Join Our Team | RSIGCI</title>
+    <title>Join Our Team | RSIGCI.</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
@@ -236,6 +237,63 @@
         from { opacity: 0; transform: translateY(30px); }
         to { opacity: 1; transform: translateY(0); }
       }
+      
+      /* Carousel Styles */
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      
+      .carousel-slide.active {
+        opacity: 1;
+      }
+      
+      .carousel-dot.active {
+        background-color: #f97316 !important;
+        transform: scale(1.2);
+      }
+      
+      .carousel-control {
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        padding: 1rem;
+        border-radius: 50%;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      
+      .carousel-control:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: scale(1.1);
+      }
+      
+      @media (max-width: 768px) {
+        .carousel-control {
+          padding: 0.75rem;
+        }
+      }
+      .carousel-dots-mobile-fix {
+        margin-bottom: 3.5rem;
+      }
+      @media (min-width: 768px) {
+        .carousel-dots-mobile-fix {
+          margin-bottom: 2rem;
+        }
+      }
     </style>
   </head>
   <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
@@ -253,7 +311,9 @@
       <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
           <div class="text-white font-bold text-xl">
-            <img src="RSIGCI_Logo.png" alt="RSIGCI Logo" class="h-10 w-auto" />
+            <button onclick="goToHomepage()" class="hover:opacity-80 transition-opacity">
+              <img src="RSIGCI_Logo.png" alt="RSIGCI Logo" class="h-10 w-auto" />
+            </button>
           </div>
           <div class="hidden md:flex space-x-8">
             <button id="headerAboutBtn" class="text-white hover:text-orange-300 transition-colors focus:outline-none">About</button>
@@ -283,8 +343,21 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="min-h-screen gradient-bg text-white flex flex-col justify-center items-center text-center px-6 relative" id="heroSection">
-      <div class="absolute inset-0 bg-black opacity-20"></div>
+    <section class="min-h-screen gradient-bg text-white flex flex-col justify-center items-center text-center px-6 pt-20 md:pt-0 relative overflow-hidden" id="heroSection">
+      <!-- Carousel Background -->
+      <div class="absolute inset-0 carousel-container">
+        <div class="carousel-slide active" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjMWUzYThhIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDE8L3RleHQ+PC9zdmc+');">
+          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+        <div class="carousel-slide" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjM2I4MmY2Ii8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDI8L3RleHQ+PC9zdmc+');">
+          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+        <div class="carousel-slide" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjMWU0MGFmIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDM8L3RleHQ+PC9zdmc+');">
+          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+      </div>
+      
+      <!-- Carousel Navigation -->
       <div class="relative z-10 max-w-4xl mx-auto">
         <div class="fade-in stagger-1">
           <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -302,9 +375,15 @@
           <button id="exploreOpportunitiesBtn" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg hover-lift">
             <i class="fas fa-search mr-2"></i>Explore Opportunities
           </button>
-          <a href="#apply" class="glass-effect px-8 py-4 rounded-full font-semibold text-lg hover-lift">
+          <button id="applyNowBtn" class="glass-effect px-8 py-4 rounded-full font-semibold text-lg hover-lift">
             <i class="fas fa-rocket mr-2"></i>Apply Now
-          </a>
+          </button>
+        </div>
+        <div class="fade-in stagger-4 mt-8">
+          <button id="seeMoreBtn" class="text-white hover:text-orange-300 transition-colors font-semibold text-lg">
+            <span id="seeMoreText">See More About Our Company</span>
+            <i class="fas fa-chevron-down ml-2" id="seeMoreIcon"></i>
+          </button>
         </div>
       </div>
       
@@ -325,45 +404,152 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="py-20 px-6 bg-white" id="about">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <div class="slide-in-left stagger-1 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-blue-50 to-blue-100">
-            <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <i class="fas fa-shield-alt text-2xl text-white"></i>
+    <!-- Homepage Sections Wrapper -->
+    <div id="homepageSections" class="hidden">
+      <!-- About Section -->
+      <section class="py-20 px-6 bg-white" id="about">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <div class="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0 justify-center items-stretch">
+              <!-- Vision -->
+              <div class="slide-in-left stagger-1 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-blue-50 to-blue-100 flex-1">
+                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <i class="fas fa-shield-alt text-2xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Vision</h3>
+                <p class="text-gray-600">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</p>
+              </div>
+              <!-- Mission -->
+              <div class="slide-in-left stagger-2 text-center p-8 rounded-2xl hover-lift flex-1" style="background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 100%);">
+                <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <i class="fas fa-handshake text-2xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Mission</h3>
+                <p class="text-gray-600">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</p>
+              </div>
+              <!-- Core Values -->
+              <div class="slide-in-left stagger-3 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-green-50 to-green-100 flex-1">
+                <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <i class="fas fa-star text-2xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Core Values</h3>
+                <ul class="text-gray-600 list-disc list-inside text-left inline-block">
+                  <li>Integrity</li>
+                  <li>Teamwork</li>
+                  <li>Excellence</li>
+                  <li>Respect</li>
+                  <li>Professionalism</li>
+                </ul>
+              </div>
             </div>
-            <h3 class="text-xl font-semibold mb-4">Vision</h3>
-            <p class="text-gray-600">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</p>
-          </div>
-          <div class="slide-in-left stagger-2 text-center p-8 rounded-2xl hover-lift" style="background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 100%);">
-            <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <i class="fas fa-handshake text-2xl text-white"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-4">Mission</h3>
-            <p class="text-gray-600">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</p>
-          </div>
-          <div class="slide-in-left stagger-3 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-green-50 to-green-100">
-            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <i class="fas fa-star text-2xl text-white"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-4">Core Values</h3>
-            <ul class="text-gray-600 list-disc list-inside text-left inline-block">
-              <li>Integrity</li>
-              <li>Teamwork</li>
-              <li>Excellence</li>
-              <li>Respect</li>
-              <li>Professionalism</li>
-            </ul>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <!-- Company Overview Section -->
+      <section class="py-20 px-6 bg-white" id="company-overview">
+        <div class="max-w-4xl mx-auto text-center mb-12">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">REIGN-NAN Sales Industry & General Contractor, Inc.</h1>
+          <p class="text-lg text-gray-700 mb-2 font-medium">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</p>
+        </div>
+        <div class="max-w-3xl mx-auto bg-blue-50 rounded-xl shadow-md p-8">
+          <h2 class="text-2xl font-bold text-blue-800 mb-4">Company Overview</h2>
+          <p class="text-gray-700 mb-4">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.</p>
+          <p class="text-gray-700 mb-4">With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.</p>
+          <p class="text-gray-700">Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</p>
+        </div>
+      </section>
+      <!-- Leadership & Team Section -->
+      <section class="py-20 px-6 bg-gray-50" id="leadership">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Leadership & Team</h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+              Presided by <span class="font-semibold">Mr. Nanding A. Bancoro</span> and managed by <span class="font-semibold">Engr. Marieta A. Bancoro</span>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Milestones Section -->
+      <section class="py-20 px-6 bg-white" id="milestones">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Milestones</h2>
+          </div>
+          <div class="max-w-3xl mx-auto">
+            <div class="relative border-l-4 border-blue-200 ml-6">
+              <!-- 1997 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">1997</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Founded in Cabuyao, Laguna</span>
+                </div>
+              </div>
+              <!-- 2003 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2003</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Relocated to a three-storey office building in Banay-Banay, Cabuyao</span>
+                </div>
+              </div>
+              <!-- 2008 (Incorporated) -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2008</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Incorporated as REIGN-NAN Sales Industry and General Contractor, Inc.</span>
+                </div>
+              </div>
+              <!-- 2008 (AESSEAL) -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2008</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Appointed as exclusive distributor of AESSEAL products</span>
+                </div>
+              </div>
+              <!-- 2010 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2010</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Began active sponsorship of PSME and professional organizations</span>
+                </div>
+              </div>
+              <!-- 2012 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2012</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">AESSEAL products selected as standard brand for key clients</span>
+                </div>
+              </div>
+              <!-- 2013 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2013</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Awarded the International Quality Crown (London 2013)</span>
+                </div>
+              </div>
+              <!-- 2015 -->
+              <div class="mb-10 ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2015</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Recognized as Fastest Growing Company by AES East Asia</span>
+                </div>
+              </div>
+              <!-- 2017 -->
+              <div class="ml-8 flex items-center group">
+                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2017</span>
+                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
+                  <span class="text-gray-700">Construction of a new building for Mechanical Seal Division (MSD)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- Open Positions Tab -->
     <section class="py-20 px-6 bg-gray-50 hidden" id="openPositionsTab">
       <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 mt-24">
           <div class="slide-in-right">
             <h2 class="text-4xl md:text-5xl font-bold mb-6">Open Positions</h2>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -391,7 +577,7 @@
         </div>
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <!-- Supply of Mechanical Seals -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-1">
             <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-cog text-xl text-white"></i>
             </div>
@@ -400,7 +586,7 @@
           </div>
           
           <!-- Trading of Electrical and Mechanical Equipment -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-2">
             <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-bolt text-xl text-white"></i>
             </div>
@@ -409,7 +595,7 @@
           </div>
           
           <!-- Installation and Commissioning Services -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-3">
             <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mb-4" style="background-color: #ea580c;">
               <i class="fas fa-tools text-xl text-white"></i>
             </div>
@@ -418,7 +604,7 @@
           </div>
           
           <!-- Industrial Painting Works -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-4">
             <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-paint-roller text-xl text-white"></i>
             </div>
@@ -427,7 +613,7 @@
           </div>
           
           <!-- Steam Pipeline Cladding -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-5">
             <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-fire text-xl text-white"></i>
             </div>
@@ -436,7 +622,7 @@
           </div>
           
           <!-- Sourcing and Maintenance -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift">
+          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-6">
             <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-wrench text-xl text-white"></i>
             </div>
@@ -463,8 +649,8 @@
       </div>
     </section>
 
-    <!-- Application Form -->
-    <section class="py-20 px-6 bg-white" id="apply">
+    <!-- Application Form Section (hidden by default) -->
+    <section class="py-20 px-6 bg-white hidden" id="apply">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-12 mt-24">
           <div class="fade-in">
@@ -514,7 +700,7 @@
               <label class="block text-sm font-medium text-gray-700 mb-2">Cover Letter</label>
               <textarea id="coverLetter" placeholder="Tell us why you'd be a great fit..." rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
               <div class="flex justify-between items-center mt-1">
-                <span id="coverLetterWordCount" class="text-xs text-gray-500">0/200 words</span>
+                <span id="coverLetterWordCount" class="text-xs text-gray-500">0/400 words</span>
                 <span id="coverLetterLimitWarning" class="text-xs text-red-500 hidden">Word limit reached!</span>
               </div>
               <span class="error-message" id="coverLetterError" style="display:none"></span>
@@ -612,6 +798,14 @@
       function closeMobileMenu() {
         const menu = document.getElementById('mobileMenu');
         menu.classList.add('translate-x-full');
+      }
+      
+      // Go to homepage function
+      function goToHomepage() {
+        // Clear any hash and show the hero section
+        window.location.hash = '';
+        showTab('hero');
+        window.scrollTo(0, 0);
       }
       
       // Smooth scrolling for navigation links
@@ -1153,7 +1347,7 @@
       const coverLetter = document.getElementById('coverLetter');
       const wordCount = document.getElementById('coverLetterWordCount');
       const limitWarning = document.getElementById('coverLetterLimitWarning');
-      const WORD_LIMIT = 200;
+      const WORD_LIMIT = 400;
 
       function updateCoverLetterWordCount() {
         const words = coverLetter.value.trim().split(/\s+/).filter(Boolean);
@@ -1283,8 +1477,17 @@
         });
       }
 
+      // Apply Now button in hero navigates to apply tab
+      const applyNowBtn = document.getElementById('applyNowBtn');
+      if (applyNowBtn) {
+        applyNowBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          showTab('apply');
+        });
+      }
+
       // Centralized tab logic
-      function showTab(tabName) {
+      function showTab(tabName, skipHashUpdate) {
         // List all main sections/tabs
         const sections = [
           heroSection,
@@ -1295,27 +1498,60 @@
         ];
         // Hide all by default
         sections.forEach(sec => { if (sec) sec.style.display = 'none'; if (sec && sec.classList) sec.classList.add('hidden'); });
+        // Hide homepage sections by default
+        const homepageSections = document.getElementById('homepageSections');
+        if (homepageSections) homepageSections.style.display = 'none';
         if (tabName === 'hero') {
           // Show hero, about, and apply for home
           if (heroSection) { heroSection.style.display = ''; heroSection.classList.remove('hidden'); }
           if (aboutSection) { aboutSection.style.display = ''; aboutSection.classList.remove('hidden'); }
-          if (applySection) { applySection.style.display = ''; applySection.classList.remove('hidden'); }
+          if (applySection) { applySection.style.display = 'none'; applySection.classList.add('hidden'); } // Hide apply by default
+          if (!skipHashUpdate) window.location.hash = '#about';
+          // Show homepage sections
+          if (homepageSections) homepageSections.style.display = '';
         } else {
           // Show only the requested tab/section
           let tabEl = null;
+          let hash = '';
           switch(tabName) {
-            case 'about': tabEl = aboutSection; break;
-            case 'apply': tabEl = applySection; break;
-            case 'openPositions': tabEl = openPositionsTab; break;
-            case 'products': tabEl = productsTab; break;
+            case 'about': tabEl = aboutSection; hash = '#about'; break;
+            case 'apply': tabEl = applySection; hash = '#apply'; break;
+            case 'openPositions': tabEl = openPositionsTab; hash = '#openPositions'; break;
+            case 'products': tabEl = productsTab; hash = '#products'; break;
           }
           if (tabEl) {
             tabEl.style.display = '';
             if (tabEl.classList) tabEl.classList.remove('hidden');
           }
+          if (!skipHashUpdate && hash) window.location.hash = hash;
         }
         window.scrollTo(0, 0);
       }
+
+      // Handle hash navigation on page load and hash change
+      function handleHashNavigation() {
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        switch(hash) {
+          case 'about':
+          case '':
+            showTab('hero', true);
+            break;
+          case 'apply':
+            showTab('apply', true);
+            break;
+          case 'openpositions':
+            showTab('openPositions', true);
+            break;
+          case 'products':
+            showTab('products', true);
+            break;
+          default:
+            showTab('hero', true);
+        }
+      }
+      window.addEventListener('hashchange', handleHashNavigation);
+      // On initial load
+      handleHashNavigation();
 
       // About and Apply header buttons logic
       const headerAboutBtn = document.getElementById('headerAboutBtn');
@@ -1355,6 +1591,129 @@
           showTab('apply');
         });
       }
+
+      // Setup the main "See More" button for homepage sections
+      function setupSeeMoreButton() {
+        const seeMoreBtn = document.getElementById('seeMoreBtn');
+        const homepageSections = document.getElementById('homepageSections');
+        const seeMoreText = document.getElementById('seeMoreText');
+        const seeMoreIcon = document.getElementById('seeMoreIcon');
+        
+        if (seeMoreBtn && homepageSections) {
+          seeMoreBtn.addEventListener('click', function() {
+            const isExpanded = !homepageSections.classList.contains('hidden');
+            
+            if (isExpanded) {
+              // Hide sections
+              homepageSections.classList.add('hidden');
+              seeMoreText.textContent = 'See More About Our Company';
+              seeMoreIcon.className = 'fas fa-chevron-down ml-2';
+              
+              // Scroll back to top
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              // Show sections
+              homepageSections.classList.remove('hidden');
+              seeMoreText.textContent = 'See Less';
+              seeMoreIcon.className = 'fas fa-chevron-up ml-2';
+              
+              // Smooth scroll to the revealed sections
+              setTimeout(() => {
+                homepageSections.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
+            }
+          });
+        }
+      }
+
+      // Ensure See More button is always initialized after all DOM is ready
+      function ensureSeeMoreButtonInit() {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setupSeeMoreButton);
+        } else {
+          setupSeeMoreButton();
+        }
+      }
+      ensureSeeMoreButtonInit();
+      
+      // Carousel functionality
+      class Carousel {
+        constructor() {
+          this.currentSlide = 0;
+          this.slides = document.querySelectorAll('.carousel-slide');
+          this.dots = document.querySelectorAll('.carousel-dot');
+          this.prevBtn = document.querySelector('.carousel-control.prev');
+          this.nextBtn = document.querySelector('.carousel-control.next');
+          this.autoPlayInterval = null;
+          
+          this.init();
+        }
+        
+        init() {
+          if (this.slides.length === 0) return;
+          
+          // Add event listeners
+          this.prevBtn?.addEventListener('click', () => this.prevSlide());
+          this.nextBtn?.addEventListener('click', () => this.nextSlide());
+          
+          // Add dot navigation
+          this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+          });
+          
+          // Start auto-play
+          this.startAutoPlay();
+          
+          // Pause auto-play on hover
+          const carouselContainer = document.querySelector('.carousel-container');
+          if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', () => this.stopAutoPlay());
+            carouselContainer.addEventListener('mouseleave', () => this.startAutoPlay());
+          }
+        }
+        
+        goToSlide(index) {
+          // Remove active class from current slide and dot
+          this.slides[this.currentSlide].classList.remove('active');
+          this.dots[this.currentSlide].classList.remove('active');
+          
+          // Update current slide
+          this.currentSlide = index;
+          
+          // Add active class to new slide and dot
+          this.slides[this.currentSlide].classList.add('active');
+          this.dots[this.currentSlide].classList.add('active');
+        }
+        
+        nextSlide() {
+          const nextIndex = (this.currentSlide + 1) % this.slides.length;
+          this.goToSlide(nextIndex);
+        }
+        
+        prevSlide() {
+          const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+          this.goToSlide(prevIndex);
+        }
+        
+        startAutoPlay() {
+          this.stopAutoPlay(); // Clear any existing interval
+          this.autoPlayInterval = setInterval(() => {
+            this.nextSlide();
+          }, 5000); // Change slide every 5 seconds
+        }
+        
+        stopAutoPlay() {
+          if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+          }
+        }
+      }
+      
+      // Initialize carousel when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        new Carousel();
+      });
     </script>
   </body>
 </html>
