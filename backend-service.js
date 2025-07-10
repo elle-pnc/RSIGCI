@@ -1,6 +1,6 @@
 // Backend Service for communicating with our Node.js server
 class BackendService {
-  static BACKEND_URL = 'http://localhost:3000/api';
+  static BACKEND_URL = 'https://rsigci-job-applications.onrender.com/api';
 
   // Jobs Collection
   static async getJobs() {
