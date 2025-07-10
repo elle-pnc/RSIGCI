@@ -71,17 +71,14 @@ function optimizeTableRendering(container, items, renderFunction) {
 // Show/hide dashboard or login form based on auth state
 function updateUI(user) {
   const loginSection = document.getElementById('loginSection');
-  const resetSection = document.getElementById('resetSection');
   const dashboardContent = document.getElementById('dashboardContent');
   const adminUserEmail = document.getElementById('adminUserEmail');
   if (user) {
     if (loginSection) loginSection.style.display = 'none';
-    if (resetSection) resetSection.style.display = 'none';
     if (dashboardContent) dashboardContent.style.display = '';
     if (adminUserEmail) adminUserEmail.textContent = user.email;
   } else {
     if (loginSection) loginSection.style.display = '';
-    if (resetSection) resetSection.style.display = 'none';
     if (dashboardContent) dashboardContent.style.display = 'none';
     if (adminUserEmail) adminUserEmail.textContent = '';
   }
@@ -120,13 +117,7 @@ function showLoginSection() {
   document.getElementById('resetSection').style.display = 'none';
 }
 
-function showResetSection() {
-  document.getElementById('loginSection').style.display = 'none';
-  document.getElementById('resetSection').style.display = '';
-  document.getElementById('resetEmail').value = '';
-  document.getElementById('resetMsg').classList.add('hidden');
-  document.getElementById('resetError').classList.add('hidden');
-}
+
 
 // ===== SEARCH AND FILTER FUNCTIONS =====
 
@@ -1499,6 +1490,39 @@ function safe(str) {
   return sanitize(str);
 }
 
+// Custom password reset functionality
+async function sendCustomPasswordReset(email) {
+  try {
+    // First, check if the user exists
+    const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
+    
+    if (methods.length === 0) {
+      // User doesn't exist, but we don't want to reveal this
+      return { success: true, message: 'If an account with that email exists, a password reset link has been sent. Please check your inbox.' };
+    }
+
+    // Generate a custom reset token with our custom reset page
+    const actionCodeSettings = {
+      url: window.location.origin + '/reset-password.html',
+      handleCodeInApp: true
+    };
+
+    await firebase.auth().sendPasswordResetEmail(email, actionCodeSettings);
+    
+    return { 
+      success: true, 
+      message: 'Password reset link has been sent to your email. Please check your inbox and spam folder.' 
+    };
+  } catch (error) {
+    console.error('Password reset error:', error);
+    // Don't reveal if user exists or not for security
+    return { 
+      success: true, 
+      message: 'If an account with that email exists, a password reset link has been sent. Please check your inbox.' 
+    };
+  }
+}
+
 // ===== EVENT LISTENERS =====
 
 // Patch tab switching to always hide bulk action bars and deselect all checkboxes
@@ -1607,32 +1631,81 @@ document.addEventListener('DOMContentLoaded', function() {
     // Forgot Password link logic
     document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
       e.preventDefault();
-      showResetSection();
+      document.getElementById('passwordResetModal').classList.remove('hidden');
+      document.getElementById('resetEmailInput').focus();
     });
     
-    // Back to Login link logic
-    document.getElementById('backToLoginLink').addEventListener('click', function(e) {
-      e.preventDefault();
-      showLoginSection();
+    // Password Reset Modal functionality
+    document.getElementById('cancelResetBtn').addEventListener('click', function() {
+      document.getElementById('passwordResetModal').classList.add('hidden');
+      document.getElementById('passwordResetForm').reset();
+      document.getElementById('resetMessage').classList.add('hidden');
+    });
+    
+    // Close modal when clicking outside
+    document.getElementById('passwordResetModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.add('hidden');
+        document.getElementById('passwordResetForm').reset();
+        document.getElementById('resetMessage').classList.add('hidden');
+      }
     });
     
     // Password Reset Form Submit
-    document.getElementById('resetForm').addEventListener('submit', function(e) {
+    document.getElementById('passwordResetForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email = document.getElementById('resetEmail').value;
-      const msg = document.getElementById('resetMsg');
-      const error = document.getElementById('resetError');
-      msg.classList.add('hidden');
-      error.classList.add('hidden');
-      firebase.auth().sendPasswordResetEmail(email)
-        .then(() => {
-          msg.textContent = 'If an account with that email exists, a password reset link has been sent. Please check your inbox.';
-          msg.classList.remove('hidden');
-        })
-        .catch(() => {
-          msg.textContent = 'If an account with that email exists, a password reset link has been sent. Please check your inbox.';
-          msg.classList.remove('hidden');
-        });
+      
+      const email = document.getElementById('resetEmailInput').value.trim();
+      const sendResetBtn = document.getElementById('sendResetBtn');
+      const sendResetBtnText = document.getElementById('sendResetBtnText');
+      const sendResetSpinner = document.getElementById('sendResetSpinner');
+      const resetMessage = document.getElementById('resetMessage');
+      const resetMessageText = document.getElementById('resetMessageText');
+      
+      if (!email) {
+        resetMessageText.textContent = 'Please enter a valid email address.';
+        resetMessage.className = 'mt-4 p-3 rounded-lg bg-red-50 border border-red-200';
+        resetMessage.classList.remove('hidden');
+        return;
+      }
+      
+      // Show loading state
+      sendResetBtn.disabled = true;
+      sendResetBtnText.classList.add('hidden');
+      sendResetSpinner.classList.remove('hidden');
+      resetMessage.classList.add('hidden');
+      
+      try {
+        const result = await sendCustomPasswordReset(email);
+        
+        // Show success message
+        resetMessageText.textContent = result.message;
+        resetMessage.className = 'mt-4 p-3 rounded-lg bg-green-50 border border-green-200';
+        resetMessage.classList.remove('hidden');
+        
+        // Clear form
+        document.getElementById('resetEmailInput').value = '';
+        
+        // Auto-close modal after 3 seconds
+        setTimeout(() => {
+          document.getElementById('passwordResetModal').classList.add('hidden');
+          resetMessage.classList.add('hidden');
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Password reset error:', error);
+        
+        // Show error message
+        resetMessageText.textContent = 'If an account with that email exists, a password reset link has been sent. Please check your inbox.';
+        resetMessage.className = 'mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200';
+        resetMessage.classList.remove('hidden');
+        
+      } finally {
+        // Reset button state
+        sendResetBtn.disabled = false;
+        sendResetBtnText.classList.remove('hidden');
+        sendResetSpinner.classList.add('hidden');
+      }
     });
 
     // Handle new job form submission

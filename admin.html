@@ -51,24 +51,60 @@
         <a href="index.html" class="block mt-6 text-center btn-primary py-3 rounded-lg text-lg font-semibold text-white">Back to Home</a>
       </form>
     </div>
-    <!-- Password Reset Section (hidden by default) -->
-    <div id="resetSection" class="flex items-center justify-center min-h-screen bg-gray-50 animate-fade-in" style="display:none;" role="main">
-      <form id="resetForm" class="bg-white p-8 rounded-xl shadow-md w-full max-w-sm" aria-label="Password reset form">
-        <h2 class="text-2xl font-bold mb-6 text-center">Reset Password</h2>
-        <div class="mb-4">
-          <label for="resetEmail" class="sr-only">Email address</label>
-          <input type="email" id="resetEmail" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Enter your email" required aria-describedby="resetError resetMsg" />
-        </div>
-        <button type="submit" id="resetBtn" class="btn-primary w-full py-3 rounded-lg text-lg font-semibold flex items-center justify-center">Reset My Password</button>
-        <p id="resetMsg" class="text-green-600 text-center mt-4 hidden" role="alert"></p>
-        <p id="resetError" class="text-red-600 text-center mt-4 hidden" role="alert"></p>
-        <p class="text-center mt-4">
-          <a href="#" id="backToLoginLink" class="text-blue-600 hover:underline">Back to Login</a>
-        </p>
-        <a href="index.html" class="block mt-6 text-center btn-primary py-3 rounded-lg text-lg font-semibold text-white">Back to Home</a>
-      </form>
-    </div>
+
     <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+    <!-- Password Reset Modal -->
+    <div id="passwordResetModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+      <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4 animate-fade-in">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-lock text-white text-2xl"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Reset Password</h2>
+          <p class="text-gray-600">Enter your email to receive a password reset link</p>
+        </div>
+        
+        <form id="passwordResetForm" class="space-y-4">
+          <div>
+            <label for="resetEmailInput" class="block text-sm font-medium text-gray-700 mb-2">
+              <i class="fas fa-envelope mr-2 text-blue-600"></i>Email Address
+            </label>
+            <input 
+              type="email" 
+              id="resetEmailInput" 
+              class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors" 
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+          
+          <div class="flex space-x-3 pt-4">
+            <button 
+              type="button" 
+              id="cancelResetBtn"
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              id="sendResetBtn"
+              class="flex-1 btn-primary px-4 py-3 rounded-lg text-white font-medium flex items-center justify-center"
+            >
+              <span id="sendResetBtnText">Send Reset Link</span>
+              <span id="sendResetSpinner" class="ml-2 hidden">
+                <i class="fas fa-spinner fa-spin"></i>
+              </span>
+            </button>
+          </div>
+        </form>
+        
+        <div id="resetMessage" class="mt-4 p-3 rounded-lg hidden">
+          <p id="resetMessageText" class="text-sm"></p>
+        </div>
+      </div>
+    </div>
 
     <!-- Undo Snackbar -->
     <div id="undoSnackbar" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-4 rounded-xl shadow-lg flex items-center space-x-4 hidden transition-all duration-300" style="min-width:220px;max-width:90vw;">
