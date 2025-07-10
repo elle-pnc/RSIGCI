@@ -26,29 +26,76 @@ const upload = multer({
 
 // Google Drive Service Account configuration
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
-const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || 'root'; // Your Google Drive folder ID
+const FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || 'root'; // Your Google Drive folder ID - using root for now
+
+// Debug environment variables
+console.log('=== ENVIRONMENT VARIABLES DEBUG ===');
+console.log('GOOGLE_DRIVE_FOLDER_ID:', process.env.GOOGLE_DRIVE_FOLDER_ID);
+console.log('GOOGLE_SERVICE_ACCOUNT_KEY exists:', !!process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+  try {
+    const key = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    console.log('Service account email:', key.client_email);
+    console.log('Project ID:', key.project_id);
+  } catch (e) {
+    console.error('Failed to parse service account key:', e.message);
+  }
+}
+console.log('=== END ENVIRONMENT DEBUG ===');
 
 // Create Google Drive client
 function createDriveClient() {
   let auth;
   
-  // Check if service account key is provided as environment variable
-  if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
-    // Use environment variable for service account key
-    const serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
-    auth = new google.auth.GoogleAuth({
-      credentials: serviceAccountKey,
-      scopes: SCOPES,
-    });
-  } else {
-    // Use key file (for local development)
-    auth = new google.auth.GoogleAuth({
-      keyFile: process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE || './service-account-key.json',
-      scopes: SCOPES,
-    });
+  try {
+    // Check if service account key is provided as environment variable
+    if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+      console.log('Using service account key from environment variable');
+      // Use environment variable for service account key
+      const serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+      auth = new google.auth.GoogleAuth({
+        credentials: serviceAccountKey,
+        scopes: SCOPES,
+      });
+    } else {
+      console.log('Using service account key from file');
+      // Use key file (for local development)
+      auth = new google.auth.GoogleAuth({
+        keyFile: process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE || './service-account-key.json',
+        scopes: SCOPES,
+      });
+    }
+    
+    return google.drive({ version: 'v3', auth });
+  } catch (error) {
+    console.error('Error creating Drive client:', error);
+    throw error;
   }
-  
-  return google.drive({ version: 'v3', auth });
+}
+
+// Helper: Find or create a folder by name under a parent
+async function getOrCreateApplicantFolder(drive, parentFolderId, applicantName) {
+  // Search for folder
+  const query = `name = '${applicantName.replace(/'/g, "\\'")}' and mimeType = 'application/vnd.google-apps.folder' and '${parentFolderId}' in parents and trashed = false`;
+  const res = await drive.files.list({
+    q: query,
+    fields: 'files(id, name)',
+    spaces: 'drive',
+  });
+  if (res.data.files && res.data.files.length > 0) {
+    return res.data.files[0].id;
+  }
+  // Create folder
+  const folderMetadata = {
+    name: applicantName,
+    mimeType: 'application/vnd.google-apps.folder',
+    parents: [parentFolderId],
+  };
+  const folder = await drive.files.create({
+    requestBody: folderMetadata,
+    fields: 'id',
+  });
+  return folder.data.id;
 }
 
 // In-memory storage for jobs and applications (in production, use a database)
@@ -86,6 +133,38 @@ let jobs = [
 ];
 
 let applications = [];
+
+// Test service account endpoint
+app.get('/api/test-service-account', async (req, res) => {
+  try {
+    console.log('Testing service account access...');
+    
+    const drive = createDriveClient();
+    
+    // Try to list files in the folder to test access
+    const response = await drive.files.list({
+      pageSize: 1,
+      fields: 'files(id,name)',
+      q: `'${FOLDER_ID}' in parents`,
+    });
+    
+    console.log('Service account test successful');
+    res.json({
+      success: true,
+      folderId: FOLDER_ID,
+      filesFound: response.data.files.length,
+      message: 'Service account has access to Google Drive folder'
+    });
+  } catch (error) {
+    console.error('Service account test failed:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      folderId: FOLDER_ID,
+      message: 'Service account test failed'
+    });
+  }
+});
 
 // Get access token endpoint
 app.get('/api/google-drive/token', async (req, res) => {
@@ -129,10 +208,10 @@ app.post('/api/google-drive/upload', upload.single('file'), async (req, res) => 
     const drive = createDriveClient();
     
     // Create file metadata
-    const fileMetadata = {
-      name: `${Date.now()}_${req.file.originalname}`,
-      parents: FOLDER_ID !== 'root' ? [FOLDER_ID] : undefined,
-    };
+            const fileMetadata = {
+          name: `${Date.now()}_${req.file.originalname}`,
+          parents: undefined, // Use root folder for now
+        };
 
     // Create media - convert buffer to stream
     const { Readable } = require('stream');
@@ -262,13 +341,24 @@ app.post('/api/applications', upload.single('resume'), async (req, res) => {
       console.log('File name:', req.file.originalname);
       console.log('File size:', req.file.size);
       console.log('File type:', req.file.mimetype);
+      console.log('FOLDER_ID:', FOLDER_ID);
+      
       try {
+        console.log('Creating Drive client...');
         const drive = createDriveClient();
+        console.log('Drive client created successfully');
         
+        // 1. Find or create applicant folder
+        const applicantFolderId = await getOrCreateApplicantFolder(drive, FOLDER_ID, applicationData.fullName);
+        console.log('Applicant folder ID:', applicantFolderId);
+        
+        // 2. Upload file into applicant folder
         const fileMetadata = {
           name: `${Date.now()}_${req.file.originalname}`,
-          parents: FOLDER_ID !== 'root' ? [FOLDER_ID] : undefined,
+          parents: [applicantFolderId],
         };
+        
+        console.log('File metadata:', fileMetadata);
 
         // Create media - convert buffer to stream
         const { Readable } = require('stream');
@@ -276,6 +366,8 @@ app.post('/api/applications', upload.single('resume'), async (req, res) => {
           mimeType: req.file.mimetype,
           body: Readable.from(req.file.buffer),
         };
+        
+        console.log('Media created, uploading to Drive...');
 
         const file = await drive.files.create({
           requestBody: fileMetadata,
@@ -286,14 +378,20 @@ app.post('/api/applications', upload.single('resume'), async (req, res) => {
         applicationData.resumeURL = `https://drive.google.com/file/d/${file.data.id}/view?usp=sharing`;
         applicationData.resumeFileName = req.file.originalname;
         applicationData.resumeFileId = file.data.id;
+        applicationData.resumeFolderId = applicantFolderId;
 
         console.log('✅ Resume uploaded to Google Drive successfully!');
         console.log('File ID:', file.data.id);
         console.log('File URL:', applicationData.resumeURL);
+        console.log('Full file data:', file.data);
       } catch (uploadError) {
-        console.error('Error uploading resume:', uploadError);
+        console.error('❌ Error uploading resume:', uploadError);
+        console.error('Error details:', uploadError.message);
+        console.error('Error stack:', uploadError.stack);
         applicationData.resumeUploadError = uploadError.message;
       }
+    } else {
+      console.log('No file provided in request');
     }
 
     applications.push(applicationData);
