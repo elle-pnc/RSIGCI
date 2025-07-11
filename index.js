@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // --- DOM ELEMENT ASSIGNMENTS (MUST BE FIRST) ---
+  // --- DOM ELEMENT ASSIGNMENTS ---
   const heroSection = document.getElementById('heroSection');
   const aboutSection = document.getElementById('about');
   const applySection = document.getElementById('apply');
   const openPositionsTab = document.getElementById('openPositionsTab');
   const productsTab = document.getElementById('productsTab');
   const homepageSections = document.getElementById('homepageSections');
-
-  // --- Navigation and Tab Logic ---
-  // (showTab function is defined later in the file)
 
   // --- Mobile Menu Functions ---
   function toggleMobileMenu() {
@@ -25,48 +22,59 @@ document.addEventListener('DOMContentLoaded', function() {
   window.toggleMobileMenu = toggleMobileMenu;
   window.closeMobileMenu = closeMobileMenu;
 
-  // --- Mobile Menu Accessibility & UX Enhancements ---
-  const hamburgerBtn = document.querySelector('nav .md\:hidden button');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileAboutBtn = document.getElementById('mobileAboutBtn');
-  function openMobileMenu() {
-    mobileMenu.classList.remove('translate-x-full');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => { if (mobileAboutBtn) mobileAboutBtn.focus(); }, 200);
-  }
-  function closeMobileMenuAndRestoreFocus() {
-    mobileMenu.classList.add('translate-x-full');
-    document.body.style.overflow = '';
-    if (hamburgerBtn) hamburgerBtn.focus();
-  }
-  // Override global functions
-  window.toggleMobileMenu = openMobileMenu;
-  window.closeMobileMenu = closeMobileMenuAndRestoreFocus;
-
   // --- Navigation Functions ---
   function goToHomepage() {
     // Clear any hash and show the hero section
     window.location.hash = '';
     showTab('hero');
     window.scrollTo(0, 0);
-    // Reset See More button
-    resetSeeMoreButton();
-  }
-
-  function resetSeeMoreButton() {
-    const seeMoreText = document.getElementById('seeMoreText');
-    const seeMoreIcon = document.getElementById('seeMoreIcon');
-    if (seeMoreText && seeMoreIcon) {
-      seeMoreText.textContent = 'See More About Our Company';
-      seeMoreIcon.classList.remove('fa-chevron-up');
-      seeMoreIcon.classList.add('fa-chevron-down');
-    }
   }
 
   // Make goToHomepage globally available
   window.goToHomepage = goToHomepage;
 
-  // --- See More Button Toggle Logic ---
+  // --- Centralized Tab Logic ---
+  function showTab(tabName, skipHashUpdate) {
+    // List all main sections/tabs
+    const sections = [
+      heroSection,
+      aboutSection,
+      applySection,
+      openPositionsTab,
+      productsTab
+    ];
+    // Hide all by default
+    sections.forEach(sec => { if (sec) sec.style.display = 'none'; if (sec && sec.classList) sec.classList.add('hidden'); });
+    // Hide homepage sections by default
+    if (homepageSections) homepageSections.style.display = 'none';
+    
+    let hash = '';
+    if (tabName === 'hero' || tabName === 'about') {
+      // Show hero, about, and apply for home
+      if (heroSection) { heroSection.style.display = ''; heroSection.classList.remove('hidden'); }
+      if (aboutSection) { aboutSection.style.display = ''; aboutSection.classList.remove('hidden'); }
+      if (applySection) { applySection.style.display = 'none'; applySection.classList.add('hidden'); } // Hide apply by default
+      if (homepageSections) homepageSections.style.display = '';
+      hash = '#about';
+    } else if (tabName === 'openPositions') {
+      if (openPositionsTab) { openPositionsTab.style.display = ''; openPositionsTab.classList.remove('hidden'); }
+      loadJobs();
+      hash = '#openPositions';
+    } else if (tabName === 'products') {
+      if (productsTab) { productsTab.style.display = ''; productsTab.classList.remove('hidden'); }
+      hash = '#products';
+    } else if (tabName === 'apply') {
+      if (applySection) { applySection.style.display = ''; applySection.classList.remove('hidden'); }
+      hash = '#apply';
+    }
+    if (!skipHashUpdate && hash) window.location.hash = hash;
+    window.scrollTo(0, 0);
+  }
+
+  // Make showTab globally available
+  window.showTab = showTab;
+
+  // --- See More Button Setup ---
   function setupSeeMoreButton() {
     const seeMoreBtn = document.getElementById('seeMoreBtn');
     const homepageSections = document.getElementById('homepageSections');
@@ -74,151 +82,135 @@ document.addEventListener('DOMContentLoaded', function() {
     const seeMoreIcon = document.getElementById('seeMoreIcon');
     
     if (seeMoreBtn && homepageSections) {
-      seeMoreBtn.onclick = function() {
+      seeMoreBtn.addEventListener('click', function() {
         const isExpanded = !homepageSections.classList.contains('hidden');
+        
         if (isExpanded) {
           // Hide sections
           homepageSections.classList.add('hidden');
           seeMoreText.textContent = 'See More About Our Company';
           seeMoreIcon.className = 'fas fa-chevron-down ml-2';
+          
+          // Scroll back to top
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           // Show sections
           homepageSections.classList.remove('hidden');
           seeMoreText.textContent = 'See Less';
           seeMoreIcon.className = 'fas fa-chevron-up ml-2';
+          
+          // Smooth scroll to the revealed sections
           setTimeout(() => {
             homepageSections.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 100);
         }
-      };
-    }
-  }
-  // Ensure See More button is always initialized after all DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupSeeMoreButton);
-  } else {
-    setupSeeMoreButton();
-  }
-
-  // --- Hero Buttons ---
-  document.getElementById('exploreOpportunitiesBtn').onclick = function() { showTab('openPositions'); };
-  document.getElementById('applyNowBtn').onclick = function() { showTab('apply'); };
-  // REMOVE the old seeMoreBtn onclick here (it is now handled by setupSeeMoreButton)
-
-  // --- Header Navigation ---
-  // (These will be set up after showTab function is defined)
-
-  // --- Mobile Navigation ---
-  // (These will be set up after showTab function is defined)
-
-  // --- Back to Home Buttons ---
-  // (These will be set up after showTab function is defined)
-
-  // --- Success Modal ---
-  // (This will be set up after showTab function is defined)
-
-  // --- Phone Number Copy Functionality ---
-  const phoneNumber = document.getElementById('phoneNumber');
-  const copyClipboard = document.getElementById('copyClipboard');
-  
-  if (phoneNumber && copyClipboard) {
-    const copyPhoneNumber = () => {
-      const phoneText = phoneNumber.textContent;
-      navigator.clipboard.writeText(phoneText).then(() => {
-        // Show a brief visual feedback
-        const originalText = copyClipboard.innerHTML;
-        copyClipboard.innerHTML = '<i class="fas fa-check text-green-500"></i>';
-        setTimeout(() => {
-          copyClipboard.innerHTML = originalText;
-        }, 1000);
-      }).catch(err => {
-        console.error('Failed to copy phone number:', err);
       });
-    };
-
-    phoneNumber.addEventListener('click', copyPhoneNumber);
-    copyClipboard.addEventListener('click', copyPhoneNumber);
+    }
   }
 
-  // --- Carousel Logic ---
-  class Carousel {
-    constructor() {
-      this.currentSlide = 0;
-      this.slides = document.querySelectorAll('.carousel-slide');
-      this.dots = document.querySelectorAll('.carousel-dot');
-      this.prevBtn = document.querySelector('.carousel-control.prev');
-      this.nextBtn = document.querySelector('.carousel-control.next');
-      this.autoPlayInterval = null;
-      
-      this.init();
-    }
-    
-    init() {
-      if (this.slides.length === 0) return;
-      
-      // Add event listeners
-      this.prevBtn?.addEventListener('click', () => this.prevSlide());
-      this.nextBtn?.addEventListener('click', () => this.nextSlide());
-      
-      // Add dot navigation
-      this.dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => this.goToSlide(index));
+  // --- Button Event Listeners Setup ---
+  function setupButtonListeners() {
+    // Hero Buttons
+    const exploreOpportunitiesBtn = document.getElementById('exploreOpportunitiesBtn');
+    if (exploreOpportunitiesBtn) {
+      exploreOpportunitiesBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('openPositions');
       });
-      
-      // Start auto-play
-      this.startAutoPlay();
-      
-      // Pause auto-play on hover
-      const carouselContainer = document.querySelector('.carousel-container');
-      if (carouselContainer) {
-        carouselContainer.addEventListener('mouseenter', () => this.stopAutoPlay());
-        carouselContainer.addEventListener('mouseleave', () => this.startAutoPlay());
-      }
     }
-    
-    goToSlide(index) {
-      // Remove active class from current slide and dot
-      this.slides[this.currentSlide].classList.remove('active');
-      this.dots[this.currentSlide].classList.remove('active');
-      
-      // Update current slide
-      this.currentSlide = index;
-      
-      // Add active class to new slide and dot
-      this.slides[this.currentSlide].classList.add('active');
-      this.dots[this.currentSlide].classList.add('active');
+
+    const applyNowBtn = document.getElementById('applyNowBtn');
+    if (applyNowBtn) {
+      applyNowBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('apply');
+      });
     }
-    
-    nextSlide() {
-      const nextIndex = (this.currentSlide + 1) % this.slides.length;
-      this.goToSlide(nextIndex);
+
+    // Header Navigation
+    const headerAboutBtn = document.getElementById('headerAboutBtn');
+    if (headerAboutBtn) {
+      headerAboutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('hero');
+      });
     }
-    
-    prevSlide() {
-      const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
-      this.goToSlide(prevIndex);
+
+    const headerProductsBtn = document.getElementById('headerProductsBtn');
+    if (headerProductsBtn) {
+      headerProductsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('products');
+      });
     }
-    
-    startAutoPlay() {
-      this.stopAutoPlay(); // Clear any existing interval
-      this.autoPlayInterval = setInterval(() => {
-        this.nextSlide();
-      }, 5000); // Change slide every 5 seconds
+
+    const headerCareersBtn = document.getElementById('headerCareersBtn');
+    if (headerCareersBtn) {
+      headerCareersBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('openPositions');
+      });
     }
-    
-    stopAutoPlay() {
-      if (this.autoPlayInterval) {
-        clearInterval(this.autoPlayInterval);
-        this.autoPlayInterval = null;
-      }
+
+    const headerApplyBtn = document.getElementById('headerApplyBtn');
+    if (headerApplyBtn) {
+      headerApplyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('apply');
+      });
+    }
+
+    // Mobile Navigation
+    const mobileAboutBtn = document.getElementById('mobileAboutBtn');
+    if (mobileAboutBtn) {
+      mobileAboutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('hero');
+      });
+    }
+
+    const mobileCareersBtn = document.getElementById('mobileCareersBtn');
+    if (mobileCareersBtn) {
+      mobileCareersBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('openPositions');
+      });
+    }
+
+    const mobileApplyBtn = document.getElementById('mobileApplyBtn');
+    if (mobileApplyBtn) {
+      mobileApplyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTab('apply');
+      });
+    }
+
+    // Back to Home Buttons
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    if (backToHomeBtn) {
+      backToHomeBtn.addEventListener('click', function() {
+        showTab('hero');
+      });
+    }
+
+    const backToHomeProductsBtn = document.getElementById('backToHomeProductsBtn');
+    if (backToHomeProductsBtn) {
+      backToHomeProductsBtn.addEventListener('click', function() {
+        showTab('hero');
+      });
+    }
+
+    // Success Modal
+    const successBackBtn = document.getElementById('successBackBtn');
+    if (successBackBtn) {
+      successBackBtn.addEventListener('click', function() {
+        closeSuccessModal();
+        window.location.hash = "";
+        window.scrollTo(0, 0);
+        window.location.reload();
+      });
     }
   }
-  
-  // Initialize carousel when DOM is loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    new Carousel();
-  });
 
   // --- Jobs Loading ---
   async function loadJobs() {
@@ -460,6 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const otherPositionInput = document.getElementById('otherPosition');
 
   // Cover letter word count
+  if (coverLetterTextarea) {
   coverLetterTextarea.addEventListener('input', function() {
     const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
     const wordCount = words.length;
@@ -472,8 +465,10 @@ document.addEventListener('DOMContentLoaded', function() {
       coverLetterLimitWarning.classList.add('hidden');
     }
   });
+  }
 
   // Position selection logic
+  if (positionSelect) {
   positionSelect.addEventListener('change', function() {
     if (this.value === 'Other') {
       otherPositionInput.style.display = '';
@@ -484,12 +479,14 @@ document.addEventListener('DOMContentLoaded', function() {
       otherPositionInput.value = '';
     }
   });
+  }
 
-  // --- File Upload System (RESTORED FROM ORIGINAL) ---
+  // --- File Upload System ---
   function setupFileUpload() {
     const fileInput = document.getElementById('resumeFile');
     const dropZone = document.getElementById('dropZone');
     if (!fileInput || !dropZone) return;
+    
     // Store original drop zone content
     const originalContent = dropZone.innerHTML;
     dropZone.addEventListener('click', () => fileInput.click());
@@ -513,6 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
         handleFileUpload(e.target.files[0]);
       }
     });
+    
     function handleFileUpload(file) {
       // Validate file type
       const allowedTypes = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
@@ -564,14 +562,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 100);
     }
   }
-  // Ensure file upload is set up on DOMContentLoaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupFileUpload);
-  } else {
-    setupFileUpload();
-  }
 
-  // --- Application Submission (RESTORED FILE UPLOAD) ---
+  // --- Application Submission ---
   async function submitApplication(event) {
     event.preventDefault();
     [
@@ -809,7 +801,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         showTab('apply', true);
         break;
       case 'openpositions':
-      case 'careers': // Added to support footer link
+      case 'careers':
         showTab('openPositions', true);
         break;
       case 'products':
@@ -826,13 +818,119 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // On initial load
   handleHashNavigation();
 
-  // --- Initialize ---
-  // Load jobs when page loads
-  document.addEventListener('DOMContentLoaded', async function() {
-    console.log('DOM loaded, testing Firebase and Google Drive connection...');
+  // --- Phone Number Copy Functionality ---
+  const phoneNumber = document.getElementById('phoneNumber');
+  const copyClipboard = document.getElementById('copyClipboard');
+  
+  if (phoneNumber && copyClipboard) {
+    const copyPhoneNumber = () => {
+      const phoneText = phoneNumber.textContent;
+      navigator.clipboard.writeText(phoneText).then(() => {
+        // Show a brief visual feedback
+        const originalText = copyClipboard.innerHTML;
+        copyClipboard.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+        setTimeout(() => {
+          copyClipboard.innerHTML = originalText;
+        }, 1000);
+      }).catch(err => {
+        console.error('Failed to copy phone number:', err);
+      });
+    };
+
+    phoneNumber.addEventListener('click', copyPhoneNumber);
+    copyClipboard.addEventListener('click', copyPhoneNumber);
+  }
+
+  // --- Carousel Logic ---
+  class Carousel {
+    constructor() {
+      this.currentSlide = 0;
+      this.slides = document.querySelectorAll('.carousel-slide');
+      this.dots = document.querySelectorAll('.carousel-dot');
+      this.prevBtn = document.querySelector('.carousel-control.prev');
+      this.nextBtn = document.querySelector('.carousel-control.next');
+      this.autoPlayInterval = null;
+      
+      this.init();
+    }
+    
+    init() {
+      if (this.slides.length === 0) return;
+      
+      // Add event listeners
+      this.prevBtn?.addEventListener('click', () => this.prevSlide());
+      this.nextBtn?.addEventListener('click', () => this.nextSlide());
+      
+      // Add dot navigation
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+      
+      // Start auto-play
+      this.startAutoPlay();
+      
+      // Pause auto-play on hover
+      const carouselContainer = document.querySelector('.carousel-container');
+      if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', () => this.stopAutoPlay());
+        carouselContainer.addEventListener('mouseleave', () => this.startAutoPlay());
+      }
+    }
+    
+    goToSlide(index) {
+      // Remove active class from current slide and dot
+      this.slides[this.currentSlide].classList.remove('active');
+      this.dots[this.currentSlide].classList.remove('active');
+      
+      // Update current slide
+      this.currentSlide = index;
+      
+      // Add active class to new slide and dot
+      this.slides[this.currentSlide].classList.add('active');
+      this.dots[this.currentSlide].classList.add('active');
+    }
+    
+    nextSlide() {
+      const nextIndex = (this.currentSlide + 1) % this.slides.length;
+      this.goToSlide(nextIndex);
+    }
+    
+    prevSlide() {
+      const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+      this.goToSlide(prevIndex);
+    }
+    
+    startAutoPlay() {
+      this.stopAutoPlay(); // Clear any existing interval
+      this.autoPlayInterval = setInterval(() => {
+        this.nextSlide();
+      }, 5000); // Change slide every 5 seconds
+    }
+    
+    stopAutoPlay() {
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+      }
+    }
+  }
+  
+  // Initialize carousel when DOM is loaded
+  new Carousel();
+
+  // --- Initialize Everything ---
+  // Setup all button listeners
+  setupButtonListeners();
+  
+  // Setup See More button
+  setupSeeMoreButton();
     
     // Setup file upload
     setupFileUpload();
+  
+  // Load jobs when page loads
+  document.addEventListener('DOMContentLoaded', async function() {
+    console.log('DOM loaded, testing Firebase and Google Drive connection...');
     
     // Test if FirebaseService is available
     if (typeof FirebaseService === 'undefined') {
@@ -898,206 +996,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   }
   
-  // Show/hide otherPosition input
-  positionSelect.addEventListener('change', function() {
-    if (positionSelect.value === 'Other') {
-      otherPositionInput.style.display = 'block';
-    } else {
-      otherPositionInput.style.display = 'none';
-      otherPositionInput.value = '';
-      document.getElementById('otherPositionError').style.display = 'none';
-      otherPositionInput.classList.remove('form-input-error');
-    }
-  });
-  
   // Remove error on input for otherPosition
+  if (otherPositionInput) {
   otherPositionInput.addEventListener('input', function() {
     otherPositionInput.classList.remove('form-input-error');
     document.getElementById('otherPositionError').style.display = 'none';
-  });
-
-  // Phone number copy-to-clipboard logic (with SVG copy icon)
-  function copyPhoneNumber() {
-    const phoneText = phoneNumber.textContent;
-    navigator.clipboard.writeText(phoneText).then(() => {
-      // Show a brief visual feedback
-      const originalText = copyClipboard.innerHTML;
-      copyClipboard.innerHTML = '<i class="fas fa-check text-green-500"></i>';
-      setTimeout(() => {
-        copyClipboard.innerHTML = originalText;
-      }, 1000);
-    }).catch(err => {
-      console.error('Failed to copy phone number:', err);
     });
   }
-
-  if (phoneNumber) {
-    phoneNumber.addEventListener('click', copyPhoneNumber);
-  }
-  if (copyClipboard) {
-    copyClipboard.addEventListener('click', copyPhoneNumber);
-  }
-
-  // Tab logic for Open Positions
-  const backToHomeBtn = document.getElementById('backToHomeBtn');
-  backToHomeBtn.addEventListener('click', function() {
-    showTab('hero');
-  });
-
-  // Simple Success Modal logic
-  document.getElementById('successBackBtn').addEventListener('click', function() {
-    closeSuccessModal();
-    window.location.hash = "";
-    window.scrollTo(0, 0);
-    window.location.reload();
-  });
-
-  // Header Careers button opens Open Positions tab
-  const headerCareersBtn = document.getElementById('headerCareersBtn');
-  if (headerCareersBtn) {
-    headerCareersBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('openPositions');
-    });
-  }
-
-  // Products & Services tab logic
-  const headerProductsBtn = document.getElementById('headerProductsBtn');
-  if (headerProductsBtn) {
-    headerProductsBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('products');
-    });
-  }
-  if (backToHomeProductsBtn) {
-    backToHomeProductsBtn.addEventListener('click', function() {
-      showTab('hero');
-    });
-  }
-
-  // Explore Opportunities button in hero opens Open Positions tab
-  const exploreOpportunitiesBtn = document.getElementById('exploreOpportunitiesBtn');
-  if (exploreOpportunitiesBtn) {
-    exploreOpportunitiesBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('openPositions');
-    });
-  }
-
-  // Apply Now button in hero navigates to apply tab
-  const applyNowBtn = document.getElementById('applyNowBtn');
-  if (applyNowBtn) {
-    applyNowBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('apply');
-    });
-  }
-
-  // --- Footer Quick Links Setup ---
-  // Ensure footer links trigger correct tab logic
-  document.querySelectorAll('footer a[href="#about"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('about');
-    });
-  });
-  document.querySelectorAll('footer a[href="#careers"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('openPositions');
-    });
-  });
-  document.querySelectorAll('footer a[href="#apply"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      showTab('apply');
-    });
-  });
-
-  // Centralized tab logic
-  function showTab(tabName, skipHashUpdate) {
-    // List all main sections/tabs
-    const sections = [
-      heroSection,
-      aboutSection,
-      applySection,
-      openPositionsTab,
-      productsTab
-    ];
-    // Hide all by default
-    sections.forEach(sec => { if (sec) sec.style.display = 'none'; if (sec && sec.classList) sec.classList.add('hidden'); });
-    // Hide homepage sections by default
-    if (homepageSections) homepageSections.style.display = 'none';
-    
-    let hash = '';
-    if (tabName === 'hero' || tabName === 'about') {
-      // Show hero, about, and apply for home
-      if (heroSection) { heroSection.style.display = ''; heroSection.classList.remove('hidden'); }
-      if (aboutSection) { aboutSection.style.display = ''; aboutSection.classList.remove('hidden'); }
-      if (applySection) { applySection.style.display = 'none'; applySection.classList.add('hidden'); } // Hide apply by default
-      if (homepageSections) homepageSections.style.display = '';
-      // Reset See More button
-      resetSeeMoreButton();
-      hash = '#about';
-    } else if (
-      tabName === 'company-overview' ||
-      tabName === 'leadership' ||
-      tabName === 'milestones'
-    ) {
-      // Show both hero and about sections
-      if (heroSection) { heroSection.style.display = ''; heroSection.classList.remove('hidden'); }
-      if (homepageSections) homepageSections.style.display = '';
-      // Optionally scroll to section
-      const section = document.getElementById(tabName);
-      if (section) section.scrollIntoView({ behavior: 'smooth' });
-      hash = '#about';
-    } else if (tabName === 'openPositions') {
-      if (openPositionsTab) { openPositionsTab.style.display = ''; openPositionsTab.classList.remove('hidden'); }
-      loadJobs();
-      hash = '#openPositions';
-    } else if (tabName === 'products') {
-      if (productsTab) { productsTab.style.display = ''; productsTab.classList.remove('hidden'); }
-      hash = '#products';
-    } else if (tabName === 'apply') {
-      if (applySection) { applySection.style.display = ''; applySection.classList.remove('hidden'); }
-      hash = '#apply';
-    }
-    if (!skipHashUpdate && hash) window.location.hash = hash;
-    window.scrollTo(0, 0);
-  }
-
-  // Make showTab globally available
-  window.showTab = showTab;
-
-  // --- Header Navigation Setup (AFTER showTab is defined) ---
-  console.log('DEBUG: Attaching header button listeners');
-  const debugHeaderAboutBtn = document.getElementById('headerAboutBtn');
-  const debugHeaderProductsBtn = document.getElementById('headerProductsBtn');
-  const debugHeaderCareersBtn = document.getElementById('headerCareersBtn');
-  const debugHeaderApplyBtn = document.getElementById('headerApplyBtn');
-  console.log('DEBUG: headerAboutBtn:', debugHeaderAboutBtn);
-  console.log('DEBUG: headerProductsBtn:', debugHeaderProductsBtn);
-  console.log('DEBUG: headerCareersBtn:', debugHeaderCareersBtn);
-  console.log('DEBUG: headerApplyBtn:', debugHeaderApplyBtn);
-  document.getElementById('headerAboutBtn').onclick = function() { showTab('about'); };
-  document.getElementById('headerProductsBtn').onclick = function() { showTab('products'); };
-  document.getElementById('headerCareersBtn').onclick = function() { showTab('openPositions'); };
-  document.getElementById('headerApplyBtn').onclick = function() { showTab('apply'); };
-
-  // --- Mobile Navigation Setup (AFTER showTab is defined) ---
-  document.getElementById('mobileAboutBtn').onclick = function() { showTab('about'); };
-  document.getElementById('mobileCareersBtn').onclick = function() { showTab('openPositions'); };
-  document.getElementById('mobileApplyBtn').onclick = function() { showTab('apply'); };
-
-  // --- Back to Home Buttons Setup (AFTER showTab is defined) ---
-  document.getElementById('backToHomeBtn').onclick = function() { showTab('hero'); };
-  document.getElementById('backToHomeProductsBtn').onclick = function() { showTab('hero'); };
-
-  // --- Success Modal Setup (AFTER showTab is defined) ---
-  document.getElementById('successBackBtn').onclick = function() { 
-    document.getElementById('successModal').classList.add('hidden');
-    showTab('hero');
-  };
 
   // Load jobs if we're on the open positions tab
   if (window.location.hash === '#openPositions') {

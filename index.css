@@ -302,3 +302,40 @@
     margin-bottom: 2rem;
   }
 } 
+
+/* Milestone Tooltip Styles */
+/* Horizontal Milestone Timeline Styles */
+.milestone-horizontal {
+  min-width: 3rem;
+}
+.milestone-tooltip {
+  z-index: 50;
+  pointer-events: none;
+  white-space: normal;
+}
+.milestone-btn:focus + .milestone-tooltip,
+.milestone-btn:active + .milestone-tooltip {
+  display: block !important;
+  pointer-events: auto;
+}
+@media (max-width: 768px) {
+  .milestone-tooltip {
+    left: 50% !important;
+    width: 90vw !important;
+    min-width: 180px;
+    max-width: 95vw;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .milestone-btn:active + .milestone-tooltip {
+    display: block !important;
+    pointer-events: auto;
+  }
+}
+@keyframes fadeInTooltip {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeInTooltip 0.3s cubic-bezier(0.4,0,0.2,1);
+} 

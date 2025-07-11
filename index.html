@@ -19,6 +19,7 @@
     <script src="https://accounts.google.com/gsi/client"></script>
     <script src="google-drive-service.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   </head>
   <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
     <!-- Loading Overlay -->
@@ -67,7 +68,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="min-h-screen gradient-bg text-white flex flex-col justify-center items-center text-center px-6 pt-20 md:pt-0 relative overflow-hidden" id="heroSection">
+    <section class="min-h-screen gradient-bg text-white flex flex-col justify-center items-center text-center w-full px-4 md:px-8 pt-20 md:pt-0 relative overflow-hidden" id="heroSection">
       <!-- Carousel Background -->
       <div class="absolute inset-0 carousel-container">
         <div class="carousel-slide active" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjMWUzYThhIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDE8L3RleHQ+PC9zdmc+');">
@@ -84,14 +85,14 @@
       <!-- Carousel Navigation -->
       <div class="relative z-10 max-w-4xl mx-auto">
         <div class="fade-in stagger-1">
-          <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 leading-tight">
             Join Our Team of 
             <span class="text-orange-400">Builders</span> and 
             <span class="text-orange-400">Closers</span>
           </h1>
         </div>
         <div class="fade-in stagger-2">
-          <p class="mb-8 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
+          <p class="mb-8 text-base sm:text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
             Our company is engaged in the supply of mechanical seals, bearing protectors, packing and gaskets, electrical and mechanical equipments and parts for industrial use. We are also engaged in insulation and commissioning which is part of after sales service.
           </p>
         </div>
@@ -129,35 +130,35 @@
     </section>
 
     <!-- Homepage Sections Wrapper -->
-    <div id="homepageSections" class="hidden">
+    <div id="homepageSections" class="hidden w-full">
       <!-- About Section -->
-      <section class="py-20 px-6 bg-white" id="about">
+      <section class="py-20 px-4 md:px-8 bg-white w-full" id="about">
         <div class="max-w-6xl mx-auto">
           <div class="text-center mb-16">
             <div class="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0 justify-center items-stretch">
               <!-- Vision -->
-              <div class="slide-in-left stagger-1 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-blue-50 to-blue-100 flex-1">
+              <div class="slide-in-left stagger-1 text-center p-0 flex-1">
                 <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <i class="fas fa-shield-alt text-2xl text-white"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Vision</h3>
-                <p class="text-gray-600">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</p>
+                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Vision</h3>
+                <p class="text-gray-600 text-sm sm:text-base">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</p>
               </div>
               <!-- Mission -->
-              <div class="slide-in-left stagger-2 text-center p-8 rounded-2xl hover-lift flex-1" style="background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 100%);">
+              <div class="slide-in-left stagger-2 text-center p-0 flex-1">
                 <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <i class="fas fa-handshake text-2xl text-white"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Mission</h3>
-                <p class="text-gray-600">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</p>
+                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Mission</h3>
+                <p class="text-gray-600 text-sm sm:text-base">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</p>
               </div>
               <!-- Core Values -->
-              <div class="slide-in-left stagger-3 text-center p-8 rounded-2xl hover-lift bg-gradient-to-br from-green-50 to-green-100 flex-1">
+              <div class="slide-in-left stagger-3 text-center p-0 flex-1">
                 <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <i class="fas fa-star text-2xl text-white"></i>
                 </div>
-                <h3 class="text-xl font-semibold mb-4">Core Values</h3>
-                <ul class="text-gray-600 list-disc list-inside text-left inline-block">
+                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Core Values</h3>
+                <ul class="text-gray-600 list-disc list-inside text-left inline-block text-sm sm:text-base">
                   <li>Integrity</li>
                   <li>Teamwork</li>
                   <li>Excellence</li>
@@ -170,98 +171,152 @@
         </div>
       </section>
       <!-- Company Overview Section -->
-      <section class="py-20 px-6 bg-white" id="company-overview">
-        <div class="max-w-4xl mx-auto text-center mb-12">
-          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-900">REIGN-NAN Sales Industry & General Contractor, Inc.</h1>
-          <p class="text-lg text-gray-700 mb-2 font-medium">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</p>
+      <section class="py-20 px-4 md:px-8 bg-white w-full" id="company-overview">
+        <div class="w-full text-center mb-12">
+          <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-blue-900">REIGN-NAN Sales Industry & General Contractor, Inc.</h1>
+          <p class="text-base sm:text-lg md:text-xl text-gray-700 mb-2 font-medium">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</p>
         </div>
-        <div class="max-w-3xl mx-auto bg-blue-50 rounded-xl shadow-md p-8">
-          <h2 class="text-2xl font-bold text-blue-800 mb-4">Company Overview</h2>
-          <p class="text-gray-700 mb-4">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.</p>
-          <p class="text-gray-700 mb-4">With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.</p>
-          <p class="text-gray-700">Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</p>
-        </div>
-      </section>
-      <!-- Leadership & Team Section -->
-      <section class="py-20 px-6 bg-gray-50" id="leadership">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Leadership & Team</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mx-auto">
-              Presided by <span class="font-semibold">Mr. Nanding A. Bancoro</span> and managed by <span class="font-semibold">Engr. Marieta A. Bancoro</span>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.
-            </p>
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="bg-blue-50 rounded-xl shadow-md p-8">
+            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-blue-800 mb-4">Company Overview</h2>
+            <p class="text-gray-700 text-sm sm:text-base mb-4">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.</p>
+            <p class="text-gray-700 text-sm sm:text-base mb-4">With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.</p>
+            <p class="text-gray-700 text-sm sm:text-base">Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</p>
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-md w-full h-full min-h-[300px] flex items-center justify-center">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889256935179!2d121.13029257509969!3d14.259680186187273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752212108104!5m2!1sen!2sph" 
+              width="100%" 
+              height="350" 
+              style="border:0; min-width:200px; min-height:300px;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
           </div>
         </div>
       </section>
-      <!-- Milestones Section -->
-      <section class="py-20 px-6 bg-white" id="milestones">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Milestones</h2>
-          </div>
-          <div class="max-w-3xl mx-auto">
-            <div class="relative border-l-4 border-blue-200 ml-6">
-              <!-- 1997 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">1997</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Founded in Cabuyao, Laguna</span>
-                </div>
+      <!-- Leadership & Team + Milestones Section -->
+      <section class="py-20 px-4 md:px-8 bg-gray-50 w-full" id="leadership-milestones">
+        <div class="w-full">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            <!-- Leadership & Team -->
+            <div>
+              <div class="text-center md:text-left mb-16 md:mb-0">
+                <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Leadership & Team</h2>
+                <p class="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto md:mx-0">
+                  Presided by <span class="font-semibold">Mr. Nanding A. Bancoro</span> and managed by <span class="font-semibold">Engr. Marieta A. Bancoro</span>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.
+                </p>
               </div>
-              <!-- 2003 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2003</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Relocated to a three-storey office building in Banay-Banay, Cabuyao</span>
-                </div>
+            </div>
+            <!-- Milestones -->
+            <div>
+              <div class="text-center md:text-left mb-10">
+                <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Milestones</h2>
               </div>
-              <!-- 2008 (Incorporated) -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2008</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Incorporated as REIGN-NAN Sales Industry and General Contractor, Inc.</span>
-                </div>
-              </div>
-              <!-- 2008 (AESSEAL) -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2008</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Appointed as exclusive distributor of AESSEAL products</span>
-                </div>
-              </div>
-              <!-- 2010 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2010</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Began active sponsorship of PSME and professional organizations</span>
-                </div>
-              </div>
-              <!-- 2012 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2012</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">AESSEAL products selected as standard brand for key clients</span>
-                </div>
-              </div>
-              <!-- 2013 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2013</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Awarded the International Quality Crown (London 2013)</span>
-                </div>
-              </div>
-              <!-- 2015 -->
-              <div class="mb-10 ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2015</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Recognized as Fastest Growing Company by AES East Asia</span>
-                </div>
-              </div>
-              <!-- 2017 -->
-              <div class="ml-8 flex items-center group">
-                <span class="absolute -left-6 flex items-center justify-center w-12 h-12 bg-blue-600 text-white font-bold rounded-full shadow-lg group-hover:scale-110 transition-transform">2017</span>
-                <div class="bg-blue-50 p-5 rounded-xl shadow-sm ml-4 w-full">
-                  <span class="text-gray-700">Construction of a new building for Mechanical Seal Division (MSD)</span>
+              <div class="relative w-full overflow-x-auto pb-8">
+                <!-- Timeline Line: now outside the flex container -->
+                <div class="absolute left-0 right-0 top-1/2 h-1 bg-blue-200 z-0" style="height: 4px;"></div>
+                <div class="flex items-center space-x-8 min-w-[700px] md:min-w-0 justify-center relative z-10">
+                  <!-- 1997 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=1997" alt="1997 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=1997" alt="1997 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Founded in Cabuyao, Laguna</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">1997</span>
+                  </div>
+                  <!-- 2003 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2003" alt="2003 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2003" alt="2003 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Relocated to a three-storey office building in Banay-Banay, Cabuyao</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2003</span>
+                  </div>
+                  <!-- 2008 (Incorporated) -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2008" alt="2008 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2008" alt="2008 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Incorporated as REIGN-NAN Sales Industry and General Contractor, Inc.</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2008</span>
+                  </div>
+                  <!-- 2008 (AESSEAL) -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2008" alt="2008 AESSEAL" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2008+AESSEAL" alt="2008 AESSEAL" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Appointed as exclusive distributor of AESSEAL products</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2008</span>
+                  </div>
+                  <!-- 2010 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2010" alt="2010 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2010" alt="2010 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Began active sponsorship of PSME and professional organizations</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2010</span>
+                  </div>
+                  <!-- 2012 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2012" alt="2012 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2012" alt="2012 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">AESSEAL products selected as standard brand for key clients</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2012</span>
+                  </div>
+                  <!-- 2013 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2013" alt="2013 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2013" alt="2013 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Awarded the International Quality Crown (London 2013)</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2013</span>
+                  </div>
+                  <!-- 2015 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2015" alt="2015 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2015" alt="2015 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Recognized as Fastest Growing Company by AES East Asia</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2015</span>
+                  </div>
+                  <!-- 2017 -->
+                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
+                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
+                      <img src="https://placehold.co/56x56?text=2017" alt="2017 Milestone" class="object-cover w-full h-full" />
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
+                      <img src="https://placehold.co/200x100?text=2017" alt="2017 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
+                      <div class="text-xs text-gray-700">Construction of a new building for Mechanical Seal Division (MSD)</div>
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-900">2017</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,17 +326,17 @@
     </div>
 
     <!-- Open Positions Tab -->
-    <section class="py-20 px-6 bg-gray-50 hidden" id="openPositionsTab">
-      <div class="max-w-6xl mx-auto">
+    <section class="py-20 px-4 md:px-8 bg-gray-50 w-full hidden" id="openPositionsTab">
+      <div class="w-full">
         <div class="text-center mb-16 mt-24">
           <div class="slide-in-right">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Open Positions</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Open Positions</h2>
+            <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Join our dynamic team and contribute to building the future
             </p>
           </div>
         </div>
-        <div class="grid gap-4 md:gap-8 md:grid-cols-2" id="jobsContainer">
+        <div class="grid gap-4 md:gap-8 md:grid-cols-2 w-full" id="jobsContainer">
           <!-- Jobs will be dynamically loaded here -->
         </div>
         
@@ -307,19 +362,19 @@
     </section>
 
     <!-- Products & Services Tab -->
-    <section class="py-20 px-6 bg-white hidden" id="productsTab">
-      <div class="max-w-6xl mx-auto">
+    <section class="py-20 px-4 md:px-8 bg-white w-full hidden" id="productsTab">
+      <div class="w-full">
         <div class="text-center mb-16 mt-24">
-          <h2 class="text-4xl md:text-5xl font-bold mb-6">Our Products & Services</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover what we offer to help you build and grow.</p>
+          <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Our Products & Services</h2>
+          <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Discover what we offer to help you build and grow.</p>
         </div>
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 w-full">
           <!-- Supply of Mechanical Seals -->
           <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-1">
             <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-cog text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Supply of Mechanical Seals</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Supply of Mechanical Seals</h3>
             <p class="text-gray-600 mb-4">High-quality mechanical seals for industrial applications, ensuring optimal performance and reliability in demanding environments.</p>
           </div>
           
@@ -328,7 +383,7 @@
             <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-bolt text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Trading of Electrical and Mechanical Equipment</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Trading of Electrical and Mechanical Equipment</h3>
             <p class="text-gray-600 mb-4">Comprehensive range of electrical and mechanical equipment for industrial and commercial applications.</p>
           </div>
           
@@ -337,7 +392,7 @@
             <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mb-4" style="background-color: #ea580c;">
               <i class="fas fa-tools text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Installation and Commissioning Services</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Installation and Commissioning Services</h3>
             <p class="text-gray-600 mb-4">Professional installation and commissioning services to ensure optimal system performance and reliability.</p>
           </div>
           
@@ -346,7 +401,7 @@
             <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-paint-roller text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Industrial Painting Works</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Industrial Painting Works</h3>
             <p class="text-gray-600 mb-4">Specialized industrial painting services for protection and aesthetic enhancement of industrial facilities.</p>
           </div>
           
@@ -355,7 +410,7 @@
             <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-fire text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Steam Pipeline Cladding</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Steam Pipeline Cladding</h3>
             <p class="text-gray-600 mb-4">Expert steam pipeline cladding services for thermal insulation and protection in high-temperature environments.</p>
           </div>
           
@@ -364,7 +419,7 @@
             <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
               <i class="fas fa-wrench text-xl text-white"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2 text-blue-800">Sourcing and Maintenance</h3>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Sourcing and Maintenance</h3>
             <p class="text-gray-600 mb-4">Comprehensive sourcing and maintenance services for industrial and commercial applications, ensuring optimal performance.</p>
           </div>
         </div>
@@ -388,8 +443,8 @@
     </section>
 
     <!-- Application Form Section (hidden by default) -->
-    <section class="py-20 px-6 bg-white hidden" id="apply">
-      <div class="max-w-2xl mx-auto">
+    <section class="py-20 px-4 md:px-8 bg-white w-full hidden" id="apply">
+      <div class="w-full max-w-2xl mx-auto">
         <div class="text-center mb-12 mt-24">
           <div class="fade-in">
             <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Join Us?</h2>
@@ -486,14 +541,17 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 class="text-xl font-bold mb-4">REIGN-NAN Sales Industry and General Contractor Inc.</h3>
+    <footer class="bg-gray-900 text-white py-12 w-full">
+      <div class="w-full px-4 md:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
+          <!-- Company Info -->
+          <div class="lg:col-span-1">
+            <h3 class="text-xl font-bold mb-4">REIGN-NAN Sales Industry & General Contractor, Inc.</h3>
             <p class="text-gray-400">Building the future, one project at a time.</p>
           </div>
-          <div>
+          
+          <!-- Quick Links -->
+          <div class="lg:col-span-1">
             <h4 class="font-semibold mb-4">Quick Links</h4>
             <ul class="space-y-2 text-gray-400">
               <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
@@ -502,15 +560,19 @@
               <li><a href="admin.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
             </ul>
           </div>
-          <div>
+          
+          <!-- Contact Info -->
+          <div class="lg:col-span-1">
             <h4 class="font-semibold mb-4">Contact</h4>
             <ul class="space-y-2 text-gray-400">
               <li><i class="fas fa-envelope mr-2"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400">recruitment@rsigci.com</a></li>
               <li><i class="fas fa-phone mr-2"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
-              <li><i class="fas fa-map-marker-alt mr-2"></i><a href="https://www.google.com/maps?q=745M%2BW45%2C+MAB+Bldg+Blk+9+Lot+2+Katapatan%2C+Banaybanay%2C+Cabuyao+City%2C+Laguna" target="_blank" rel="noopener" class="hover:underline text-gray-400">3rd Floor MAB Building Block 19 Lot 2, Unit 7 & 8 Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</a></li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
             </ul>
           </div>
-          <div>
+          
+          <!-- Social Media -->
+          <div class="lg:col-span-1">
             <h4 class="font-semibold mb-4">Follow Us</h4>
             <div class="flex space-x-4">
               <a href="#" class="text-gray-400 hover:text-white transition-colors">
@@ -524,9 +586,25 @@
               </a>
             </div>
           </div>
+          
+          <!-- Google Maps Embed -->
+          <div class="lg:col-span-1">
+            <h4 class="font-semibold mb-4">Location</h4>
+            <div class="rounded-lg overflow-hidden shadow-lg">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889256935179!2d121.13029257509969!3d14.259680186187273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752212108104!5m2!1sen!2sph" 
+                width="100%" 
+                height="200" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 1997 REIGN-NAN Sales Industry and General Contractor Inc. All rights reserved.</p>
+          <p>&copy; 1997 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
