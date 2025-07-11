@@ -314,7 +314,7 @@
           <div id="applications" class="tab-content hidden" role="region" aria-label="Applications management">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 md:mb-6 gap-2 md:gap-0 w-full overflow-x-hidden">
               <h2 class="text-xl md:text-2xl font-bold mb-2 md:mb-0">Applications</h2>
-              <div class="flex flex-col sm:flex-row sm:flex-wrap md:flex-row md:items-center w-full md:w-auto gap-2 md:space-x-2 min-w-0">
+              <div class="applications-exports flex flex-col sm:flex-row sm:flex-wrap md:flex-row md:items-center w-full md:w-auto gap-2 md:space-x-2 min-w-0">
                 <select id="statusFilter" class="form-input px-3 py-3 border border-gray-300 rounded-lg text-sm w-full sm:w-auto min-w-0 max-w-full" aria-label="Filter by application status">
                   <option value="">All Status</option>
                   <option value="new">New</option>
@@ -327,18 +327,29 @@
                   <option value="">All Positions</option>
                   <!-- Positions will be populated dynamically -->
                 </select>
-                <button onclick="exportApplicationsCSV()" class="px-4 py-3 border border-blue-500 text-blue-700 rounded hover:bg-blue-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export applications as CSV">
-                  <i class="fas fa-file-csv mr-2" aria-hidden="true"></i>Export CSV
-                </button>
-                <button onclick="exportSelectedApplicationsCSV()" class="px-4 py-3 border border-green-500 text-green-700 rounded hover:bg-green-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export selected applications as CSV">
-                  <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected CSV
-                </button>
-                <button onclick="exportApplicationsPDF()" class="px-4 py-3 border border-red-500 text-red-700 rounded hover:bg-red-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export applications as PDF">
-                  <i class="fas fa-file-pdf mr-2" aria-hidden="true"></i>Export PDF
-                </button>
-                <button onclick="exportSelectedApplicationsPDF()" class="px-4 py-3 border border-purple-500 text-purple-700 rounded hover:bg-purple-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export selected applications as PDF">
-                  <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected PDF
-                </button>
+                <select id="dateSort" class="form-input px-3 py-3 border border-gray-300 rounded-lg text-sm w-full sm:w-auto min-w-0 max-w-full" aria-label="Sort by date">
+                  <option value="desc">Newest First</option>
+                  <option value="asc">Oldest First</option>
+                  <option value="custom">Custom Range</option>
+                </select>
+                <div id="dateRangeInputs" class="flex gap-2 mt-2 hidden">
+                  <input type="date" id="dateFrom" class="form-input px-3 py-2 border border-gray-300 rounded text-sm" placeholder="From" />
+                  <input type="date" id="dateTo" class="form-input px-3 py-2 border border-gray-300 rounded text-sm" placeholder="To" />
+                </div>
+                <div class="export-btns hidden md:flex flex-row gap-2">
+                  <button onclick="exportApplicationsCSV()" class="px-4 py-3 border border-blue-500 text-blue-700 rounded hover:bg-blue-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export applications as CSV">
+                    <i class="fas fa-file-csv mr-2" aria-hidden="true"></i>Export CSV
+                  </button>
+                  <button onclick="exportSelectedApplicationsCSV()" class="px-4 py-3 border border-green-500 text-green-700 rounded hover:bg-green-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export selected applications as CSV">
+                    <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected CSV
+                  </button>
+                  <button onclick="exportApplicationsPDF()" class="px-4 py-3 border border-red-500 text-red-700 rounded hover:bg-red-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export applications as PDF">
+                    <i class="fas fa-file-pdf mr-2" aria-hidden="true"></i>Export PDF
+                  </button>
+                  <button onclick="exportSelectedApplicationsPDF()" class="px-4 py-3 border border-purple-500 text-purple-700 rounded hover:bg-purple-50 text-sm font-medium w-full sm:w-auto min-w-0 max-w-full" aria-label="Export selected applications as PDF">
+                    <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected PDF
+                  </button>
+                </div>
               </div>
             </div>
             <div class="flex w-full mb-4">
@@ -362,6 +373,21 @@
               </div>
               <button id="applicationsNextPageBtn" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
                 <span class="hidden md:inline">Next</span><i class="fas fa-chevron-right ml-1 md:ml-2"></i>
+              </button>
+            </div>
+            <!-- Mobile export buttons at the bottom -->
+            <div class="export-btns-mobile flex flex-col gap-2 mt-6 md:hidden">
+              <button onclick="exportApplicationsCSV()" class="px-4 py-3 border border-blue-500 text-blue-700 rounded hover:bg-blue-50 text-sm font-medium w-full" aria-label="Export applications as CSV">
+                <i class="fas fa-file-csv mr-2" aria-hidden="true"></i>Export CSV
+              </button>
+              <button onclick="exportSelectedApplicationsCSV()" class="px-4 py-3 border border-green-500 text-green-700 rounded hover:bg-green-50 text-sm font-medium w-full" aria-label="Export selected applications as CSV">
+                <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected CSV
+              </button>
+              <button onclick="exportApplicationsPDF()" class="px-4 py-3 border border-red-500 text-red-700 rounded hover:bg-red-50 text-sm font-medium w-full" aria-label="Export applications as PDF">
+                <i class="fas fa-file-pdf mr-2" aria-hidden="true"></i>Export PDF
+              </button>
+              <button onclick="exportSelectedApplicationsPDF()" class="px-4 py-3 border border-purple-500 text-purple-700 rounded hover:bg-purple-50 text-sm font-medium w-full" aria-label="Export selected applications as PDF">
+                <i class="fas fa-check-double mr-2" aria-hidden="true"></i>Export Selected PDF
               </button>
             </div>
           </div>

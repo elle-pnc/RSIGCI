@@ -22,7 +22,7 @@ let isInitialized = false;
 
 // Pagination state for applications
 let applicationsCurrentPage = 1;
-const applicationsPerPage = 10;
+const applicationsPerPage = 5;
 
 // ===== PERFORMANCE OPTIMIZATIONS =====
 
@@ -486,6 +486,45 @@ function loadApplications() {
       filteredApplications = filteredApplications.filter(app => app.position === selectedPosition);
     }
 
+    // Apply date sort
+    const dateSort = document.getElementById('dateSort') ? document.getElementById('dateSort').value : 'desc';
+    const dateRangeInputs = document.getElementById('dateRangeInputs');
+    if (dateRangeInputs) {
+      if (dateSort === 'custom') {
+        dateRangeInputs.classList.remove('hidden');
+      } else {
+        dateRangeInputs.classList.add('hidden');
+      }
+    }
+    if (dateSort === 'custom') {
+      const fromInput = document.getElementById('dateFrom');
+      const toInput = document.getElementById('dateTo');
+      const from = fromInput && fromInput.value ? new Date(fromInput.value) : null;
+      const to = toInput && toInput.value ? new Date(toInput.value) : null;
+      filteredApplications = filteredApplications.filter(app => {
+        const appDate = app.appliedAt && typeof app.appliedAt.toDate === 'function' ? app.appliedAt.toDate() : new Date(app.appliedAt);
+        if (from && appDate < from) return false;
+        if (to && appDate > to) return false;
+        return true;
+      });
+      // Sort by date ascending
+      filteredApplications = filteredApplications.slice().sort((a, b) => {
+        const aDate = a.appliedAt && typeof a.appliedAt.toDate === 'function' ? a.appliedAt.toDate() : new Date(a.appliedAt);
+        const bDate = b.appliedAt && typeof b.appliedAt.toDate === 'function' ? b.appliedAt.toDate() : new Date(b.appliedAt);
+        return aDate - bDate;
+      });
+    } else {
+      filteredApplications = filteredApplications.slice().sort((a, b) => {
+        const aDate = a.appliedAt && typeof a.appliedAt.toDate === 'function' ? a.appliedAt.toDate() : new Date(a.appliedAt);
+        const bDate = b.appliedAt && typeof b.appliedAt.toDate === 'function' ? b.appliedAt.toDate() : new Date(b.appliedAt);
+        if (dateSort === 'asc') {
+          return aDate - bDate;
+        } else {
+          return bDate - aDate;
+        }
+      });
+    }
+
     // Pagination logic for applications
     const totalApplications = filteredApplications.length;
     const totalPages = Math.ceil(totalApplications / applicationsPerPage) || 1;
@@ -499,11 +538,11 @@ function loadApplications() {
       selectAllHtml = `<div class="mb-2 flex items-center"><input type="checkbox" id="selectAllApplications" class="mr-2" onchange="toggleSelectAllApplications(this)"><label for="selectAllApplications" class="text-sm text-gray-700 cursor-pointer">Select All</label></div>`;
     }
 
+    const isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
     container.innerHTML = (totalApplications === 0 ? 
       '<div class="text-center py-12"><p class="text-gray-500">No applications found</p></div>' :
       selectAllHtml +
       currentApplications.map(app => {
-        // Handle Firestore Timestamp for appliedAt
         let appliedDate = 'Recently';
         if (app.appliedAt) {
           if (typeof app.appliedAt.toDate === 'function') {
@@ -512,63 +551,30 @@ function loadApplications() {
             appliedDate = new Date(app.appliedAt).toLocaleDateString();
           }
         }
-        // Add Restore button if status is deleted
         let restoreBtn = '';
         if (app.status === 'deleted') {
           restoreBtn = `<button class="absolute top-4 right-4 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full font-medium shadow-lg z-10 transition-transform transform hover:scale-105 focus:outline-none" title="Restore Application" onclick="restoreApplication('${app.id}')"><i class='fas fa-undo'></i></button>`;
         }
-        return `
-          <div class="application-card bg-white p-6 rounded-xl shadow-sm relative" id="appCard-${app.id}">
-            <input type="checkbox" class="bulk-app-checkbox absolute top-4 left-4" data-app-id="${app.id}" onchange="onBulkAppCheckboxChange()">
-            <button class="absolute bottom-4 left-4 text-red-500 hover:text-red-700 focus:outline-none" title="Delete Application" onclick="showDeleteApplicationModal('${app.id}', () => deleteApplication('${app.id}'))"><i class="fas fa-trash"></i></button>
-            ${restoreBtn}
-            <div class="flex items-start justify-between mb-4">
-              <div style="padding-left: 2rem;">
-                <h3 class="text-xl font-semibold text-gray-800">${safe(app.fullName)}</h3>
-                <p class="text-gray-600">${safe(app.email)}</p>
-                <p class="text-sm text-gray-500">${app.phone ? `<span class="copy-phone cursor-pointer hover:underline" data-phone="${safe(app.phone)}" title="Copy to clipboard">${safe(app.phone)} <i class='fas fa-copy text-gray-400 ml-1'></i></span>` : ''}</p>
+        const name = app.fullName && app.fullName.trim() ? safe(app.fullName) : 'Applicant';
+        const position = app.position && app.position.trim() ? safe(app.position) : '—';
+        if (isMobile) {
+          return `
+            <div class="application-card bg-white p-6 rounded-xl shadow-sm relative flex flex-col gap-2" id="appCard-${app.id}" style="min-height: 140px; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+              <input type="checkbox" class="bulk-app-checkbox absolute top-4 left-4" data-app-id="${app.id}" onchange="onBulkAppCheckboxChange()">
+              ${restoreBtn}
+              <div class="flex justify-between items-start mb-2" style="padding-left:2rem;">
+                <div>
+                  <span class="text-lg font-bold text-gray-800 truncate block">${name}</span>
+                  <span class="clamp-2 text-gray-600 text-sm mt-1 block">${position}</span>
+                </div>
+                <div class="flex flex-col items-end">
+                  <span class="status-badge status-${app.status}" style="margin-bottom:0.25rem;">${safe(app.status)}</span>
+                  <span class="text-xs text-gray-500">${appliedDate}</span>
+                </div>
               </div>
-              <div class="text-right">
-                <span class="status-badge status-${app.status}">${safe(app.status)}</span>
-                <p class="text-sm text-gray-500 mt-1">${safe(app.position)}</p>
-              </div>
-            </div>
-            <div class="mb-4">
-              <span class="cover-letter-truncated" id="coverLetter-${app.id}">${safe(app.coverLetter ? app.coverLetter.replace(/\n/g, ' ') : 'No cover letter provided')}</span>
-              ${app.coverLetter && app.coverLetter.length > 100 ? `<button class="expand-btn" onclick="toggleExpandApp('${app.id}')" title="Show more"><i id="chevron-${app.id}" class="fas fa-chevron-down"></i></button>` : ''}
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500">Applied: ${appliedDate}</span>
-              <div class="flex space-x-2">
-                ${app.resumeURL ? 
-                  app.resumeURL.includes('drive.google.com') ? 
-                    `<div class="space-y-2">
-                      <p class="text-gray-700">${safe(app.resumeFileName || 'Resume uploaded to Google Drive')}</p>
-                      <div class="flex space-x-2">
-                        <button onclick="viewResume('${safe(app.resumeURL)}', '${safe(app.resumeFileName || 'Resume')}')" class="icon-btn bg-green-500 hover:bg-green-600 text-white" title="View in Google Drive">
-                          <i class="fab fa-google-drive"></i>
-                        </button>
-                        ${app.driveDownloadUrl ? 
-                          `<a href="${safe(app.driveDownloadUrl)}" target="_blank" class="icon-btn bg-blue-500 hover:bg-blue-600 text-white" title="Download">
-                            <i class="fas fa-download"></i>
-                          </a>` : ''
-                        }
-                      </div>
-                      <p class="text-xs text-gray-500">File stored in Google Drive</p>
-                    </div>` :
-                    `<div class="space-y-2">
-                      <p class="text-gray-700">${safe(app.resumeFileName || 'Resume uploaded')}</p>
-                      <button onclick="viewResume('${safe(app.resumeURL)}', '${safe(app.resumeFileName || 'Resume')}')" class="icon-btn bg-blue-500 hover:bg-blue-600 text-white" title="View Resume">
-                        <i class="fas fa-eye mr-2"></i>View Resume
-                      </button>
-                    </div>`
-                  : app.resumeUploadError ? 
-                    `<div class="space-y-2">
-                      <p class="text-gray-700">${safe(app.resumeFileName || 'Resume')} (Upload Failed)</p>
-                      <p class="text-red-600 text-sm">Error: ${safe(app.resumeUploadError)}</p>
-                    </div>` : 
-                    '<p class="text-gray-700">No resume uploaded</p>'}
-                <div class="flex items-center space-x-2">
+              <div class="flex justify-between items-end mt-auto pt-4" style="padding-left:2rem; padding-right:0.5rem;">
+                <button class="text-red-500 hover:text-red-700 focus:outline-none" title="Delete Application" onclick="showDeleteApplicationModal('${app.id}', () => deleteApplication('${app.id}'))" style="font-size:1.3em;"><i class="fas fa-trash"></i></button>
+                <div class="flex items-center gap-2">
                   <select class="status-select form-input px-3 py-1 border border-gray-300 rounded-lg text-sm" data-app-id="${app.id}" onchange="updateAppStatus('${app.id}', this.value)">
                     <option value="new" ${app.status === 'new' ? 'selected' : ''}>New</option>
                     <option value="reviewing" ${app.status === 'reviewing' ? 'selected' : ''}>Reviewing</option>
@@ -576,9 +582,52 @@ function loadApplications() {
                     <option value="rejected" ${app.status === 'rejected' ? 'selected' : ''}>Rejected</option>
                     <option value="deleted" ${app.status === 'deleted' ? 'selected' : ''}>Deleted</option>
                   </select>
-                  <button onclick="viewApplication('${app.id}')" class="btn-primary view-btn" title="View">View</button>
+                  <button onclick="viewApplication('${app.id}')" class="btn-primary view-btn flex items-center justify-center" title="View" style="font-size:1.3em; width:2.2em; height:2.2em; border-radius:50%;"><i class="fas fa-eye"></i></button>
                 </div>
               </div>
+            </div>
+          `;
+        }
+        // Desktop (full info)
+        const email = app.email && app.email.trim() ? safe(app.email) : '—';
+        const phone = app.phone && app.phone.trim() ? safe(app.phone) : '';
+        return `
+          <div class="application-card bg-white p-6 rounded-xl shadow-sm relative flex flex-col gap-2" id="appCard-${app.id}">
+            <input type="checkbox" class="bulk-app-checkbox absolute top-4 left-4" data-app-id="${app.id}" onchange="onBulkAppCheckboxChange()">
+            ${restoreBtn}
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="text-lg font-bold text-gray-800 truncate">${name}</span>
+                <span class="status-badge status-${app.status}">${safe(app.status)}</span>
+              </div>
+              <span class="text-xs text-gray-500">${appliedDate}</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 text-sm mb-1">
+              <span class="flex items-center min-w-0"><i class="fas fa-briefcase mr-1"></i><span class="truncate">${position}</span></span>
+            </div>
+            <div class="flex items-center gap-4 text-gray-600 text-sm mb-2">
+              <span class="flex items-center min-w-0"><i class="fas fa-envelope mr-1"></i><span class="truncate">${email}</span></span>
+              ${phone ? `<span class="flex items-center copy-phone cursor-pointer hover:underline min-w-0" data-phone="${phone}" title="Copy to clipboard"><i class="fas fa-phone mr-1"></i><span class="truncate">${phone}</span> <i class='fas fa-copy text-gray-400 ml-1'></i></span>` : ''}
+            </div>
+            <div class="mb-2 text-gray-700 text-sm">
+              <span class="cover-letter-truncated" id="coverLetter-${app.id}">${safe(app.coverLetter ? app.coverLetter.replace(/\n/g, ' ') : 'No cover letter')}</span>
+              ${app.coverLetter && app.coverLetter.length > 100 ? `<button class="expand-btn" onclick="toggleExpandApp('${app.id}')" title="Show more"><i id="chevron-${app.id}" class="fas fa-chevron-down"></i></button>` : ''}
+            </div>
+            <div class="flex items-center gap-2 mt-2 justify-end">
+              <button class="text-red-500 hover:text-red-700 focus:outline-none" title="Delete Application" onclick="showDeleteApplicationModal('${app.id}', () => deleteApplication('${app.id}'))"><i class="fas fa-trash"></i></button>
+              ${app.resumeURL ? 
+                app.resumeURL.includes('drive.google.com') ? 
+                  `<button onclick="viewResume('${safe(app.resumeURL)}', '${safe(app.resumeFileName || 'Resume')}')" class="icon-btn bg-green-500 hover:bg-green-600 text-white" title="View in Google Drive"><i class="fab fa-google-drive"></i></button>` :
+                  `<button onclick="viewResume('${safe(app.resumeURL)}', '${safe(app.resumeFileName || 'Resume')}')" class="icon-btn bg-blue-500 hover:bg-blue-600 text-white" title="View Resume"><i class="fas fa-eye"></i></button>`
+                : ''}
+              <select class="status-select form-input px-3 py-1 border border-gray-300 rounded-lg text-sm" data-app-id="${app.id}" onchange="updateAppStatus('${app.id}', this.value)">
+                <option value="new" ${app.status === 'new' ? 'selected' : ''}>New</option>
+                <option value="reviewing" ${app.status === 'reviewing' ? 'selected' : ''}>Reviewing</option>
+                <option value="approved" ${app.status === 'approved' ? 'selected' : ''}>Approved</option>
+                <option value="rejected" ${app.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                <option value="deleted" ${app.status === 'deleted' ? 'selected' : ''}>Deleted</option>
+              </select>
+              <button onclick="viewApplication('${app.id}')" class="btn-primary view-btn" title="View"><i class="fas fa-eye"></i></button>
             </div>
           </div>
         `;
@@ -607,12 +656,19 @@ function showBulkActionBar(show) {
     bar = document.createElement('div');
     bar.id = 'bulkActionBar';
     bar.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-white shadow-lg rounded-xl px-6 py-4 flex items-center space-x-4 border border-gray-200';
+    // Mobile minimal bar
     bar.innerHTML = `
-      <span class='font-semibold text-gray-700 mr-4' id='bulkSelectedCount'></span>
-      <button class='bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium' onclick='bulkUpdateStatus("approved")'><i class="fas fa-check mr-2"></i>Approve</button>
-      <button class='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium' onclick='bulkUpdateStatus("rejected")'><i class="fas fa-times mr-2"></i>Reject</button>
-      <button class='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium' onclick='bulkDeleteApplications()'><i class="fas fa-trash mr-2"></i>Delete</button>
-      <button class='ml-4 text-gray-500 hover:text-gray-700' onclick='deselectAllApplications()'><i class="fas fa-times"></i> Cancel</button>
+      <div class='bulk-bar-mobile-content w-full'>
+        <div class='flex justify-between items-center mb-2'>
+          <span class='font-semibold text-gray-700 mr-4' id='bulkSelectedCount'></span>
+          <button class='bulk-cancel-btn text-gray-400 hover:text-gray-700 text-2xl' onclick='deselectAllApplications()' title='Cancel'><i class="fas fa-times"></i></button>
+        </div>
+        <div class='flex w-full justify-between gap-2'>
+          <button class='bulk-approve-btn bg-green-500 hover:bg-green-600 text-white flex-1 rounded-lg py-3 text-2xl flex items-center justify-center' onclick='bulkUpdateStatus("approved")' title='Approve'><i class="fas fa-check"></i></button>
+          <button class='bulk-reject-btn bg-yellow-500 hover:bg-yellow-600 text-white flex-1 rounded-lg py-3 text-2xl flex items-center justify-center' onclick='bulkUpdateStatus("rejected")' title='Reject'><i class="fas fa-times"></i></button>
+          <button class='bulk-delete-btn bg-red-500 hover:bg-red-600 text-white flex-1 rounded-lg py-3 text-2xl flex items-center justify-center' onclick='bulkDeleteApplications()' title='Delete'><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
     `;
     document.body.appendChild(bar);
   }
@@ -1124,16 +1180,42 @@ function setupApplicationsPagination(currentPage, totalPages, totalApplications)
   const prevBtn = document.getElementById('applicationsPrevPageBtn');
   const nextBtn = document.getElementById('applicationsNextPageBtn');
 
+  // Clear previous controls
+  pageNumbers.innerHTML = '';
+
   if (totalApplications > applicationsPerPage) {
     paginationControls.classList.remove('hidden');
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === totalPages;
-    pageNumbers.innerHTML = '';
+
+    // First page button
+    const firstBtn = document.createElement('button');
+    firstBtn.className = `px-2 py-2 border rounded-lg transition-colors border-gray-300 text-gray-700 hover:bg-gray-50`;
+    firstBtn.innerHTML = '<i class="fas fa-angle-double-left"></i>';
+    firstBtn.onclick = () => goToApplicationsPage(1);
+    firstBtn.disabled = currentPage === 1;
+    pageNumbers.appendChild(firstBtn);
+
+    // Previous page button
+    const prevPageBtn = document.createElement('button');
+    prevPageBtn.className = `px-2 py-2 border rounded-lg transition-colors border-gray-300 text-gray-700 hover:bg-gray-50`;
+    prevPageBtn.innerHTML = '<i class="fas fa-angle-left"></i>';
+    prevPageBtn.onclick = () => goToApplicationsPage(currentPage - 1);
+    prevPageBtn.disabled = currentPage === 1;
+    pageNumbers.appendChild(prevPageBtn);
+
+    // Page numbers with ellipsis
     const maxVisiblePages = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    if (startPage > 1) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      ellipsis.className = 'px-2 text-gray-400';
+      pageNumbers.appendChild(ellipsis);
     }
     for (let i = startPage; i <= endPage; i++) {
       const pageBtn = document.createElement('button');
@@ -1146,6 +1228,56 @@ function setupApplicationsPagination(currentPage, totalPages, totalApplications)
       pageBtn.onclick = () => goToApplicationsPage(i);
       pageNumbers.appendChild(pageBtn);
     }
+    if (endPage < totalPages) {
+      const ellipsis = document.createElement('span');
+      ellipsis.textContent = '...';
+      ellipsis.className = 'px-2 text-gray-400';
+      pageNumbers.appendChild(ellipsis);
+    }
+
+    // Next page button
+    const nextPageBtn2 = document.createElement('button');
+    nextPageBtn2.className = `px-2 py-2 border rounded-lg transition-colors border-gray-300 text-gray-700 hover:bg-gray-50`;
+    nextPageBtn2.innerHTML = '<i class="fas fa-angle-right"></i>';
+    nextPageBtn2.onclick = () => goToApplicationsPage(currentPage + 1);
+    nextPageBtn2.disabled = currentPage === totalPages;
+    pageNumbers.appendChild(nextPageBtn2);
+
+    // Last page button
+    const lastBtn = document.createElement('button');
+    lastBtn.className = `px-2 py-2 border rounded-lg transition-colors border-gray-300 text-gray-700 hover:bg-gray-50`;
+    lastBtn.innerHTML = '<i class="fas fa-angle-double-right"></i>';
+    lastBtn.onclick = () => goToApplicationsPage(totalPages);
+    lastBtn.disabled = currentPage === totalPages;
+    pageNumbers.appendChild(lastBtn);
+
+    // Custom page search (input + Go)
+    const pageSearchDiv = document.createElement('div');
+    pageSearchDiv.className = 'flex items-center ml-3';
+    pageSearchDiv.innerHTML = `
+      <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="w-14 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500" id="customPageInput" />
+      <button class="ml-1 px-2 py-1 bg-blue-500 text-white rounded text-sm" id="customPageGoBtn">Go</button>
+    `;
+    pageNumbers.appendChild(pageSearchDiv);
+    setTimeout(() => {
+      const input = document.getElementById('customPageInput');
+      const goBtn = document.getElementById('customPageGoBtn');
+      if (input && goBtn) {
+        goBtn.onclick = () => {
+          let val = parseInt(input.value, 10);
+          if (!isNaN(val) && val >= 1 && val <= totalPages) {
+            goToApplicationsPage(val);
+          } else {
+            input.value = currentPage;
+          }
+        };
+        input.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            goBtn.click();
+          }
+        };
+      }
+    }, 0);
     prevBtn.onclick = () => goToApplicationsPage(currentPage - 1);
     nextBtn.onclick = () => goToApplicationsPage(currentPage + 1);
   } else {
@@ -1840,6 +1972,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize lazy loading
     lazyLoadImages();
     
+    // Date sort change
+    const dateSort = document.getElementById('dateSort');
+    if (dateSort) {
+      dateSort.addEventListener('change', loadApplications);
+    }
+    // Date range change
+    const dateFrom = document.getElementById('dateFrom');
+    const dateTo = document.getElementById('dateTo');
+    if (dateFrom) dateFrom.addEventListener('change', loadApplications);
+    if (dateTo) dateTo.addEventListener('change', loadApplications);
   } catch (error) {
     console.error('Error initializing admin dashboard:', error);
     showToast('Error initializing dashboard. Please refresh the page.');
