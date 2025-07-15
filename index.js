@@ -10,12 +10,57 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Mobile Menu Functions ---
   function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.header-hamburger');
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     menu.classList.toggle('translate-x-full');
+    if (!menu.classList.contains('translate-x-full')) {
+      // Menu is open: trap focus
+      setTimeout(() => {
+        const focusableEls = menu.querySelectorAll(focusableSelectors);
+        if (focusableEls.length) focusableEls[0].focus();
+      }, 100);
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', trapFocusInMobileMenu);
+    } else {
+      // Menu is closed: return focus to hamburger
+      if (hamburger) hamburger.focus();
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', trapFocusInMobileMenu);
+    }
   }
 
   function closeMobileMenu() {
     const menu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.header-hamburger');
     menu.classList.add('translate-x-full');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', trapFocusInMobileMenu);
+    if (hamburger) hamburger.focus();
+  }
+
+  function trapFocusInMobileMenu(e) {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('translate-x-full')) return;
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableEls = Array.from(menu.querySelectorAll(focusableSelectors)).filter(el => !el.disabled && el.offsetParent !== null);
+    if (!focusableEls.length) return;
+    const firstEl = focusableEls[0];
+    const lastEl = focusableEls[focusableEls.length - 1];
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === firstEl) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (document.activeElement === lastEl) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    } else if (e.key === 'Escape') {
+      closeMobileMenu();
+    }
   }
 
   // Make mobile menu functions globally available
@@ -88,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isExpanded) {
           // Hide sections
           homepageSections.classList.add('hidden');
-          seeMoreText.textContent = 'See More About Our Company';
+          if (seeMoreText) seeMoreText.textContent = 'See More About Our Company';
           seeMoreIcon.className = 'fas fa-chevron-down ml-2';
           
           // Scroll back to top
@@ -918,6 +963,399 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // Initialize carousel when DOM is loaded
   new Carousel();
 
+  // --- Milestone Info Box Hover Logic ---
+  const milestoneCards = document.querySelectorAll('.milestone-card');
+  const milestoneInfo = document.getElementById('milestoneInfo');
+  const milestoneDots = document.querySelectorAll('.milestone-dot');
+  const milestoneNavLeft = document.getElementById('milestoneNavLeft');
+  const milestoneNavRight = document.getElementById('milestoneNavRight');
+  const milestonesGallery = document.getElementById('milestonesGallery');
+
+  // Define milestone data (update as needed)
+  window.milestoneData = [
+    {
+      year: '1997',
+      title: '<b>Humble Beginnings</b>',
+      desc: 'REIGN-NAN Sales Industry was established as a trading company offering packing materials, gaskets, o-rings, cords, and engineering plastics.'
+    },
+    {
+      year: '2000',
+      title: '<b>Expansion to Services</b>',
+      desc: 'REIGN-NAN ventured beyond trading, beginning insulation and cladding services for industrial applications.'
+    },
+    {
+      year: '2003',
+      title: '<b>First Headquarters Constructed</b>',
+      desc: 'Completion of REIGN-NAN’s first building marked a major step in company infrastructure and growth.'
+    },
+    {
+      year: '2008',
+      title: '<b>Official Incorporation & Strategic Partnerships</b>',
+      desc: 'REIGN-NAN Sales Industry & General Contractor, Inc. was incorporated under the SEC.\nAlso appointed as the exclusive distributor of AESSEAL and tapped by Wyeth as an in-house contractor.'
+    },
+    {
+      year: '2010',
+      title: '<b>Industry Presence Strengthened</b>',
+      desc: 'Became a prominent participant in the PSME PhilMachinery Exhibition, reinforcing the company’s reputation in the mechanical engineering industry.'
+    },
+    {
+      year: '2013',
+      title: '<b>International Recognition & ESP Division Launched</b>',
+      desc: 'REIGN-NAN received the International Quality Crown Award in London.\nLaunched the ESP (Equipment, Services, and Parts) business line to diversify offerings.'
+    },
+    {
+      year: '2016',
+      title: '<b>Major Hot Insulation Contract</b>',
+      desc: 'Secured a significant contract for hot insulation and cladding, demonstrating continued technical growth and trust in industrial sectors.'
+    },
+    {
+      year: '2018',
+      title: '<b>Global Collaborations</b>',
+      desc: 'Formed key partnerships with international firms:<br>KC Cottrell (South Korea)<br>TAPC (Australia)<br>These partnerships strengthened REIGN-NAN’s global sourcing and service capabilities.'
+    },
+    {
+      year: '2020',
+      title: '<b>Landmark Projects Amid Challenges</b>',
+      desc: 'Awarded contracts with:<br>JG Summit Petrochemical Corporation (JGSPC) for scaffolding services<br>Philippine Geothermal Production Company for civil and mechanical maintenance (MSA)'
+    },
+    {
+      year: '2022',
+      title: '<b>Recognitions & Long-Term Contracts</b>',
+      desc: 'Received the “Best Bearing Supplier” recognition.\nAlso secured a 3-year industrial painting contract with JG Summit, showcasing long-term client trust.'
+    },
+    {
+      year: '2023',
+      title: '<b>Continued Project Acquisition</b>',
+      desc: 'Awarded contracts for Building & Grounds Maintenance and another Insulation and Cladding project—highlighting consistent project wins.'
+    },
+    {
+      year: '2025',
+      title: '<b>Digital Transformation Begins</b>',
+      desc: 'Development of the official RSIGCI website begins, marking a major step toward digital modernization and increased public visibility.'
+    }
+  ];
+
+  // Initialize year labels
+  function updateYearLabels() {
+    milestoneCards.forEach((card, index) => {
+      const yearLabel = card.querySelector('.milestone-year-label');
+      if (yearLabel && milestoneData[index]) {
+        yearLabel.textContent = milestoneData[index].year;
+      }
+    });
+  }
+
+  // Update info box with milestone data
+  function updateMilestoneInfo(index) {
+    if (milestoneData[index]) {
+      milestoneInfo.querySelector('.milestone-info-title').innerHTML = milestoneData[index].title;
+      milestoneInfo.querySelector('.milestone-info-desc').textContent = milestoneData[index].desc;
+    }
+  }
+
+  // Reset to default state
+  function resetMilestoneInfo() {
+    milestoneInfo.querySelector('.milestone-info-title').innerHTML = '<b>REIGN-NAN Achievements</b>';
+    milestoneInfo.querySelector('.milestone-info-desc').textContent = 'Explore our journey through the years';
+  }
+
+  // Update active states
+  function updateActiveStates(activeIndex) {
+    // Update cards
+    milestoneCards.forEach((card, index) => {
+      card.classList.toggle('active', index === activeIndex);
+    });
+
+    // Update dots
+    milestoneDots.forEach((dot, index) => {
+      dot.classList.toggle('milestone-dot-active', index === activeIndex);
+    });
+  }
+
+  // Navigation functionality
+  let currentMilestoneIndex = 0;
+
+  function scrollToMilestone(index) {
+    const card = milestoneCards[index];
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      currentMilestoneIndex = index;
+      updateActiveStates(index);
+      updateMilestoneInfo(index);
+      updateNavigationButtons();
+    }
+  }
+
+  function updateNavigationButtons() {
+    milestoneNavLeft.disabled = currentMilestoneIndex === 0;
+    milestoneNavRight.disabled = currentMilestoneIndex === milestoneCards.length - 1;
+  }
+
+  // Event listeners for navigation buttons
+  milestoneNavLeft.addEventListener('click', () => {
+    if (currentMilestoneIndex > 0) {
+      scrollToMilestone(currentMilestoneIndex - 1);
+    }
+  });
+
+  milestoneNavRight.addEventListener('click', () => {
+    if (currentMilestoneIndex < milestoneCards.length - 1) {
+      scrollToMilestone(currentMilestoneIndex + 1);
+    }
+  });
+
+  // Event listeners for milestone cards
+  milestoneCards.forEach((card, index) => {
+    card.addEventListener('mouseenter', () => {
+      updateActiveStates(index);
+      updateMilestoneInfo(index);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      updateActiveStates(currentMilestoneIndex);
+      if (currentMilestoneIndex === index) {
+        updateMilestoneInfo(index);
+      } else {
+        resetMilestoneInfo();
+      }
+    });
+
+    card.addEventListener('click', () => {
+      scrollToMilestone(index);
+    });
+  });
+
+  // Event listeners for milestone dots
+  milestoneDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      scrollToMilestone(index);
+    });
+
+    dot.addEventListener('mouseenter', () => {
+      updateActiveStates(index);
+      updateMilestoneInfo(index);
+    });
+
+    dot.addEventListener('mouseleave', () => {
+      updateActiveStates(currentMilestoneIndex);
+      if (currentMilestoneIndex === index) {
+        updateMilestoneInfo(index);
+      } else {
+        resetMilestoneInfo();
+      }
+    });
+  });
+
+  // Initialize
+  updateYearLabels();
+  updateNavigationButtons();
+  resetMilestoneInfo();
+
+  // --- Milestone Focus Overlay for Mobile ---
+function isMobile() {
+  return window.innerWidth <= 600;
+}
+const milestonesSection = document.querySelector('.milestones-section');
+const milestoneFocusOverlay = document.querySelector('.milestone-focus-overlay');
+const milestoneCardsArr = Array.from(document.querySelectorAll('.milestone-card'));
+const milestoneFocusArrowLeft = document.querySelector('.milestone-focus-arrow.left');
+const milestoneFocusArrowRight = document.querySelector('.milestone-focus-arrow.right');
+let focusedMilestoneIdx = 0;
+let isMilestoneFading = false;
+
+// Add page number indicator below the expanded card
+function updateMilestonePageIndicator() {
+  let overlayCard = document.querySelector('.milestones-section.milestone-focus-active .milestone-card.active');
+  let indicator = document.querySelector('.milestone-page-indicator');
+  if (!overlayCard) return;
+  if (!indicator) {
+    indicator = document.createElement('div');
+    indicator.className = 'milestone-page-indicator';
+    indicator.style.textAlign = 'center';
+    indicator.style.fontSize = '1.02rem';
+    indicator.style.color = '#174ea6';
+    indicator.style.fontWeight = '600';
+    indicator.style.margin = '0.5rem 0 0.2rem 0';
+    overlayCard.parentNode.insertBefore(indicator, overlayCard.nextSibling);
+  }
+  indicator.textContent = `Page ${focusedMilestoneIdx + 1} / ${milestoneCardsArr.length}`;
+}
+
+function showMilestoneModalDesc(idx) {
+  const card = milestoneCardsArr[idx];
+  if (!card) return;
+  let title = '', desc = '';
+  if (window.milestoneData && window.milestoneData[idx]) {
+    title = window.milestoneData[idx].title;
+    desc = window.milestoneData[idx].desc;
+  } else {
+    // fallback: try to get from DOM
+    const domTitle = card.querySelector('.milestone-info-title');
+    const domDesc = card.querySelector('.milestone-info-desc');
+    title = domTitle ? domTitle.innerHTML : '';
+    desc = domDesc ? domDesc.textContent : '';
+  }
+  // Remove any previous expanded title/desc
+  let overlayCard = document.querySelector('.milestones-section.milestone-focus-active .milestone-card.active');
+  if (!overlayCard) overlayCard = card;
+  const oldTitle = overlayCard.querySelector('.milestone-expanded-title');
+  const oldDesc = overlayCard.querySelector('.milestone-expanded-desc');
+  if (oldTitle) oldTitle.remove();
+  if (oldDesc) oldDesc.remove();
+  const img = overlayCard.querySelector('.milestone-img');
+  if (img) {
+    const titleEl = document.createElement('div');
+    titleEl.className = 'milestone-expanded-title';
+    titleEl.innerHTML = title;
+    const descEl = document.createElement('div');
+    descEl.className = 'milestone-expanded-desc';
+    descEl.innerHTML = desc.replace(/\n/g, '<br>');
+    img.insertAdjacentElement('afterend', descEl);
+    img.insertAdjacentElement('afterend', titleEl);
+  }
+  updateMilestonePageIndicator();
+}
+function removeMilestoneModalDesc(idx) {
+  const card = milestoneCardsArr[idx];
+  if (!card) return;
+  const descEl = card.querySelector('.milestone-modal-desc');
+  if (descEl) descEl.remove();
+  // Remove page indicator if present
+  let indicator = document.querySelector('.milestone-page-indicator');
+  if (indicator) indicator.remove();
+}
+function focusMilestone(idx) {
+  milestoneCardsArr.forEach((c, i) => {
+    if (i === idx) {
+      c.classList.add('active');
+      c.style.display = 'flex';
+      showMilestoneModalDesc(i);
+    } else {
+      c.classList.remove('active');
+      c.style.display = 'none';
+      removeMilestoneModalDesc(i);
+    }
+  });
+  milestonesSection.classList.add('milestone-focus-active');
+  focusedMilestoneIdx = idx;
+  updateMilestonePageIndicator();
+  updateNavigationButtons();
+}
+
+function fadeToMilestone(nextIdx) {
+  if (isMilestoneFading) return;
+  // Prevent looping: only allow if nextIdx is within bounds
+  if (nextIdx < 0 || nextIdx >= milestoneCardsArr.length) return;
+  isMilestoneFading = true;
+  setArrowButtonsEnabled(false);
+  // Only show the next card, hide all others
+  milestoneCardsArr.forEach((c, i) => {
+    if (i !== nextIdx && i !== focusedMilestoneIdx) {
+      c.style.display = 'none';
+      c.classList.remove('active');
+      removeMilestoneModalDesc(i);
+    }
+  });
+  const currentIdx = focusedMilestoneIdx;
+  const currentCard = milestoneCardsArr[currentIdx];
+  const nextCard = milestoneCardsArr[nextIdx];
+  if (!currentCard || !nextCard) { isMilestoneFading = false; setArrowButtonsEnabled(true); return; }
+  // Fade out current
+  currentCard.style.transition = 'opacity 0.6s';
+  currentCard.style.opacity = '0';
+  setTimeout(() => {
+    currentCard.classList.remove('active');
+    currentCard.style.transition = '';
+    currentCard.style.opacity = '';
+    currentCard.style.display = 'none';
+    removeMilestoneModalDesc(currentIdx);
+    // Fade in next
+    nextCard.style.display = 'flex';
+    nextCard.classList.add('active');
+    showMilestoneModalDesc(nextIdx);
+    nextCard.style.opacity = '0';
+    nextCard.style.transition = 'opacity 0.6s';
+    void nextCard.offsetWidth; // Force reflow
+    milestonesSection.classList.add('milestone-focus-active');
+    focusedMilestoneIdx = nextIdx;
+    setTimeout(() => {
+      nextCard.style.opacity = '1';
+      setTimeout(() => {
+        nextCard.style.transition = '';
+        nextCard.style.opacity = '';
+        isMilestoneFading = false;
+        setArrowButtonsEnabled(true);
+        updateMilestonePageIndicator();
+        updateNavigationButtons();
+      }, 700);
+    }, 10);
+  }, 600);
+}
+
+function unfocusMilestone() {
+  milestonesSection.classList.remove('milestone-focus-active');
+  milestoneCardsArr.forEach((c, i) => {
+    c.classList.remove('active');
+    c.style.display = '';
+    removeMilestoneModalDesc(i);
+  });
+  cleanUpMilestoneCardTitlesDescs(); // <-- Ensure cleanup on unfocus
+}
+function cleanUpMilestoneCardTitlesDescs() {
+  milestoneCardsArr.forEach(card => {
+    const oldTitle = card.querySelector('.milestone-expanded-title');
+    const oldDesc = card.querySelector('.milestone-expanded-desc');
+    if (oldTitle) oldTitle.remove();
+    if (oldDesc) oldDesc.remove();
+  });
+}
+if (milestonesSection && milestoneFocusOverlay && milestoneCardsArr.length) {
+  milestoneCardsArr.forEach((card, idx) => {
+    card.addEventListener('click', (e) => {
+      // On mobile, trigger focus for any click inside the card
+      if (isMobile() && !milestonesSection.classList.contains('milestone-focus-active')) {
+        focusMilestone(idx);
+      }
+      // If already in focus mode, do nothing (prevent click)
+      if (isMobile() && milestonesSection.classList.contains('milestone-focus-active')) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+      }
+    });
+  });
+  milestoneFocusOverlay.addEventListener('click', () => {
+    if (isMobile()) {
+      unfocusMilestone();
+    }
+  });
+  if (milestoneFocusArrowLeft && milestoneFocusArrowRight) {
+    milestoneFocusArrowLeft.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isMobile() && focusedMilestoneIdx > 0) {
+        fadeToMilestone(focusedMilestoneIdx - 1);
+      }
+    });
+    milestoneFocusArrowRight.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isMobile() && focusedMilestoneIdx < milestoneCardsArr.length - 1) {
+        fadeToMilestone(focusedMilestoneIdx + 1);
+      }
+    });
+  }
+  // Optional: Remove focus on resize
+  window.addEventListener('resize', () => {
+    if (!isMobile()) {
+      unfocusMilestone();
+    }
+  });
+}
+
+function setArrowButtonsEnabled(enabled) {
+  if (milestoneFocusArrowLeft) milestoneFocusArrowLeft.disabled = !enabled || focusedMilestoneIdx === 0;
+  if (milestoneFocusArrowRight) milestoneFocusArrowRight.disabled = !enabled || focusedMilestoneIdx === milestoneCardsArr.length - 1;
+}
+
   // --- Initialize Everything ---
   // Setup all button listeners
   setupButtonListeners();
@@ -1007,5 +1445,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // Load jobs if we're on the open positions tab
   if (window.location.hash === '#openPositions') {
     loadJobs();
+  }
+
+  // --- Hero Image Switcher ---
+  const heroImageMain = document.getElementById('heroImageMain');
+  const heroImageSecond = document.getElementById('heroImageSecond');
+  let heroCurrent = 0;
+  if (heroImageMain && heroImageSecond) {
+    setInterval(() => {
+      if (heroCurrent === 0) {
+        heroImageMain.classList.remove('show');
+        heroImageSecond.classList.add('show');
+        heroCurrent = 1;
+      } else {
+        heroImageSecond.classList.remove('show');
+        heroImageMain.classList.add('show');
+        heroCurrent = 0;
+      }
+    }, 4000);
+  }
+
+  // Attach event listener to milestone-focus-close button
+  const milestoneFocusClose = document.querySelector('.milestone-focus-close');
+  if (milestoneFocusClose) {
+    milestoneFocusClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      unfocusMilestone();
+    });
   }
 }); 

@@ -31,296 +31,173 @@
       </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect-dark">
-      <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-          <div class="text-white font-bold text-xl">
-            <button onclick="goToHomepage()" class="hover:opacity-80 transition-opacity">
+    <!-- Header / Navigation -->
+    <header>
+      <nav class="custom-header-nav">
+        <div class="header-logo">
               <img src="RSIGCI_Logo.png" alt="RSIGCI Logo" class="h-10 w-auto" />
-            </button>
-          </div>
-          <div class="hidden md:flex space-x-8">
-            <button id="headerAboutBtn" class="text-white hover:text-orange-300 transition-colors focus:outline-none">About</button>
-            <button id="headerProductsBtn" class="text-white hover:text-orange-300 transition-colors focus:outline-none">Products & Services</button>
-            <button id="headerCareersBtn" class="text-white hover:text-orange-300 transition-colors focus:outline-none">Careers</button>
-            <button id="headerApplyBtn" class="text-white hover:text-orange-300 transition-colors focus:outline-none">Apply</button>
-          </div>
-          <div class="md:hidden">
-            <button class="text-white" onclick="toggleMobileMenu()">
-              <i class="fas fa-bars text-xl"></i>
-            </button>
-          </div>
         </div>
-      </div>
+        <ul class="header-nav-links">
+          <li><button id="headerAboutBtn" class="header-link">About Us</button></li>
+          <li><button id="headerProductsBtn" class="header-link">Products & Services</button></li>
+          <li><button id="headerCareersBtn" class="header-link">Careers</button></li>
+          <li><button id="headerApplyBtn" class="header-link">Apply</button></li>
+        </ul>
+        <button class="header-hamburger" onclick="toggleMobileMenu()" aria-label="Open menu" aria-controls="mobileMenu">
+          <span class="hamburger-icon" aria-label="Menu icon"></span>
+        </button>
     </nav>
+    </header>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-blue-900 z-40 transform translate-x-full transition-transform duration-300 md:hidden">
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-blue-900 z-40 transform translate-x-full transition-transform duration-300 md:hidden" aria-label="Mobile navigation menu" role="navigation">
       <div class="flex flex-col items-center justify-center h-full space-y-8">
-        <button id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()">About</button>
-        <button id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()">Careers</button>
-        <button id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()">Apply</button>
-        <button onclick="closeMobileMenu()" class="absolute top-6 right-6 text-white text-2xl">
-          <i class="fas fa-times"></i>
-        </button>
+        <button id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Our Company">Our Company</button>
+        <button id="mobileProductsBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Products & Services">Products & Services</button>
+        <button id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Careers">Careers</button>
+        <button id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Apply">Apply</button>
       </div>
     </div>
 
     <!-- Hero Section -->
-    <section class="min-h-screen gradient-bg text-white flex flex-col justify-center items-center text-center w-full px-4 md:px-8 pt-20 md:pt-0 relative overflow-hidden" id="heroSection">
-      <!-- Carousel Background -->
-      <div class="absolute inset-0 carousel-container">
-        <div class="carousel-slide active" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjMWUzYThhIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDE8L3RleHQ+PC9zdmc+');">
-          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <section class="hero-section" id="heroSection">
+      <img src="RSIGCI_Main.png" alt="Background" class="hero-bg-image fade-image show" id="heroImageMain" />
+      <img src="RSIGCI_Second.jpg" alt="Background 2" class="hero-bg-image fade-image" id="heroImageSecond" />
+      <div class="hero-container hero-content-on-top">
+        <!-- Left: Text and Buttons -->
+        <div class="hero-left">
+          <h1 class="hero-title">Join Our Team of<br>Builders and Closers</h1>
+          <p class="hero-description">Our company is engaged in the supply of mechanical seals, bearing protectors, packing and gaskets, and electrical and mechanical equipment and parts for industrial use. We are also engaged in insulation and commissioning, which is part of after-sales service.</p>
+          <div class="hero-buttons">
+            <button id="exploreOpportunitiesBtn" class="hero-btn hero-btn-green"><i class="fas fa-search"></i> Explore Opportunities</button>
+            <button id="applyNowBtn" class="hero-btn hero-btn-blue"><i class="fas fa-briefcase"></i> Apply Now</button>
+          </div>
         </div>
-        <div class="carousel-slide" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjM2I4MmY2Ii8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDI8L3RleHQ+PC9zdmc+');">
-          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        </div>
-        <div class="carousel-slide" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSIjMWU0MGFmIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBob3RvIDM8L3RleHQ+PC9zdmc+');">
-          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        </div>
-      </div>
-      
-      <!-- Carousel Navigation -->
-      <div class="relative z-10 max-w-4xl mx-auto">
-        <div class="fade-in stagger-1">
-          <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 leading-tight">
-            Join Our Team of 
-            <span class="text-orange-400">Builders</span> and 
-            <span class="text-orange-400">Closers</span>
-          </h1>
-        </div>
-        <div class="fade-in stagger-2">
-          <p class="mb-8 text-base sm:text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
-            Our company is engaged in the supply of mechanical seals, bearing protectors, packing and gaskets, electrical and mechanical equipments and parts for industrial use. We are also engaged in insulation and commissioning which is part of after sales service.
-          </p>
-        </div>
-        <div class="fade-in stagger-3 flex flex-wrap gap-4 justify-center">
-          <button id="exploreOpportunitiesBtn" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg hover-lift">
-            <i class="fas fa-search mr-2"></i>Explore Opportunities
-          </button>
-          <button id="applyNowBtn" class="glass-effect px-8 py-4 rounded-full font-semibold text-lg hover-lift">
-            <i class="fas fa-rocket mr-2"></i>Apply Now
-          </button>
-        </div>
-        <div class="fade-in stagger-4 mt-8">
-          <button id="seeMoreBtn" class="text-white hover:text-orange-300 transition-colors font-semibold text-lg">
-            <span id="seeMoreText">See More About Our Company</span>
-            <i class="fas fa-chevron-down ml-2" id="seeMoreIcon"></i>
-          </button>
+        <!-- Right: Circular Image with Overlays -->
+        <div class="hero-right">
+          <!-- overlays removed, image is now behind -->
         </div>
       </div>
-      
-      <!-- Floating Elements -->
-      <div class="absolute top-20 left-10 floating">
-        <i class="fas fa-hammer text-4xl text-orange-400 opacity-30"></i>
-      </div>
-      <div class="absolute top-40 right-20 floating" style="animation-delay: 1s;">
-        <i class="fas fa-chart-line text-3xl text-orange-400 opacity-30"></i>
-      </div>
-      <div class="absolute bottom-40 left-20 floating" style="animation-delay: 2s;">
-        <i class="fas fa-users text-3xl text-orange-400 opacity-30"></i>
-      </div>
-      
-      <!-- Scroll Indicator -->
-      <div class="scroll-indicator">
-        <i class="fas fa-chevron-down text-2xl text-white opacity-70"></i>
+      <div class="hero-see-more-wrapper">
+        <a href="#about" class="hero-see-more" id="seeMoreBtn">See More About Our Company</a>
+        <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
       </div>
     </section>
 
     <!-- Homepage Sections Wrapper -->
     <div id="homepageSections" class="hidden w-full">
       <!-- About Section -->
-      <section class="py-20 px-4 md:px-8 bg-white w-full" id="about">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            <div class="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0 justify-center items-stretch">
-              <!-- Vision -->
-              <div class="slide-in-left stagger-1 text-center p-0 flex-1">
-                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <i class="fas fa-shield-alt text-2xl text-white"></i>
+      <section class="about-section" id="about">
+        <div class="about-cards-row">
+          <div class="about-card">
+            <div class="about-card-icon mission-icon"><i class="fas fa-bullseye"></i></div>
+            <div class="about-card-title">MISSION</div>
+            <div class="about-card-text">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</div>
                 </div>
-                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Vision</h3>
-                <p class="text-gray-600 text-sm sm:text-base">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</p>
+          <div class="about-card">
+            <div class="about-card-icon vision-icon"><i class="fas fa-eye"></i></div>
+            <div class="about-card-title">VISION</div>
+            <div class="about-card-text">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</div>
               </div>
-              <!-- Mission -->
-              <div class="slide-in-left stagger-2 text-center p-0 flex-1">
-                <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <i class="fas fa-handshake text-2xl text-white"></i>
-                </div>
-                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Mission</h3>
-                <p class="text-gray-600 text-sm sm:text-base">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</p>
-              </div>
-              <!-- Core Values -->
-              <div class="slide-in-left stagger-3 text-center p-0 flex-1">
-                <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <i class="fas fa-star text-2xl text-white"></i>
-                </div>
-                <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-4">Core Values</h3>
-                <ul class="text-gray-600 list-disc list-inside text-left inline-block text-sm sm:text-base">
+          <div class="about-card">
+            <div class="about-card-icon values-icon"><i class="fas fa-gem"></i></div>
+            <div class="about-card-title">CORE VALUES</div>
+            <div class="about-card-text">
+              <ul class="about-values-list">
                   <li>Integrity</li>
                   <li>Teamwork</li>
                   <li>Excellence</li>
                   <li>Respect</li>
                   <li>Professionalism</li>
                 </ul>
-              </div>
             </div>
           </div>
         </div>
       </section>
-      <!-- Company Overview Section -->
-      <section class="py-20 px-4 md:px-8 bg-white w-full" id="company-overview">
-        <div class="w-full text-center mb-12">
-          <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-blue-900">REIGN-NAN Sales Industry & General Contractor, Inc.</h1>
-          <p class="text-base sm:text-lg md:text-xl text-gray-700 mb-2 font-medium">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</p>
-        </div>
-        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div class="bg-blue-50 rounded-xl shadow-md p-8">
-            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-blue-800 mb-4">Company Overview</h2>
-            <p class="text-gray-700 text-sm sm:text-base mb-4">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.</p>
-            <p class="text-gray-700 text-sm sm:text-base mb-4">With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.</p>
-            <p class="text-gray-700 text-sm sm:text-base">Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</p>
+      <!-- Company Overview & Location Section -->
+      <section class="company-section">
+        <h2 class="company-title">REIGN-NAN Sales Industry & General Contractor, Inc.</h2>
+        <div class="company-address">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</div>
+        <div class="company-row">
+          <div class="company-card company-overview">
+            <div class="company-card-title">COMPANY OVERVIEW</div>
+            <div class="company-card-text">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.<br><br>With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.<br><br>Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</div>
           </div>
-          <div class="rounded-xl overflow-hidden shadow-md w-full h-full min-h-[300px] flex items-center justify-center">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889256935179!2d121.13029257509969!3d14.259680186187273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752212108104!5m2!1sen!2sph" 
-              width="100%" 
-              height="350" 
-              style="border:0; min-width:200px; min-height:300px;" 
-              allowfullscreen="" 
-              loading="lazy" 
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+          <div class="company-card company-location">
+            <div class="company-card-title">COMPANY LOCATION</div>
+            <div class="company-card-map">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" width="100%" height="100%" style="border:0; border-radius: 1.5rem; min-height:250px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
           </div>
         </div>
       </section>
-      <!-- Leadership & Team + Milestones Section -->
-      <section class="py-20 px-4 md:px-8 bg-gray-50 w-full" id="leadership-milestones">
-        <div class="w-full">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            <!-- Leadership & Team -->
-            <div>
-              <div class="text-center md:text-left mb-16 md:mb-0">
-                <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Leadership & Team</h2>
-                <p class="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto md:mx-0">
-                  Presided by <span class="font-semibold">Mr. Nanding A. Bancoro</span> and managed by <span class="font-semibold">Engr. Marieta A. Bancoro</span>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.
-                </p>
+      <!-- Leadership & Team Section -->
+      <section class="leadership-section">
+        <div class="leadership-row">
+          <div class="leadership-text">
+            <div class="leadership-title">LEADERSHIP & TEAM</div>
+            <div class="leadership-desc">Presided by <b>Mr. Nanding A. Bancoro</b> and managed by <b>Engr. Marieta A. Bancoro</b>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.</div>
               </div>
+          <div class="leadership-image-wrapper">
+            <img src="Leadership.png" alt="Leadership Team" class="leadership-image" />
             </div>
-            <!-- Milestones -->
-            <div>
-              <div class="text-center md:text-left mb-10">
-                <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Milestones</h2>
               </div>
-              <div class="relative w-full overflow-x-auto pb-8">
-                <!-- Timeline Line: now outside the flex container -->
-                <div class="absolute left-0 right-0 top-1/2 h-1 bg-blue-200 z-0" style="height: 4px;"></div>
-                <div class="flex items-center space-x-8 min-w-[700px] md:min-w-0 justify-center relative z-10">
-                  <!-- 1997 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=1997" alt="1997 Milestone" class="object-cover w-full h-full" />
+      </section>
+      <!-- Milestones Section -->
+      <section class="milestones-section">
+        <div class="milestone-blur-bg"></div>
+        <div class="milestone-focus-overlay"></div>
+        <!-- Minimalistic SVG left arrow -->
+        <button class="milestone-focus-arrow left" aria-label="Previous milestone">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L10 14L18 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- Minimalistic SVG right arrow -->
+        <button class="milestone-focus-arrow right" aria-label="Next milestone">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L18 14L10 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- Minimalistic SVG X close button -->
+        <button class="milestone-focus-close" aria-label="Close milestone modal" style="display:none;">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L20 20M20 8L8 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+        <!-- Milestone heading inside the panel -->
+        <div class="milestone-section-title" style="text-align:center; font-size:2rem; font-weight:700; margin-bottom:1.5rem; color:#174ea6;">Milestone</div>
+        <div class="milestones-container">
+          <button class="milestone-nav-btn milestone-nav-left" id="milestoneNavLeft" aria-label="Previous milestone">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
                     </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=1997" alt="1997 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Founded in Cabuyao, Laguna</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">1997</span>
-                  </div>
-                  <!-- 2003 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2003" alt="2003 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2003" alt="2003 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Relocated to a three-storey office building in Banay-Banay, Cabuyao</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2003</span>
-                  </div>
-                  <!-- 2008 (Incorporated) -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2008" alt="2008 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2008" alt="2008 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Incorporated as REIGN-NAN Sales Industry and General Contractor, Inc.</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2008</span>
-                  </div>
-                  <!-- 2008 (AESSEAL) -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2008" alt="2008 AESSEAL" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2008+AESSEAL" alt="2008 AESSEAL" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Appointed as exclusive distributor of AESSEAL products</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2008</span>
-                  </div>
-                  <!-- 2010 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2010" alt="2010 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2010" alt="2010 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Began active sponsorship of PSME and professional organizations</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2010</span>
-                  </div>
-                  <!-- 2012 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2012" alt="2012 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2012" alt="2012 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">AESSEAL products selected as standard brand for key clients</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2012</span>
-                  </div>
-                  <!-- 2013 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2013" alt="2013 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2013" alt="2013 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Awarded the International Quality Crown (London 2013)</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2013</span>
-                  </div>
-                  <!-- 2015 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2015" alt="2015 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2015" alt="2015 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Recognized as Fastest Growing Company by AES East Asia</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2015</span>
-                  </div>
-                  <!-- 2017 -->
-                  <div class="relative flex flex-col items-center milestone-horizontal" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
-                    <button class="w-14 h-14 bg-white border-2 border-blue-600 rounded-lg shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform hover:scale-110 milestone-btn z-10 overflow-hidden p-0" tabindex="0" style="margin-bottom: 0.5rem;">
-                      <img src="https://placehold.co/56x56?text=2017" alt="2017 Milestone" class="object-cover w-full h-full" />
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-28 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-56 z-20" style="display: none;">
-                      <img src="https://placehold.co/200x100?text=2017" alt="2017 Milestone" class="rounded mb-2 w-full h-24 object-cover" />
-                      <div class="text-xs text-gray-700">Construction of a new building for Mechanical Seal Division (MSD)</div>
-                    </div>
-                    <span class="mt-2 text-sm font-semibold text-blue-900">2017</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="milestones-gallery" id="milestonesGallery">
+            <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="11"><span class="milestone-year-label" data-year="11"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
           </div>
+          <button class="milestone-nav-btn milestone-nav-right" id="milestoneNavRight" aria-label="Next milestone">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                    </div>
+        <div class="milestones-dots-row" id="milestonesDots">
+          <span class="milestone-dot milestone-dot-active" data-milestone="0">1997</span>
+          <span class="milestone-dot" data-milestone="1">2003</span>
+          <span class="milestone-dot" data-milestone="2">2008</span>
+          <span class="milestone-dot" data-milestone="3">2008</span>
+          <span class="milestone-dot" data-milestone="4">2023</span>
+          <span class="milestone-dot" data-milestone="5">2010</span>
+          <span class="milestone-dot" data-milestone="6">2015</span>
+          <span class="milestone-dot" data-milestone="7">2018</span>
+          <span class="milestone-dot" data-milestone="8">2020</span>
+          <span class="milestone-dot" data-milestone="9">2022</span>
+                  </div>
+        <div class="milestone-info" id="milestoneInfo">
+          <div class="milestone-info-title"><b>Reign-NAN Sales Industry</b> was formed</div>
+          <div class="milestone-info-desc">Trading Company of Packing, Gasket, O-ring, Cords, and Engineering Plastics</div>
         </div>
       </section>
     </div>
@@ -458,40 +335,40 @@
           <form id="applicationForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input type="text" id="fullName" placeholder="Enter your full name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required />
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
                 <span class="error-message" id="fullNameError" style="display:none"></span>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                <input type="email" id="email" placeholder="your.email@example.com" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required />
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your.email@example.com" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
                 <span class="error-message" id="emailError" style="display:none"></span>
               </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                <input type="tel" id="phone" placeholder="+63 912 345 6789" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required />
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
                 <span class="error-message" id="phoneError" style="display:none"></span>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Position Interest</label>
-                <select id="position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="position">Position Interest</label>
+                <select id="position" name="position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true">
                   <option value="">Select a position</option>
                   <option>Construction Site Supervisor</option>
                   <option>Sales Account Executive</option>
                   <option>Other</option>
                 </select>
                 <span class="error-message" id="positionError" style="display:none"></span>
-                <input type="text" id="otherPosition" placeholder="Please specify position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg mt-2" style="display:none" />
+                <input type="text" id="otherPosition" name="otherPosition" placeholder="Please specify position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg mt-2" style="display:none" aria-label="Other Position" />
                 <span class="error-message" id="otherPositionError" style="display:none"></span>
               </div>
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Cover Letter</label>
-              <textarea id="coverLetter" placeholder="Tell us why you'd be a great fit..." rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+              <label class="block text-sm font-medium text-gray-700 mb-2" for="coverLetter">Cover Letter</label>
+              <textarea id="coverLetter" name="coverLetter" placeholder="Tell us why you'd be a great fit..." rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true"></textarea>
               <div class="flex justify-between items-center mt-1">
                 <span id="coverLetterWordCount" class="text-xs text-gray-500">0/400 words</span>
                 <span id="coverLetterLimitWarning" class="text-xs text-red-500 hidden">Word limit reached!</span>
@@ -500,26 +377,26 @@
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Resume/CV</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2" for="resumeFile">Resume/CV</label>
               <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="dropZone">
-                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2" aria-label="Upload icon"></i>
                 <p class="text-gray-600">Drag and drop your resume here, or <span class="text-blue-600 cursor-pointer">browse files</span></p>
-                <input type="file" id="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                <input type="file" id="resumeFile" name="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-label="Resume or CV upload" />
               </div>
               <span class="file-error" id="resumeError" style="display:none"></span>
             </div>
             
             <div class="flex justify-center my-4">
-              <div class="g-recaptcha" data-sitekey="6Lfnj3orAAAAAKf4SUrVhY_9tQBw1wR_xcvjfKcj"></div>
+              <div class="g-recaptcha" data-sitekey="6Lfnj3orAAAAAKf4SUrVhY_9tQBw1wR_xcvjfKcj" aria-label="reCAPTCHA"></div>
             </div>
             <span class="recaptcha-error" id="recaptchaError" style="display:none"></span>
             <div class="flex items-center mb-2">
-              <input type="checkbox" id="policyAgreement" class="mr-2" required />
+              <input type="checkbox" id="policyAgreement" name="policyAgreement" class="mr-2" required aria-required="true" />
               <label for="policyAgreement" class="text-sm text-gray-700">I agree to the <a href="privacy-policy.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Privacy Policy</a> and <a href="terms-of-service.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Terms of Service</a> <span class="text-red-500">*</span></label>
             </div>
             <span class="error-message" id="policyAgreementError" style="display:none"></span>
-            <button type="submit" id="submitBtn" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold pulse-glow" onclick="submitApplication(event)">
-              <i class="fas fa-paper-plane mr-2"></i>Submit Application
+            <button type="submit" id="submitBtn" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold pulse-glow" onclick="submitApplication(event)" aria-label="Submit Application">
+              <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>Submit Application
             </button>
           </form>
         </div>
@@ -565,9 +442,9 @@
           <div class="lg:col-span-1">
             <h4 class="font-semibold mb-4">Contact</h4>
             <ul class="space-y-2 text-gray-400">
-              <li><i class="fas fa-envelope mr-2"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400">recruitment@rsigci.com</a></li>
-              <li><i class="fas fa-phone mr-2"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
-              <li><i class="fas fa-map-marker-alt mr-2"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
+              <li><i class="fas fa-envelope mr-2" aria-hidden="true"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400" aria-label="Email recruitment@rsigci.com">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2" aria-hidden="true"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400" aria-label="Copy phone number to clipboard">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard" aria-label="Copy phone number to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
+              <li><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
             </ul>
           </div>
           
@@ -575,14 +452,17 @@
           <div class="lg:col-span-1">
             <h4 class="font-semibold mb-4">Follow Us</h4>
             <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                <i class="fab fa-linkedin text-xl"></i>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
+                <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
+                <span class="sr-only">LinkedIn</span>
               </a>
-              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener">
-                <i class="fab fa-facebook text-xl"></i>
+              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener" aria-label="Facebook">
+                <i class="fab fa-facebook text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Facebook</span>
               </a>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                <i class="fab fa-twitter text-xl"></i>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
+                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Twitter</span>
               </a>
             </div>
           </div>
@@ -592,19 +472,21 @@
             <h4 class="font-semibold mb-4">Location</h4>
             <div class="rounded-lg overflow-hidden shadow-lg">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889256935179!2d121.13029257509969!3d14.259680186187273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752212108104!5m2!1sen!2sph" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" 
                 width="100%" 
                 height="200" 
                 style="border:0;" 
                 allowfullscreen="" 
                 loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Company Location Map"
+                aria-label="Company Location Map">
               </iframe>
             </div>
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 1997 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+          <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
