@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore our comprehensive range of mechanical seals, bearing protectors, and industrial equipment. Quality products for industrial applications." />
+    <title>Product Index | RSIGCI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+    <link rel="stylesheet" href="index.css">
+    <style>
+      .product-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%);
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .product-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+        opacity: 0.3;
+        z-index: 1;
+      }
+      
+      .product-hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .breadcrumb {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .breadcrumb-item {
+        color: #64748b;
+        transition: color 0.3s ease;
+      }
+      
+      .breadcrumb-item:hover {
+        color: #3b82f6;
+      }
+      
+      .breadcrumb-separator {
+        color: #cbd5e1;
+        margin: 0 0.5rem;
+      }
+      
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 32px;
+        padding: 56px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.3s, transform 0.3s;
+      }
+      .card:hover {
+        box-shadow: 0 12px 32px rgba(44, 62, 80, 0.16);
+        transform: translateY(-6px) scale(1.02);
+      }
+      .card-banner {
+        width: 100%;
+        height: 180px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #f3f6fa;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 0;
+      }
+      .card-content {
+        padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        align-items: flex-start;
+      }
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.7rem;
+        font-family: 'Montserrat', Arial, sans-serif;
+      }
+      .card-desc {
+        color: #5a6a85;
+        font-size: 1.01rem;
+        line-height: 1.7;
+        font-family: 'Inter', Arial, sans-serif;
+        margin-bottom: 1.2rem;
+      }
+      .card-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: auto;
+      }
+      .btn-brochure {
+        background: #3b82f6;
+        color: white;
+        padding: 0.5rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.93rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+      }
+      .btn-brochure:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+      }
+      .btn-view-range {
+        background: transparent;
+        color: #3b82f6;
+        border: 2px solid #3b82f6;
+        padding: 0.5rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.93rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .btn-view-range:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+      }
+      @media (max-width: 800px) {
+        .card-grid {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding: 24px 2vw;
+        }
+        .card-banner {
+          height: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <div id="header"></div>
+    <!-- Header / Navigation -->
+    <header>
+      <nav class="custom-header-nav relative flex items-center w-full px-4 py-2" style="min-height:64px;">
+        <div class="flex items-center w-full">
+          <div class="header-logo flex items-center min-w-[120px] z-10">
+            <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-10 w-auto" />
+          </div>
+          <ul class="header-nav-links flex text-base font-medium mx-auto absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="gap:0;">
+            <li><a class="header-link" href="about.html">About Us</a></li>
+            <li><a class="header-link active" href="products.html">Products</a></li>
+            <li><a class="header-link" href="services.html">Services</a></li>
+            <li><a class="header-link" href="careers.html">Careers</a></li>
+            <li><a href="contact-us.html" class="header-link" id="contactUsBtn">Contact Us</a></li>
+          </ul>
+          <div class="flex-1 flex justify-end items-center">
+            <button class="header-hamburger ml-4 z-10" aria-label="Open menu" id="hamburgerMenuBtn">
+              <span class="hamburger-icon"></span>
+            </button>
+          </div>
+        </div>
+        <!-- Slide-down menu -->
+        <div id="slideMenu" class="fixed bg-white shadow-lg transition-all duration-300 z-50 flex flex-col divide-y divide-gray-200"
+          style="top: 0; right: -340px; width: 320px; height: 100vh; opacity: 0; pointer-events: none;">
+          <button id="closeSlideMenu" class="hidden absolute top-4 right-4 text-3xl text-gray-500 hover:text-gray-800 focus:outline-none" aria-label="Close menu">&times;</button>
+          <a href="about.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">About Us</a>
+          <a href="products.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Products</a>
+          <a href="services.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Services</a>
+          <a href="careers.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Careers</a>
+          <a href="contact.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Contact Us</a>
+        </div>
+        <style>
+          .custom-header-nav { height: 64px; min-height: 64px; }
+          header, nav.custom-header-nav { height: 64px; min-height: 64px; }
+          .header-nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 0 !important;
+            z-index: 1;
+            height: 100%;
+          }
+          .header-link {
+            transition: color 0.18s;
+            border-radius: 0;
+            height: 64px;
+            padding: 0 2.2rem;
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 0;
+            box-sizing: border-box;
+            font-size: 1rem;
+            line-height: 1;
+            z-index: 1;
+          }
+          .header-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 64px;
+            background: rgba(0,0,0,0.10);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s;
+            z-index: 0;
+          }
+          .header-link:hover::before, .header-link:focus::before {
+            opacity: 1;
+          }
+          .header-link:hover, .header-link:focus {
+            color: #38bdf8; /* Tailwind sky-400 */
+            outline: none;
+          }
+          .header-link:active {
+            background: transparent !important;
+            color: #38bdf8 !important;
+            box-shadow: none !important;
+          }
+          .header-link.active,
+          .header-link[aria-current="page"] {
+            color: #1e293b; /* default text color, not blue */
+          }
+          .header-link.active::before,
+          .header-link[aria-current="page"]::before {
+            opacity: 1;
+          }
+          .header-hamburger {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            position: relative;
+          }
+          @media (max-width: 700px) {
+            .header-hamburger {
+              display: flex !important;
+              position: relative;
+              z-index: 60;
+            }
+            #slideMenu {
+              display: none !important;
+            }
+            #slideMenu.open {
+              display: flex !important;
+            }
+          }
+          @media (min-width: 701px) {
+            #slideMenu {
+              display: none !important;
+            }
+          }
+          .header-hamburger:active, .header-hamburger:focus {
+            background: transparent !important;
+            box-shadow: none !important;
+            outline: none !important;
+          }
+          @media (max-width: 900px) {
+            .header-nav-links { gap: 1.2rem; }
+          }
+          @media (max-width: 700px) {
+            .header-nav-links { display: none !important; }
+          }
+          @media (max-width: 600px) {
+            .custom-header-nav { padding: 0.5rem 0.5rem; }
+            .header-nav-links { gap: 0.7rem; }
+          }
+          .glass-header {
+            background: rgba(30,41,59,0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1.5px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 24px rgba(30,41,59,0.08);
+          }
+        </style>
+      </nav>
+    </header>
+    <script>
+      (function() {
+        const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+        const slideMenu = document.getElementById('slideMenu');
+        const closeSlideMenu = document.getElementById('closeSlideMenu');
+        let menuOpen = false;
+        function openMenu() {
+          menuOpen = true;
+          slideMenu.classList.add('open');
+          slideMenu.style.right = '0';
+          slideMenu.style.opacity = '1';
+          slideMenu.style.pointerEvents = 'auto';
+        }
+        function closeMenu() {
+          menuOpen = false;
+          slideMenu.classList.remove('open');
+          if(window.innerWidth <= 700) {
+            slideMenu.style.right = '0';
+            slideMenu.style.opacity = '0';
+            slideMenu.style.pointerEvents = 'none';
+          } else {
+            slideMenu.style.right = '-340px';
+            slideMenu.style.opacity = '0';
+            slideMenu.style.pointerEvents = 'none';
+          }
+        }
+        if (hamburgerMenuBtn) {
+          hamburgerMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if(menuOpen) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          });
+        }
+        if(closeSlideMenu) {
+          closeSlideMenu.onclick = function(e) {
+            e.stopPropagation();
+            closeMenu();
+          };
+        }
+        document.addEventListener('click', function(e) {
+          if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+            closeMenu();
+          }
+        });
+        if (slideMenu) {
+          slideMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+          });
+        }
+        window.addEventListener('resize', function() {
+          if(menuOpen) {
+            closeMenu();
+          }
+        });
+      })();
+    </script>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb py-4">
+      <div class="container mx-auto px-4 md:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <li>
+              <a href="index.html" class="breadcrumb-item hover:text-blue-600">
+                <i class="fas fa-home mr-1"></i>Home
+              </a>
+            </li>
+            <li>
+              <span class="breadcrumb-separator">/</span>
+            </li>
+            <li>
+              <span class="breadcrumb-item text-blue-600 font-medium">Product Index</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="product-hero">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="product-hero-content text-white">
+          <div class="max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Product Index</h1>
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed">
+              Discover our comprehensive range of mechanical seals, bearing protectors, and industrial equipment. 
+              Quality products designed for reliability and performance in demanding industrial environments.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#product-categories" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center">
+                <i class="fas fa-th-large mr-2"></i>Explore Products
+              </a>
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="bg-white bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center hover:bg-opacity-30 transition-all">
+                <i class="fas fa-play mr-2"></i>Journey Of A Seal
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Categories Section -->
+    <section id="product-categories" class="py-20 px-4 md:px-8">
+      <div class="container mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Category of Product</h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            Choose from our extensive range of industrial products and solutions designed to meet your specific requirements.
+          </p>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-banner" style="background-image: url('seal_support-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Seal Support Systems</div>
+              <div class="card-desc">
+                We believe we AESSEAL® is the only manufacturer to supply CE certified assemblies without the use of third-party sources. The AESSEAL Global Technology Centre is certified to Module D, B1 and H1 - H1 being the highest level of PED certification.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('gland_packing-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Gland Packing</div>
+              <div class="card-desc">
+                AESSEAL® packing displays an exceptional level of resilience and conformity of volume. We manufacture a comprehensive range of packing to meet all your requirements.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('gas_seals-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Gas Seals</div>
+              <div class="card-desc">
+                The Gas Seal range has been developed to operate on the most challenging duties. We supply a complete range of gas seals for compressors, API pumps, process pumps, and reactors.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('elastomers-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Elastomers</div>
+              <div class="card-desc">
+                AES-Elast™ offers the excellent thermal resistance is probably the most generically applicable elastomer in the world.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('component_seals-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Component Seals</div>
+              <div class="card-desc">
+                We offer a range of component seals for a huge variety of applications. One of the most comprehensive component seals product portfolios available. With some 10,000 product lines available from the stock.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('cartridge_seals-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Cartridge Mechanical Seals</div>
+              <div class="card-desc">
+                We offer a complete portfolio of mechanical seals, including the CAPI™ Type A, B & C ranges of bellows and pusher seals, with cutting edge technology for the most demanding applications and environments.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('bearing-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Bearing Protection</div>
+              <div class="card-desc">
+                AESSEAL® is a world leader in the provision of wholly – owned and extensively inventoried contacting and non-contacting bearing seal technology.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Us Button (after REIGN-NAN & AESSEAL section) -->
+    <!-- Removed the standalone Contact Us button here -->
+
+    <!-- More Information Section -->
+    <section class="py-16 px-4 md:px-8 bg-white">
+      <div class="container mx-auto">
+        <div class="text-center">
+          <div class="bg-white rounded-xl shadow-md p-8 max-w-4xl mx-auto mb-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div class="md:w-1/2 w-full mb-6 md:mb-0 md:pr-6 border-b md:border-b-0 md:border-r border-gray-200">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">REIGN-NAN & AESSEAL Partnership</h3>
+              <p class="text-lg text-gray-700 mb-4">
+                <strong>REIGN-NAN Sales Industry & General Contractor, Inc.</strong> is an official sales office and distributor for AESSEAL in the Philippines. As a trusted partner, REIGN-NAN provides access to AESSEAL’s advanced sealing solutions, technical expertise, and support for customers throughout the country.
+              </p>
+              <a href="https://www.aesseal.com/en/locations/asia/ph/reign-nan-sales-indstry-generl-ctr-inc/" target="_blank" class="text-blue-600 hover:underline font-semibold">Learn more about AESSEAL in the Philippines &rarr;</a>
+            </div>
+            <div class="md:w-1/2 w-full md:pl-6">
+              <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">For More Information</h3>
+              <p class="text-lg text-gray-600 mb-8">
+                Need technical specifications, pricing, or have questions about our products? <br>
+                Our team is ready to assist you with detailed information and expert advice.
+              </p>
+              <a href="contact-us.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow transition-all text-lg inline-flex items-center justify-center">
+                <i class="fas fa-envelope mr-2"></i>Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-12 px-4 md:px-8 bg-gray-100">
+      <div class="container mx-auto">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Follow Us</h3>
+          <p class="text-gray-600">Stay updated with our latest products and industry insights</p>
+        </div>
+        <div class="flex justify-center space-x-6">
+          <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" target="_blank" class="social-media-icon facebook hover:scale-110">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://youtu.be/_Hu_CT6jNnk" target="_blank" class="social-media-icon youtube hover:scale-110">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://ph.indeed.com/cmp/Reign--nan-Sales-Industry-and-General-Contractor-Inc./reviews" target="_blank" class="social-media-icon indeed hover:scale-110" title="Indeed Reviews">
+            <i class="fas fa-briefcase"></i>
+          </a>
+          <a href="#" class="social-media-icon linkedin hover:scale-110">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="social-media-icon instagram hover:scale-110">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Company</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="index.html#about" class="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
+              <li><a href="index.html#apply" class="hover:text-white transition-colors">Careers</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Support</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="index.html#contact" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Add scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe product category cards
+      document.querySelectorAll('.product-category-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        card.style.transitionDelay = `${index * 0.1}s`;
+        observer.observe(card);
+      });
+    </script>
+    <script>
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Set active nav link
+          const page = location.pathname.split('/').pop();
+          document.querySelectorAll('.header-link').forEach(link => {
+            if(link.getAttribute('href') === page) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        });
+    </script>
+  </body>
+</html> 

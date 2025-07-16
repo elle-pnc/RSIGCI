@@ -4,20 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <!-- SECURITY: Backend validation is still required for all uploads and user input. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://accounts.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.google.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.gstatic.com; img-src 'self' data: https://*; connect-src 'self' https://firestore.googleapis.com; frame-src https://www.google.com https://content.googleapis.com;" />
+    <meta name="keywords" content="RSIGCI, Reign-NAN, general contractor, mechanical seals, industrial equipment, careers, sales, construction, Philippines" />
+    <link rel="canonical" href="https://www.rsigci.com/" />
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Join Our Team | RSIGCI." />
+    <meta property="og:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <meta property="og:image" content="RSIGCI_LOGO_2.png" />
+    <meta property="og:url" content="https://www.rsigci.com/" />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Join Our Team | RSIGCI." />
+    <meta name="twitter:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <meta name="twitter:image" content="RSIGCI_LOGO_2.png" />
     <title>Join Our Team | RSIGCI.</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
     <link rel="stylesheet" href="index.css">
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
-    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js" defer></script>
+    <script src="firebase-config.js" defer></script>
     <!-- Google Drive API -->
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://accounts.google.com/gsi/client"></script>
-    <script src="google-drive-service.js"></script>
+    <script src="https://apis.google.com/js/api.js" defer></script>
+    <script src="https://accounts.google.com/gsi/client" defer></script>
+    <script src="google-drive-service.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   </head>
@@ -32,30 +47,218 @@
     </div>
 
     <!-- Header / Navigation -->
-    <header>
-      <nav class="custom-header-nav">
-        <div class="header-logo">
-              <img src="RSIGCI_Logo.png" alt="RSIGCI Logo" class="h-10 w-auto" />
-        </div>
-        <ul class="header-nav-links">
-          <li><button id="headerAboutBtn" class="header-link">About Us</button></li>
-          <li><button id="headerProductsBtn" class="header-link">Products & Services</button></li>
-          <li><button id="headerCareersBtn" class="header-link">Careers</button></li>
-          <li><button id="headerApplyBtn" class="header-link">Apply</button></li>
-        </ul>
-        <button class="header-hamburger" onclick="toggleMobileMenu()" aria-label="Open menu" aria-controls="mobileMenu">
-          <span class="hamburger-icon" aria-label="Menu icon"></span>
+    <!-- BEGIN HEADER.HTML COPY -->
+<header>
+  <nav class="custom-header-nav relative flex items-center w-full px-4 py-2" style="min-height:64px;">
+    <div class="flex items-center w-full">
+      <div class="header-logo flex items-center min-w-[120px] z-10">
+        <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-10 w-auto" />
+      </div>
+      <ul class="header-nav-links flex text-base font-medium mx-auto absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="gap:0;">
+        <li><a class="header-link" href="about.html">About Us</a></li>
+        <li><a class="header-link" href="products.html">Products</a></li>
+        <li><a class="header-link" href="services.html">Services</a></li>
+        <li><a class="header-link" href="careers.html">Careers</a></li>
+        <li><a href="contact.html" class="header-link" id="contactUsBtn">Contact Us</a></li>
+      </ul>
+      <div class="flex-1 flex justify-end items-center">
+        <button class="header-hamburger ml-4 z-10" aria-label="Open menu" id="hamburgerMenuBtn">
+          <span class="hamburger-icon"></span>
         </button>
-    </nav>
-    </header>
+      </div>
+    </div>
+    <!-- Slide-down menu -->
+    <div id="slideMenu" class="fixed bg-white shadow-lg transition-all duration-300 z-50 flex flex-col divide-y divide-gray-200"
+      style="top: 0; right: -340px; width: 320px; height: 100vh; opacity: 0; pointer-events: none;">
+      <button id="closeSlideMenu" class="hidden absolute top-4 right-4 text-3xl text-gray-500 hover:text-gray-800 focus:outline-none" aria-label="Close menu">&times;</button>
+      <a href="about.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">About Us</a>
+      <a href="products.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Products</a>
+      <a href="services.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Services</a>
+      <a href="careers.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Careers</a>
+      <a href="contact.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Contact Us</a>
+    </div>
+    <style>
+      .custom-header-nav { height: 64px; min-height: 64px; }
+      header, nav.custom-header-nav { height: 64px; min-height: 64px; }
+      .header-nav-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        gap: 0 !important;
+        z-index: 1;
+        height: 100%;
+      }
+      .header-link {
+        transition: color 0.18s;
+        border-radius: 0;
+        height: 64px;
+        padding: 0 2.2rem;
+        color: #1e293b;
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 0;
+        box-sizing: border-box;
+        font-size: 1rem;
+        line-height: 1;
+        z-index: 1;
+      }
+      .header-link::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 64px;
+        background: rgba(0,0,0,0.10);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s;
+        z-index: 0;
+      }
+      .header-link:hover::before, .header-link:focus::before {
+        opacity: 1;
+      }
+      .header-link:hover, .header-link:focus {
+        color: #38bdf8; /* Tailwind sky-400 */
+        outline: none;
+      }
+      .header-link:active {
+        background: transparent !important;
+        color: #38bdf8 !important;
+        box-shadow: none !important;
+      }
+      .header-link.active,
+      .header-link[aria-current="page"] {
+        color: #1e293b; /* default text color, not blue */
+      }
+      .header-link.active::before,
+      .header-link[aria-current="page"]::before {
+        opacity: 1;
+      }
+      .header-hamburger {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 60;
+        position: relative;
+      }
+      @media (max-width: 700px) {
+        .header-hamburger {
+          display: flex !important;
+          position: relative;
+          z-index: 60;
+        }
+        #slideMenu {
+          display: none !important;
+        }
+        #slideMenu.open {
+          display: flex !important;
+        }
+      }
+      @media (min-width: 701px) {
+        #slideMenu {
+          display: none !important;
+        }
+      }
+      .header-hamburger:active, .header-hamburger:focus {
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none !important;
+      }
+      @media (max-width: 900px) {
+        .header-nav-links { gap: 1.2rem; }
+      }
+      @media (max-width: 700px) {
+        .header-nav-links { display: none !important; }
+      }
+      @media (max-width: 600px) {
+        .custom-header-nav { padding: 0.5rem 0.5rem; }
+        .header-nav-links { gap: 0.7rem; }
+      }
+      .glass-header {
+        background: rgba(30,41,59,0.85);
+        backdrop-filter: blur(14px);
+        border-bottom: 1.5px solid rgba(255,255,255,0.08);
+        box-shadow: 0 4px 24px rgba(30,41,59,0.08);
+      }
+    </style>
+  </nav>
+</header>
+<!-- END HEADER.HTML COPY -->
+<script>
+(function() {
+  const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+  const slideMenu = document.getElementById('slideMenu');
+  const closeSlideMenu = document.getElementById('closeSlideMenu');
+  let menuOpen = false;
+  function openMenu() {
+    menuOpen = true;
+    slideMenu.classList.add('open');
+    slideMenu.style.right = '0';
+    slideMenu.style.opacity = '1';
+    slideMenu.style.pointerEvents = 'auto';
+  }
+  function closeMenu() {
+    menuOpen = false;
+    slideMenu.classList.remove('open');
+    if(window.innerWidth <= 700) {
+      slideMenu.style.right = '0';
+      slideMenu.style.opacity = '0';
+      slideMenu.style.pointerEvents = 'none';
+    } else {
+      slideMenu.style.right = '-340px';
+      slideMenu.style.opacity = '0';
+      slideMenu.style.pointerEvents = 'none';
+    }
+  }
+  if (hamburgerMenuBtn) {
+    hamburgerMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if(menuOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
+  if(closeSlideMenu) {
+    closeSlideMenu.onclick = function(e) {
+      e.stopPropagation();
+      closeMenu();
+    };
+  }
+  document.addEventListener('click', function(e) {
+    if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+      closeMenu();
+    }
+  });
+  if (slideMenu) {
+    slideMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+  window.addEventListener('resize', function() {
+    if(menuOpen) {
+      closeMenu();
+    }
+  });
+})();
+</script>
 
     <!-- Mobile Menu -->
     <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-blue-900 z-40 transform translate-x-full transition-transform duration-300 md:hidden" aria-label="Mobile navigation menu" role="navigation">
       <div class="flex flex-col items-center justify-center h-full space-y-8">
-        <button id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Our Company">Our Company</button>
-        <button id="mobileProductsBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Products & Services">Products & Services</button>
-        <button id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Careers">Careers</button>
-        <button id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" onclick="closeMobileMenu()" aria-label="Apply">Apply</button>
+        <a id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#about" aria-label="Our Company">Our Company</a>
+        <a id="mobileProductsBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="products.html" aria-label="Products">Products</a>
+        <a id="mobileServicesBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="services.html" aria-label="Services">Services</a>
+        <a id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#openPositions" aria-label="Careers">Careers</a>
+        <a id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#apply" aria-label="Apply">Apply</a>
       </div>
     </div>
 
@@ -83,6 +286,27 @@
         <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
       </div>
     </section>
+
+    <!-- Breadcrumb -->
+    <div id="breadcrumb" class="breadcrumb py-4 bg-gray-50 border-b border-gray-200">
+      <div class="container mx-auto px-4 md:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <li>
+              <a href="index.html" class="breadcrumb-item text-gray-500 flex items-center">
+                <i class="fas fa-home mr-1"></i>Home
+              </a>
+            </li>
+            <li>
+              <span class="breadcrumb-separator text-gray-300">/</span>
+            </li>
+            <li>
+              <span id="breadcrumbCurrent" class="breadcrumb-item text-gray-500">Home</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
 
     <!-- Homepage Sections Wrapper -->
     <div id="homepageSections" class="hidden w-full">
@@ -139,7 +363,7 @@
             <div class="leadership-desc">Presided by <b>Mr. Nanding A. Bancoro</b> and managed by <b>Engr. Marieta A. Bancoro</b>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.</div>
               </div>
           <div class="leadership-image-wrapper">
-            <img src="Leadership.png" alt="Leadership Team" class="leadership-image" />
+            <img src="Leadership.png" alt="Leadership Team" class="leadership-image" loading="lazy" /> <!-- Compress Leadership.png for faster load -->
             </div>
               </div>
       </section>
@@ -166,18 +390,18 @@
             <i class="fas fa-chevron-left" aria-hidden="true"></i>
                     </button>
           <div class="milestones-gallery" id="milestonesGallery">
-            <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
-            <div class="milestone-card" data-milestone="11"><span class="milestone-year-label" data-year="11"></span><img src="image.png" alt="Milestone" class="milestone-img" /></div>
+            <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
+            <div class="milestone-card" data-milestone="11"><span class="milestone-year-label" data-year="11"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
           </div>
           <button class="milestone-nav-btn milestone-nav-right" id="milestoneNavRight" aria-label="Next milestone">
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
@@ -337,12 +561,12 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" for="fullName">Full Name</label>
                 <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="fullNameError" style="display:none"></span>
+                <span class="error-message" id="fullNameError" style="display:none" aria-live="polite"></span>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="your.email@example.com" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="emailError" style="display:none"></span>
+                <span class="error-message" id="emailError" style="display:none" aria-live="polite"></span>
               </div>
             </div>
             
@@ -350,7 +574,7 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="phoneError" style="display:none"></span>
+                <span class="error-message" id="phoneError" style="display:none" aria-live="polite"></span>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2" for="position">Position Interest</label>
@@ -360,9 +584,9 @@
                   <option>Sales Account Executive</option>
                   <option>Other</option>
                 </select>
-                <span class="error-message" id="positionError" style="display:none"></span>
+                <span class="error-message" id="positionError" style="display:none" aria-live="polite"></span>
                 <input type="text" id="otherPosition" name="otherPosition" placeholder="Please specify position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg mt-2" style="display:none" aria-label="Other Position" />
-                <span class="error-message" id="otherPositionError" style="display:none"></span>
+                <span class="error-message" id="otherPositionError" style="display:none" aria-live="polite"></span>
               </div>
             </div>
             
@@ -373,23 +597,24 @@
                 <span id="coverLetterWordCount" class="text-xs text-gray-500">0/400 words</span>
                 <span id="coverLetterLimitWarning" class="text-xs text-red-500 hidden">Word limit reached!</span>
               </div>
-              <span class="error-message" id="coverLetterError" style="display:none"></span>
+              <span class="error-message" id="coverLetterError" style="display:none" aria-live="polite"></span>
             </div>
             
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2" for="resumeFile">Resume/CV</label>
-              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="dropZone">
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="dropZone" tabindex="0" aria-label="Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.">
+                <span id="dropZoneLabel" class="sr-only">Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.</span>
                 <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2" aria-label="Upload icon"></i>
                 <p class="text-gray-600">Drag and drop your resume here, or <span class="text-blue-600 cursor-pointer">browse files</span></p>
                 <input type="file" id="resumeFile" name="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-label="Resume or CV upload" />
               </div>
-              <span class="file-error" id="resumeError" style="display:none"></span>
+              <span class="file-error" id="resumeError" style="display:none" aria-live="polite"></span>
             </div>
             
             <div class="flex justify-center my-4">
               <div class="g-recaptcha" data-sitekey="6Lfnj3orAAAAAKf4SUrVhY_9tQBw1wR_xcvjfKcj" aria-label="reCAPTCHA"></div>
             </div>
-            <span class="recaptcha-error" id="recaptchaError" style="display:none"></span>
+            <span class="recaptcha-error" id="recaptchaError" style="display:none" aria-live="polite"></span>
             <div class="flex items-center mb-2">
               <input type="checkbox" id="policyAgreement" name="policyAgreement" class="mr-2" required aria-required="true" />
               <label for="policyAgreement" class="text-sm text-gray-700">I agree to the <a href="privacy-policy.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Privacy Policy</a> and <a href="terms-of-service.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Terms of Service</a> <span class="text-red-500">*</span></label>
@@ -404,14 +629,14 @@
     </section>
 
     <!-- Success Modal Overlay -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center transition-opacity duration-300">
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center transition-opacity duration-300" role="alertdialog" aria-modal="true" aria-labelledby="successModalTitle" aria-describedby="successModalDesc">
       <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center relative animate-fade-in">
         <div class="flex flex-col items-center">
           <div class="mb-5">
             <i class="fas fa-check-circle text-green-500 text-5xl"></i>
           </div>
-          <h2 class="text-2xl font-bold text-green-600 mb-2">Thank you for applying!</h2>
-          <p class="text-gray-700 mb-6">We've received your application.<br>Our team will review it and contact you soon.</p>
+          <h2 id="successModalTitle" class="text-2xl font-bold text-green-600 mb-2">Thank you for applying!</h2>
+          <p id="successModalDesc" class="text-gray-700 mb-6">We've received your application.<br>Our team will review it and contact you soon.</p>
           <button id="successBackBtn" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">Back to Home</button>
         </div>
       </div>
@@ -491,6 +716,40 @@
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
+    <script>
+// Breadcrumb section mapping
+const sectionMap = [
+  { id: 'about', label: 'About Us' },
+  { id: 'products', label: 'Products & Services' },
+  { id: 'openPositions', label: 'Careers' },
+  { id: 'apply', label: 'Apply' }
+];
+
+function updateBreadcrumb() {
+  let current = 'Home';
+  for (const section of sectionMap) {
+    const el = document.getElementById(section.id);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 80 && rect.bottom > 80) {
+        current = section.label;
+        break;
+      }
+    }
+  }
+  document.getElementById('breadcrumbCurrent').textContent = current;
+  // Hide breadcrumb if Home/Home
+  const breadcrumbDiv = document.getElementById('breadcrumb');
+  if (current === 'Home') {
+    breadcrumbDiv.style.display = 'none';
+  } else {
+    breadcrumbDiv.style.display = '';
+  }
+}
+
+window.addEventListener('scroll', updateBreadcrumb);
+window.addEventListener('DOMContentLoaded', updateBreadcrumb);
+</script>
   </body>
 </html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Cards Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: #eaf2fb;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      padding: 56px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 12px 32px rgba(44, 62, 80, 0.16);
+      transform: translateY(-6px) scale(1.02);
+    }
+    .card-banner {
+      width: 100%;
+      height: 180px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #f3f6fa;
+      border-radius: 12px 12px 0 0;
+      margin-bottom: 0;
+    }
+    .card-content {
+      padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: left;
+      align-items: flex-start;
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2563eb;
+      margin-bottom: 0.7rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .card-desc {
+      color: #5a6a85;
+      font-size: 1.01rem;
+      line-height: 1.7;
+      font-family: 'Inter', Arial, sans-serif;
+      margin-bottom: 1.2rem;
+    }
+    .card-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+    .btn-brochure {
+      background: #3b82f6;
+      color: white;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+    .btn-brochure:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+    .btn-view-range {
+      background: transparent;
+      color: #3b82f6;
+      border: 2px solid #3b82f6;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-view-range:hover {
+      background: #3b82f6;
+      color: white;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 800px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px 2vw;
+      }
+      .card-banner {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-banner" style="background-image: url('seal_support-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Seal Support Systems</div>
+        <div class="card-desc">
+          We believe we AESSEAL® is the only manufacturer to supply CE certified assemblies without the use of third-party sources. The AESSEAL Global Technology Centre is certified to Module D, B1 and H1 - H1 being the highest level of PED certification.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('gland_packing-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Gland Packing</div>
+        <div class="card-desc">
+          AESSEAL® packing displays an exceptional level of resilience and conformity of volume. We manufacture a comprehensive range of packing to meet all your requirements.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('gas_seals-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Gas Seals</div>
+        <div class="card-desc">
+          The Gas Seal range has been developed to operate on the most challenging duties. We supply a complete range of gas seals for compressors, API pumps, process pumps, and reactors.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('elastomers-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Elastomers</div>
+        <div class="card-desc">
+          AES-Elast™ offers the excellent thermal resistance is probably the most generically applicable elastomer in the world.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('component_seals-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Component Seals</div>
+        <div class="card-desc">
+          We offer a range of component seals for a huge variety of applications. One of the most comprehensive component seals product portfolios available. With some 10,000 product lines available from the stock.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('cartridge_seals-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Cartridge Mechanical Seals</div>
+        <div class="card-desc">
+          We offer a complete portfolio of mechanical seals, including the CAPI™ Type A, B & C ranges of bellows and pusher seals, with cutting edge technology for the most demanding applications and environments.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-banner" style="background-image: url('bearing-removebg-preview.png');"></div>
+      <div class="card-content">
+        <div class="card-title">Bearing Protection</div>
+        <div class="card-desc">
+          AESSEAL® is a world leader in the provision of wholly – owned and extensively inventoried contacting and non-contacting bearing seal technology.
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-brochure"><i class="fas fa-file-pdf"></i>Brochure</a>
+          <a href="#" class="btn-view-range"><i class="fas fa-eye"></i>View Range</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

@@ -1,3 +1,8 @@
+/*
+  index.js - Main JavaScript for RSIGCI Company Website
+  Handles navigation, tab logic, job loading, application form, file upload, modals, carousel, milestones, and accessibility enhancements.
+  Last updated: 2024-06-09
+*/
 document.addEventListener('DOMContentLoaded', function() {
   // --- DOM ELEMENT ASSIGNMENTS ---
   const heroSection = document.getElementById('heroSection');
@@ -21,11 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 100);
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', trapFocusInMobileMenu);
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
     } else {
       // Menu is closed: return focus to hamburger
       if (hamburger) hamburger.focus();
       document.body.style.overflow = '';
       document.removeEventListener('keydown', trapFocusInMobileMenu);
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
   }
 
@@ -66,6 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Make mobile menu functions globally available
   window.toggleMobileMenu = toggleMobileMenu;
   window.closeMobileMenu = closeMobileMenu;
+
+  // --- Attach event listeners for hamburger and mobile menu close button ---
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', toggleMobileMenu);
+  }
+  const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
+  if (mobileMenuCloseBtn) {
+    mobileMenuCloseBtn.addEventListener('click', closeMobileMenu);
+  }
 
   // --- Navigation Functions ---
   function goToHomepage() {
@@ -172,60 +189,64 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    // Header Navigation
+    // Header Navigation (now <a> tags)
     const headerAboutBtn = document.getElementById('headerAboutBtn');
     if (headerAboutBtn) {
-      headerAboutBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      headerAboutBtn.addEventListener('click', function() {
         showTab('hero');
       });
     }
 
     const headerProductsBtn = document.getElementById('headerProductsBtn');
     if (headerProductsBtn) {
-      headerProductsBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      headerProductsBtn.addEventListener('click', function() {
         showTab('products');
       });
     }
 
     const headerCareersBtn = document.getElementById('headerCareersBtn');
     if (headerCareersBtn) {
-      headerCareersBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      headerCareersBtn.addEventListener('click', function() {
         showTab('openPositions');
       });
     }
 
     const headerApplyBtn = document.getElementById('headerApplyBtn');
     if (headerApplyBtn) {
-      headerApplyBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      headerApplyBtn.addEventListener('click', function() {
         showTab('apply');
       });
     }
 
-    // Mobile Navigation
+    // Mobile Navigation (now <a> tags)
     const mobileAboutBtn = document.getElementById('mobileAboutBtn');
     if (mobileAboutBtn) {
-      mobileAboutBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      mobileAboutBtn.addEventListener('click', function() {
+        closeMobileMenu();
         showTab('hero');
+      });
+    }
+
+    const mobileProductsBtn = document.getElementById('mobileProductsBtn');
+    if (mobileProductsBtn) {
+      mobileProductsBtn.addEventListener('click', function() {
+        closeMobileMenu();
+        showTab('products');
       });
     }
 
     const mobileCareersBtn = document.getElementById('mobileCareersBtn');
     if (mobileCareersBtn) {
-      mobileCareersBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      mobileCareersBtn.addEventListener('click', function() {
+        closeMobileMenu();
         showTab('openPositions');
       });
     }
 
     const mobileApplyBtn = document.getElementById('mobileApplyBtn');
     if (mobileApplyBtn) {
-      mobileApplyBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      mobileApplyBtn.addEventListener('click', function() {
+        closeMobileMenu();
         showTab('apply');
       });
     }
@@ -303,33 +324,40 @@ document.addEventListener('DOMContentLoaded', function() {
       const endIndex = startIndex + jobsPerPage;
       const currentJobs = activeJobs.slice(startIndex, endIndex);
 
+      // Sanitize user-generated content (job.description)
+      function sanitize(str) {
+        const temp = document.createElement('div');
+        temp.textContent = str;
+        return temp.innerHTML;
+      }
+
       // Display current page jobs
       container.innerHTML = currentJobs.map((job, index) => `
         <div class="slide-in-right stagger-${index + 1} job-card bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm">
           <div class="flex items-start justify-between mb-3 md:mb-4">
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg md:text-2xl font-semibold mb-2 text-gray-800 truncate">${job.title}</h3>
+              <h3 class="text-lg md:text-2xl font-semibold mb-2 text-gray-800 truncate">${sanitize(job.title)}</h3>
               <p class="text-sm md:text-base text-gray-600 mb-2 md:mb-4">
                 <i class="fas fa-map-marker-alt mr-1 md:mr-2 text-orange-500"></i>
-                <span class="truncate">${job.location}</span>
+                <span class="truncate">${sanitize(job.location)}</span>
               </p>
             </div>
             <div class="bg-orange-100 text-orange-600 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium ml-2 flex-shrink-0">
-              ${job.type}
+              ${sanitize(job.type)}
             </div>
           </div>
           <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed" id="jobDesc-${job.id}">
             ${job.description && job.description.length > 150 ? 
-              `<span id="jobDescPreview-${job.id}">${job.description.substring(0, 150)}... <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium" id="toggleBtn-${job.id}">See more</button></span>
-              <span id="jobDescFull-${job.id}" class="hidden">${job.description} <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium">See less</button></span>` 
-              : (job.description || 'No description available')
+              `<span id="jobDescPreview-${job.id}">${sanitize(job.description.substring(0, 150))}... <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium" id="toggleBtn-${job.id}">See more</button></span>
+              <span id="jobDescFull-${job.id}" class="hidden">${sanitize(job.description)} <button onclick="toggleJobDescription('${job.id}')" class="text-blue-600 hover:text-blue-800 font-medium">See less</button></span>` 
+              : (sanitize(job.description) || 'No description available')
             }
           </p>
           ${job.requirements && Array.isArray(job.requirements) && job.requirements.length > 0 ? `
             <div class="mb-4 md:mb-6">
               <h4 class="text-sm md:text-base font-semibold text-gray-800 mb-2">Requirements:</h4>
               <ul class="list-disc list-inside text-sm md:text-base text-gray-600 space-y-1">
-                ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                ${job.requirements.map(req => `<li>${sanitize(req)}</li>`).join('')}
               </ul>
             </div>
           ` : ''}
@@ -555,12 +583,26 @@ document.addEventListener('DOMContentLoaded', function() {
         handleFileUpload(e.target.files[0]);
       }
     });
-    
+    // Keyboard support for drop zone
+    dropZone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        fileInput.click();
+      }
+    });
     function handleFileUpload(file) {
+      // SECURITY: Backend validation is still required for all uploads and user input.
       // Validate file type
       const allowedTypes = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
+      const allowedMimeTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/jpeg',
+        'image/png'
+      ];
       const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
-      if (!allowedTypes.includes(fileExtension)) {
+      if (!allowedTypes.includes(fileExtension) || (file.type && !allowedMimeTypes.includes(file.type))) {
         alert('Please upload a PDF, DOC, DOCX, JPG, or PNG file.');
         return;
       }
@@ -647,47 +689,71 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('fullName').classList.add('form-input-error');
       document.getElementById('fullNameError').textContent = 'Full name is required.';
       document.getElementById('fullNameError').style.display = 'block';
+      document.getElementById('fullName').setAttribute('aria-invalid', 'true');
       hasError = true;
+    } else {
+      document.getElementById('fullName').setAttribute('aria-invalid', 'false');
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
       document.getElementById('email').classList.add('form-input-error');
       document.getElementById('emailError').textContent = 'Email is required.';
       document.getElementById('emailError').style.display = 'block';
+      document.getElementById('email').setAttribute('aria-invalid', 'true');
       hasError = true;
     } else if (!emailRegex.test(email)) {
       document.getElementById('email').classList.add('form-input-error');
       document.getElementById('emailError').textContent = 'Please enter a valid email address.';
       document.getElementById('emailError').style.display = 'block';
+      document.getElementById('email').setAttribute('aria-invalid', 'true');
       hasError = true;
+    } else {
+      document.getElementById('email').setAttribute('aria-invalid', 'false');
     }
     if (!phone) {
       document.getElementById('phone').classList.add('form-input-error');
       document.getElementById('phoneError').textContent = 'Phone number is required.';
       document.getElementById('phoneError').style.display = 'block';
+      document.getElementById('phone').setAttribute('aria-invalid', 'true');
       hasError = true;
+    } else {
+      document.getElementById('phone').setAttribute('aria-invalid', 'false');
     }
     if (!position) {
       document.getElementById('position').classList.add('form-input-error');
       document.getElementById('positionError').textContent = 'Please select a position.';
       document.getElementById('positionError').style.display = 'block';
+      document.getElementById('position').setAttribute('aria-invalid', 'true');
       hasError = true;
     } else if (position === 'Other' && !otherPosition) {
       document.getElementById('otherPosition').classList.add('form-input-error');
       document.getElementById('otherPositionError').textContent = 'Please specify the position.';
       document.getElementById('otherPositionError').style.display = 'block';
+      document.getElementById('otherPosition').setAttribute('aria-invalid', 'true');
       hasError = true;
+      document.getElementById('position').setAttribute('aria-invalid', 'false');
+    } else {
+      document.getElementById('position').setAttribute('aria-invalid', 'false');
+      if (position === 'Other') {
+        document.getElementById('otherPosition').setAttribute('aria-invalid', 'false');
+      }
     }
     if (!coverLetterValue) {
       document.getElementById('coverLetter').classList.add('form-input-error');
       document.getElementById('coverLetterError').textContent = 'Cover letter is required.';
       document.getElementById('coverLetterError').style.display = 'block';
+      document.getElementById('coverLetter').setAttribute('aria-invalid', 'true');
       hasError = true;
+    } else {
+      document.getElementById('coverLetter').setAttribute('aria-invalid', 'false');
     }
     if (!file) {
       document.getElementById('resumeError').textContent = 'Please upload your resume or CV.';
       document.getElementById('resumeError').style.display = 'block';
+      document.getElementById('resumeFile').setAttribute('aria-invalid', 'true');
       hasError = true;
+    } else {
+      document.getElementById('resumeFile').setAttribute('aria-invalid', 'false');
     }
     const policyAgreement = document.getElementById('policyAgreement');
     if (!policyAgreement.checked) {
@@ -795,6 +861,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function showSuccessModal() {
     const modal = document.getElementById('successModal');
     modal.classList.remove('hidden');
+    trapFocusInModal(modal);
   }
   
   function closeSuccessModal() {
@@ -803,6 +870,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the form again for next submission
     const form = document.getElementById('applicationForm');
     if (form) form.style.display = '';
+    // Return focus to the Back to Home button or main content
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    if (backToHomeBtn) backToHomeBtn.focus();
+  }
+
+  // Trap focus within modal
+  function trapFocusInModal(modal) {
+    if (!modal) return;
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableEls = Array.from(modal.querySelectorAll(focusableSelectors)).filter(el => !el.disabled && el.offsetParent !== null);
+    if (!focusableEls.length) return;
+    const firstEl = focusableEls[0];
+    const lastEl = focusableEls[focusableEls.length - 1];
+    function handleTrap(e) {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      } else if (e.key === 'Escape') {
+        closeSuccessModal();
+      }
+    }
+    modal.addEventListener('keydown', handleTrap);
+    // Focus the first element
+    setTimeout(() => firstEl.focus(), 50);
+    // Remove event listener when modal is closed
+    function cleanup() {
+      modal.removeEventListener('keydown', handleTrap);
+      modal.removeEventListener('transitionend', cleanup);
+    }
+    modal.addEventListener('transitionend', cleanup);
   }
 
   // Make submitApplication globally available

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore our range of industrial services including installation, commissioning, painting, cladding, and maintenance." />
+    <title>Services | RSIGCI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+    <link rel="stylesheet" href="index.css">
+    <style>
+      .service-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%);
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Removed background image */
+      .service-hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      .breadcrumb {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .breadcrumb-item {
+        color: #64748b;
+        transition: color 0.3s ease;
+      }
+      .breadcrumb-item:hover {
+        color: #3b82f6;
+      }
+      .breadcrumb-separator {
+        color: #cbd5e1;
+        margin: 0 0.5rem;
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 32px;
+        padding: 56px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.3s, transform 0.3s;
+      }
+      .card:hover {
+        box-shadow: 0 12px 32px rgba(44, 62, 80, 0.16);
+        transform: translateY(-6px) scale(1.02);
+      }
+      .card-banner {
+        width: 100%;
+        height: 180px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #f3f6fa;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 0;
+      }
+      .card-content {
+        padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        align-items: flex-start;
+      }
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.7rem;
+        font-family: 'Montserrat', Arial, sans-serif;
+      }
+      .card-desc {
+        color: #5a6a85;
+        font-size: 1.01rem;
+        line-height: 1.7;
+        font-family: 'Inter', Arial, sans-serif;
+        margin-bottom: 1.2rem;
+      }
+      .card-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: auto;
+      }
+      .btn-brochure {
+        background: #3b82f6;
+        color: white;
+        padding: 0.5rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.93rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+      }
+      .btn-brochure:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+      }
+      .btn-view-range {
+        background: transparent;
+        color: #3b82f6;
+        border: 2px solid #3b82f6;
+        padding: 0.5rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.93rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .btn-view-range:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+      }
+      @media (max-width: 800px) {
+        .card-grid {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding: 24px 2vw;
+        }
+        .card-banner {
+          height: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800" style="padding-top: 90px;">
+    <div id="header"></div>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb py-4">
+      <div class="container mx-auto px-4 md:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <li>
+              <a href="index.html" class="breadcrumb-item hover:text-blue-600">
+                <i class="fas fa-home mr-1"></i>Home
+              </a>
+            </li>
+            <li>
+              <span class="breadcrumb-separator">/</span>
+            </li>
+            <li>
+              <span class="breadcrumb-item text-blue-600 font-medium">Services</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="service-hero">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="service-hero-content text-white">
+          <div class="max-w-4xl">
+            <!-- Logo removed as requested -->
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Our Services</h1>
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed">
+              Explore our professional services designed to support your industrial and commercial needs. We deliver quality, reliability, and expertise for every project.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#service-categories" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center">
+                <i class="fas fa-th-large mr-2"></i>Explore Services
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Categories Section -->
+    <section id="service-categories" class="py-20 px-4 md:px-8">
+      <div class="container mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Category of Service</h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            Choose from our extensive range of industrial services and solutions designed to meet your specific requirements.
+          </p>
+        </div>
+        <div class="card-grid">
+          <!-- Painting -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Painting</div>
+              <div class="card-desc">Metal Protective Coating, Concrete Protective Coating, Waterproofing, and Fireproofing</div>
+            </div>
+          </div>
+          <!-- Insulation and Cladding -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Insulation and Cladding</div>
+              <div class="card-desc">Perlite Insulation, Cementitious Cladding, and Aluminum Jacketing</div>
+            </div>
+          </div>
+          <!-- Mechanical -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Mechanical</div>
+              <div class="card-desc">Tank Fabrication, Pipe Laying, Conveying System, and Sandblasting</div>
+            </div>
+          </div>
+          <!-- ESP Maintenance -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">ESP Maintenance</div>
+              <div class="card-desc">Inspection, Repair, Rehab/Retrofit, and Recommissioning</div>
+            </div>
+          </div>
+          <!-- Pump Rehabilitation -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Pump Rehabilitation</div>
+              <div class="card-desc">Rehabilitation, Reconditioning, Vibration Analysis, and Motor Rewinding</div>
+            </div>
+          </div>
+          <!-- Facility Maintenance -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Facility Maintenance</div>
+              <div class="card-desc">Building Maintenance, Electrical Maintenance, HVAC, and Plumbing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More Information Section -->
+    <section class="py-16 px-4 md:px-8 bg-white">
+      <div class="container mx-auto">
+        <div class="text-center">
+          <div class="bg-white rounded-xl shadow-md p-8 max-w-4xl mx-auto mb-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div class="md:w-1/2 w-full mb-6 md:mb-0 md:pr-6 border-b md:border-b-0 md:border-r border-gray-200">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Why Choose REIGN-NAN Services?</h3>
+              <p class="text-lg text-gray-700 mb-4">
+                <strong>REIGN-NAN Sales Industry & General Contractor, Inc.</strong> delivers a full suite of industrial services with a focus on quality, safety, and customer satisfaction. Our experienced team ensures every project is completed to the highest standards.
+              </p>
+              <a href="about.html" class="text-blue-600 hover:underline font-semibold">Learn more about our company &rarr;</a>
+            </div>
+            <div class="md:w-1/2 w-full md:pl-6">
+              <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">For More Information</h3>
+              <p class="text-lg text-gray-600 mb-8">
+                Need technical specifications, pricing, or have questions about our services? <br>
+                Our team is ready to assist you with detailed information and expert advice.
+              </p>
+              <a href="contact-us.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow transition-all text-lg inline-flex items-center justify-center">
+                <i class="fas fa-envelope mr-2"></i>Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-12 px-4 md:px-8 bg-gray-100">
+      <div class="container mx-auto">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Follow Us</h3>
+          <p class="text-gray-600">Stay updated with our latest services and industry insights</p>
+        </div>
+        <div class="flex justify-center space-x-6">
+          <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" target="_blank" class="social-media-icon facebook hover:scale-110">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-media-icon youtube hover:scale-110">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" class="social-media-icon indeed hover:scale-110" title="Indeed Reviews">
+            <i class="fas fa-briefcase"></i>
+          </a>
+          <a href="#" class="social-media-icon linkedin hover:scale-110">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="social-media-icon instagram hover:scale-110">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Company</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
+              <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Support</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="contact-us.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function() {
+        const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+        const slideMenu = document.getElementById('slideMenu');
+        const closeSlideMenu = document.getElementById('closeSlideMenu');
+        let menuOpen = false;
+        function openMenu() {
+          menuOpen = true;
+          slideMenu.classList.add('open');
+          slideMenu.style.right = '0';
+          slideMenu.style.opacity = '1';
+          slideMenu.style.pointerEvents = 'auto';
+        }
+        function closeMenu() {
+          menuOpen = false;
+          slideMenu.classList.remove('open');
+          if(window.innerWidth <= 700) {
+            slideMenu.style.right = '0';
+            slideMenu.style.opacity = '0';
+            slideMenu.style.pointerEvents = 'none';
+          } else {
+            slideMenu.style.right = '-340px';
+            slideMenu.style.opacity = '0';
+            slideMenu.style.pointerEvents = 'none';
+          }
+        }
+        if (hamburgerMenuBtn) {
+          hamburgerMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if(menuOpen) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          });
+        }
+        if(closeSlideMenu) {
+          closeSlideMenu.onclick = function(e) {
+            e.stopPropagation();
+            closeMenu();
+          };
+        }
+        document.addEventListener('click', function(e) {
+          if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+            closeMenu();
+          }
+        });
+        if (slideMenu) {
+          slideMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+          });
+        }
+        window.addEventListener('resize', function() {
+          if(menuOpen) {
+            closeMenu();
+          }
+        });
+      })();
+    </script>
+    <script>
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Set active nav link
+          const page = location.pathname.split('/').pop();
+          document.querySelectorAll('.header-link').forEach(link => {
+            if(link.getAttribute('href') === page) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        });
+    </script>
+  </body>
+</html> 

@@ -1,3 +1,8 @@
+/*
+  index.css - Main Stylesheet for RSIGCI Company Website
+  Contains layout, typography, responsive, and component styles for all pages.
+  Last updated: 2024-06-09
+*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -1522,6 +1527,10 @@ html, body {
   max-width: 100vw;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 @media (max-width: 600px) {
   .hero-image-wrapper, .hero-image {
     max-width: 100vw !important;
@@ -1841,4 +1850,44 @@ html, body {
   margin-left: auto !important;
   margin-right: auto !important;
   width: 100%;
+} 
+
+/* Add visible focus styles for navigation links and buttons */
+.header-link:focus, .header-hamburger:focus, #mobileMenu a:focus {
+  outline: 2px solid #174ea6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(33, 125, 187, 0.25);
+  background: #eaf6ff;
+  color: #174ea6 !important;
+  z-index: 2;
+} 
+
+/* --- UX and Touch Improvements --- */
+.btn-primary:active, .header-link:active, #mobileMenu a:active {
+  background: #ea580c !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 2px #f97316 inset;
+}
+@media (max-width: 600px) {
+  .btn-primary, .header-link, #mobileMenu a, button, .milestone-nav-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
+    box-sizing: border-box;
+  }
+} 
+
+#mobileMenu a,
+#mobileMenu a:focus,
+#mobileMenu a:active,
+#mobileMenu a:visited,
+#mobileMenu a:focus-visible,
+#mobileMenu a:focus-within {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  color: #fff !important;
+  text-decoration: none !important;
 } 

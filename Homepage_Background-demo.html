@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSIGCI Homepage Background Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .homepage-bg {
+      background: url('Homepage_Background.png') center center/cover no-repeat;
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 41, 59, 0.45); /* blue-gray overlay for readability */
+      z-index: 1;
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    /* Spinning Donuts */
+    .spinning-donuts {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 220px;
+      height: 320px;
+      z-index: 3;
+      pointer-events: none;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 32px;
+    }
+    .donut {
+      border-radius: 50%;
+      border-style: solid;
+      opacity: 0.85;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+      animation: spin 12s linear infinite;
+      background: transparent;
+    }
+    .donut.green {
+      border-width: 12px;
+      border-color: #22c55e #22c55e #22c55e00 #22c55e00;
+      width: 90px;
+      height: 90px;
+      animation-duration: 13s;
+      margin-right: 24px;
+    }
+    .donut.blue {
+      border-width: 8px;
+      border-color: #3b82f6 #3b82f6 #3b82f600 #3b82f600;
+      width: 60px;
+      height: 60px;
+      animation-direction: reverse;
+      animation-duration: 9s;
+      margin-right: 0;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 640px) {
+      .spinning-donuts {
+        width: 90px;
+        height: 100px;
+        gap: 12px;
+      }
+      .donut.green {
+        width: 36px; height: 36px; border-width: 5px; margin-right: 10px;
+      }
+      .donut.blue {
+        width: 22px; height: 22px; border-width: 3px; margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="homepage-bg">
+    <div class="spinning-donuts">
+      <div class="donut green"></div>
+      <div class="donut blue"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="content flex flex-col items-center justify-center min-h-screen">
+      <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-28 w-auto mb-8 drop-shadow-lg" />
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow">Welcome to RSIGCI</h1>
+      <p class="text-xl md:text-2xl text-blue-100 mb-10 max-w-xl drop-shadow">Sales Industry & General Contractor, Inc.<br>Delivering quality, reliability, and innovation for your industrial needs.</p>
+      <a href="index.html" class="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-200">Enter Site</a>
+    </div>
+  </div>
+</body>
+</html> 
