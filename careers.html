@@ -316,6 +316,19 @@
             });
           })();
         });
+      // Resume upload click/keyboard handler
+      const dropZone = document.getElementById('dropZone');
+      const resumeFile = document.getElementById('resumeFile');
+      if (dropZone && resumeFile) {
+        dropZone.addEventListener('click', function() {
+          resumeFile.click();
+        });
+        dropZone.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            resumeFile.click();
+          }
+        });
+      }
     });
   </script>
 </body>
