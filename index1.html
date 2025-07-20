@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <!-- SECURITY: Backend validation is still required for all uploads and user input. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://accounts.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.google.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.gstatic.com; img-src 'self' data: https://*; connect-src 'self' https://firestore.googleapis.com; frame-src https://www.google.com https://content.googleapis.com;" />
+    <meta name="keywords" content="RSIGCI, Reign-NAN, general contractor, mechanical seals, industrial equipment, careers, sales, construction, Philippines" />
+    <link rel="canonical" href="https://www.rsigci.com/" />
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Join Our Team | RSIGCI." />
+    <meta property="og:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <meta property="og:image" content="RSIGCI_LOGO_2.png" />
+    <meta property="og:url" content="https://www.rsigci.com/" />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Join Our Team | RSIGCI." />
+    <meta name="twitter:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
+    <meta name="twitter:image" content="RSIGCI_LOGO_2.png" />
+    <title>Join Our Team | RSIGCI.</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+    <link rel="stylesheet" href="index.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js" defer></script>
+    <script src="firebase-config.js" defer></script>
+    <!-- Google Drive API -->
+    <script src="https://apis.google.com/js/api.js" defer></script>
+    <script src="https://accounts.google.com/gsi/client" defer></script>
+    <script src="google-drive-service.js" defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  </head>
+  <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center loading-overlay">
+      <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm mx-4">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p class="text-lg font-semibold text-gray-800">Submitting Application...</p>
+        <p class="text-sm text-gray-600 mt-2">Please wait while we process your application</p>
+      </div>
+    </div>
+
+    <div id="header"></div>
+    <script>
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Set active nav link
+          const page = location.pathname.split('/').pop();
+          document.querySelectorAll('.header-link').forEach(link => {
+            if(link.getAttribute('href') === page) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        });
+    </script>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-blue-900 z-40 transform translate-x-full transition-transform duration-300 md:hidden" aria-label="Mobile navigation menu" role="navigation">
+      <div class="flex flex-col items-center justify-center h-full space-y-8">
+        <a id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="about.html" aria-label="Our Company">Our Company</a>
+        <a id="mobileProductsBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="products.html" aria-label="Products">Products</a>
+        <a id="mobileServicesBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="services.html" aria-label="Services">Services</a>
+        <a id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="careers.html" aria-label="Careers">Careers</a>
+        <a id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#apply" aria-label="Apply">Apply</a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+      <img src="RSIGCI_Main.png" alt="Background" class="hero-bg-image fade-image show" id="heroImageMain" />
+      <img src="RSIGCI_Second.jpg" alt="Background 2" class="hero-bg-image fade-image" id="heroImageSecond" />
+      <div class="hero-container hero-content-on-top">
+        <!-- Left: Text and Buttons -->
+        <div class="hero-left">
+          <h1 class="hero-title">Join Our Team of<br>Builders and Closers</h1>
+          <p class="hero-description">Our company is engaged in the supply of mechanical seals, bearing protectors, packing and gaskets, and electrical and mechanical equipment and parts for industrial use. We are also engaged in insulation and commissioning, which is part of after-sales service.</p>
+          <div class="hero-buttons">
+            <button id="exploreOpportunitiesBtn" class="hero-btn hero-btn-green"><i class="fas fa-search"></i> Explore Opportunities</button>
+            <button id="applyNowBtn" class="hero-btn hero-btn-blue"><i class="fas fa-briefcase"></i> Apply Now</button>
+          </div>
+        </div>
+        <!-- Right: Circular Image with Overlays -->
+        <div class="hero-right">
+          <!-- overlays removed, image is now behind -->
+        </div>
+      </div>
+      <div class="hero-see-more-wrapper">
+        <a href="#about" class="hero-see-more" id="seeMoreBtn">See More About Our Company</a>
+        <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+      </div>
+    </section>
+
+    <!-- Homepage Sections Wrapper -->
+    <!-- Removed About, Company Overview, Leadership, Milestones sections -->
+
+    <!-- Application Form Section (hidden by default) -->
+    <section class="py-20 px-4 md:px-8 bg-white w-full hidden" id="apply">
+      <div class="w-full max-w-2xl mx-auto">
+        <div class="text-center mb-12 mt-24">
+          <div class="fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Join Us?</h2>
+            <p class="text-xl text-gray-600">
+              Tell us about yourself and let's start building something amazing together
+            </p>
+          </div>
+        </div>
+        
+        <div class="fade-in stagger-1">
+          <form id="applicationForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
+                <span class="error-message" id="fullNameError" style="display:none" aria-live="polite"></span>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your.email@example.com" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
+                <span class="error-message" id="emailError" style="display:none" aria-live="polite"></span>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
+                <span class="error-message" id="phoneError" style="display:none" aria-live="polite"></span>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="position">Position Interest</label>
+                <select id="position" name="position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true">
+                  <option value="">Select a position</option>
+                  <option>Construction Site Supervisor</option>
+                  <option>Sales Account Executive</option>
+                  <option>Other</option>
+                </select>
+                <span class="error-message" id="positionError" style="display:none" aria-live="polite"></span>
+                <input type="text" id="otherPosition" name="otherPosition" placeholder="Please specify position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg mt-2" style="display:none" aria-label="Other Position" />
+                <span class="error-message" id="otherPositionError" style="display:none" aria-live="polite"></span>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2" for="coverLetter">Cover Letter</label>
+              <textarea id="coverLetter" name="coverLetter" placeholder="Tell us why you'd be a great fit..." rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true"></textarea>
+              <div class="flex justify-between items-center mt-1">
+                <span id="coverLetterWordCount" class="text-xs text-gray-500">0/400 words</span>
+                <span id="coverLetterLimitWarning" class="text-xs text-red-500 hidden">Word limit reached!</span>
+              </div>
+              <span class="error-message" id="coverLetterError" style="display:none" aria-live="polite"></span>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2" for="resumeFile">Resume/CV</label>
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="dropZone" tabindex="0" aria-label="Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.">
+                <span id="dropZoneLabel" class="sr-only">Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.</span>
+                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2" aria-label="Upload icon"></i>
+                <p class="text-gray-600">Drag and drop your resume here, or <span class="text-blue-600 cursor-pointer">browse files</span></p>
+                <input type="file" id="resumeFile" name="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-label="Resume or CV upload" />
+              </div>
+              <span class="file-error" id="resumeError" style="display:none" aria-live="polite"></span>
+            </div>
+            
+            <div class="flex justify-center my-4">
+              <div class="g-recaptcha" data-sitekey="6Lfnj3orAAAAAKf4SUrVhY_9tQBw1wR_xcvjfKcj" aria-label="reCAPTCHA"></div>
+            </div>
+            <span class="recaptcha-error" id="recaptchaError" style="display:none" aria-live="polite"></span>
+            <div class="flex items-center mb-2">
+              <input type="checkbox" id="policyAgreement" name="policyAgreement" class="mr-2" required aria-required="true" />
+              <label for="policyAgreement" class="text-sm text-gray-700">I agree to the <a href="privacy-policy.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Privacy Policy</a> and <a href="terms-of-service.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Terms of Service</a> <span class="text-red-500">*</span></label>
+            </div>
+            <span class="error-message" id="policyAgreementError" style="display:none"></span>
+            <button type="submit" id="submitBtn" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold pulse-glow" onclick="submitApplication(event)" aria-label="Submit Application">
+              <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>Submit Application
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Modal Overlay -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center transition-opacity duration-300" role="alertdialog" aria-modal="true" aria-labelledby="successModalTitle" aria-describedby="successModalDesc">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center relative animate-fade-in">
+        <div class="flex flex-col items-center">
+          <div class="mb-5">
+            <i class="fas fa-check-circle text-green-500 text-5xl"></i>
+          </div>
+          <h2 id="successModalTitle" class="text-2xl font-bold text-green-600 mb-2">Thank you for applying!</h2>
+          <p id="successModalDesc" class="text-gray-700 mb-6">We've received your application.<br>Our team will review it and contact you soon.</p>
+          <button id="successBackBtn" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 w-full">
+      <div class="w-full px-4 md:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
+          <!-- Company Info -->
+          <div class="lg:col-span-1">
+            <h3 class="text-xl font-bold mb-4">REIGN-NAN Sales Industry & General Contractor, Inc.</h3>
+            <p class="text-gray-400">Building the future, one project at a time.</p>
+          </div>
+          
+          <!-- Quick Links -->
+          <div class="lg:col-span-1">
+            <h4 class="font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#apply" class="hover:text-white transition-colors">Apply Now</a></li>
+              <li><a href="admin.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
+            </ul>
+          </div>
+          
+          <!-- Contact Info -->
+          <div class="lg:col-span-1">
+            <h4 class="font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><i class="fas fa-envelope mr-2" aria-hidden="true"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400" aria-label="Email recruitment@rsigci.com">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2" aria-hidden="true"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400" aria-label="Copy phone number to clipboard">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard" aria-label="Copy phone number to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
+              <li><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
+            </ul>
+          </div>
+          
+          <!-- Social Media -->
+          <div class="lg:col-span-1">
+            <h4 class="font-semibold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
+                <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener" aria-label="Facebook">
+                <i class="fab fa-facebook text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Facebook</span>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
+                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Google Maps Embed -->
+          <div class="lg:col-span-1">
+            <h4 class="font-semibold mb-4">Location</h4>
+            <div class="rounded-lg overflow-hidden shadow-lg">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" 
+                width="100%" 
+                height="200" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Company Location Map"
+                aria-label="Company Location Map">
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="index.js" defer></script>
+    <script>
+// Breadcrumb section mapping
+const sectionMap = [
+  { id: 'about', label: 'About Us' },
+  { id: 'products', label: 'Products & Services' },
+  { id: 'openPositions', label: 'Careers' },
+  { id: 'apply', label: 'Apply' }
+];
+
+function updateBreadcrumb() {
+  let current = 'Home';
+  for (const section of sectionMap) {
+    const el = document.getElementById(section.id);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 80 && rect.bottom > 80) {
+        current = section.label;
+        break;
+      }
+    }
+  }
+  document.getElementById('breadcrumbCurrent').textContent = current;
+  // Hide breadcrumb if Home/Home
+  const breadcrumbDiv = document.getElementById('breadcrumb');
+  if (current === 'Home') {
+    breadcrumbDiv.style.display = 'none';
+  } else {
+    breadcrumbDiv.style.display = '';
+  }
+}
+
+window.addEventListener('scroll', updateBreadcrumb);
+window.addEventListener('DOMContentLoaded', updateBreadcrumb);
+</script>
+  </body>
+</html>

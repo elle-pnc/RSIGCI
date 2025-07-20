@@ -12,239 +12,56 @@
 </head>
 <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
   <div id="header"></div>
-  <!-- BEGIN HEADER.HTML COPY -->
-  <header>
-    <nav class="custom-header-nav relative flex items-center w-full px-4 py-2" style="min-height:64px;">
-      <div class="flex items-center w-full">
-        <div class="header-logo flex items-center min-w-[120px] z-10">
-          <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-10 w-auto" />
-        </div>
-        <ul class="header-nav-links flex text-base font-medium mx-auto absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="gap:0;">
-          <li><a class="header-link" href="about.html">About Us</a></li>
-          <li><a class="header-link" href="products.html">Products</a></li>
-          <li><a class="header-link" href="services.html">Services</a></li>
-          <li><a class="header-link active" href="careers.html">Careers</a></li>
-          <li><a href="contact-us.html" class="header-link" id="contactUsBtn">Contact Us</a></li>
-        </ul>
-        <div class="flex-1 flex justify-end items-center">
-          <button class="header-hamburger ml-4 z-10" aria-label="Open menu" id="hamburgerMenuBtn">
-            <span class="hamburger-icon"></span>
-          </button>
-        </div>
-      </div>
-      <!-- Slide-down menu -->
-      <div id="slideMenu" class="fixed bg-white shadow-lg transition-all duration-300 z-50 flex flex-col divide-y divide-gray-200"
-        style="top: 0; right: -340px; width: 320px; height: 100vh; opacity: 0; pointer-events: none;">
-        <button id="closeSlideMenu" class="hidden absolute top-4 right-4 text-3xl text-gray-500 hover:text-gray-800 focus:outline-none" aria-label="Close menu">&times;</button>
-        <a href="about.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">About Us</a>
-        <a href="products.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Products</a>
-        <a href="services.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Services</a>
-        <a href="careers.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Careers</a>
-        <a href="contact.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Contact Us</a>
-      </div>
-      <style>
-        .custom-header-nav { height: 64px; min-height: 64px; }
-        header, nav.custom-header-nav { height: 64px; min-height: 64px; }
-        .header-nav-links {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          gap: 0 !important;
-          z-index: 1;
-          height: 100%;
-        }
-        .header-link {
-          transition: color 0.18s;
-          border-radius: 0;
-          height: 64px;
-          padding: 0 2.2rem;
-          color: #1e293b;
-          text-decoration: none;
-          font-weight: 500;
-          position: relative;
-          display: flex;
-          align-items: center;
-          min-height: 0;
-          box-sizing: border-box;
-          font-size: 1rem;
-          line-height: 1;
-          z-index: 1;
-        }
-        .header-link::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          width: 100%;
-          height: 64px;
-          background: rgba(0,0,0,0.10);
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.18s;
-          z-index: 0;
-        }
-        .header-link:hover::before, .header-link:focus::before {
-          opacity: 1;
-        }
-        .header-link:hover, .header-link:focus {
-          color: #38bdf8; /* Tailwind sky-400 */
-          outline: none;
-        }
-        .header-link:active {
-          background: transparent !important;
-          color: #38bdf8 !important;
-          box-shadow: none !important;
-        }
-        .header-link.active,
-        .header-link[aria-current="page"] {
-          color: #1e293b; /* default text color, not blue */
-        }
-        .header-link.active::before,
-        .header-link[aria-current="page"]::before {
-          opacity: 1;
-        }
-        .header-hamburger {
-          display: none;
-          align-items: center;
-          justify-content: center;
-          z-index: 60;
-          position: relative;
-        }
-        @media (max-width: 700px) {
-          .header-hamburger {
-            display: flex !important;
-            position: relative;
-            z-index: 60;
-          }
-          #slideMenu {
-            display: none !important;
-          }
-          #slideMenu.open {
-            display: flex !important;
-          }
-        }
-        @media (min-width: 701px) {
-          #slideMenu {
-            display: none !important;
-          }
-        }
-        .header-hamburger:active, .header-hamburger:focus {
-          background: transparent !important;
-          box-shadow: none !important;
-          outline: none !important;
-        }
-        @media (max-width: 900px) {
-          .header-nav-links { gap: 1.2rem; }
-        }
-        @media (max-width: 700px) {
-          .header-nav-links { display: none !important; }
-        }
-        @media (max-width: 600px) {
-          .custom-header-nav { padding: 0.5rem 0.5rem; }
-          .header-nav-links { gap: 0.7rem; }
-        }
-        .glass-header {
-          background: rgba(30,41,59,0.85);
-          backdrop-filter: blur(14px);
-          border-bottom: 1.5px solid rgba(255,255,255,0.08);
-          box-shadow: 0 4px 24px rgba(30,41,59,0.08);
-        }
-      </style>
-    </nav>
-  </header>
-  <!-- END HEADER.HTML COPY -->
-  <script>
-  (function() {
-    const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
-    const slideMenu = document.getElementById('slideMenu');
-    const closeSlideMenu = document.getElementById('closeSlideMenu');
-    let menuOpen = false;
-    function openMenu() {
-      menuOpen = true;
-      slideMenu.classList.add('open');
-      slideMenu.style.right = '0';
-      slideMenu.style.opacity = '1';
-      slideMenu.style.pointerEvents = 'auto';
-    }
-    function closeMenu() {
-      menuOpen = false;
-      slideMenu.classList.remove('open');
-      if(window.innerWidth <= 700) {
-        slideMenu.style.right = '0';
-        slideMenu.style.opacity = '0';
-        slideMenu.style.pointerEvents = 'none';
-      } else {
-        slideMenu.style.right = '-340px';
-        slideMenu.style.opacity = '0';
-        slideMenu.style.pointerEvents = 'none';
-      }
-    }
-    if (hamburgerMenuBtn) {
-      hamburgerMenuBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if(menuOpen) {
-          closeMenu();
-        } else {
-          openMenu();
-        }
-      });
-    }
-    if(closeSlideMenu) {
-      closeSlideMenu.onclick = function(e) {
-        e.stopPropagation();
-        closeMenu();
-      };
-    }
-    document.addEventListener('click', function(e) {
-      if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
-        closeMenu();
-      }
-    });
-    if (slideMenu) {
-      slideMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-    }
-    window.addEventListener('resize', function() {
-      if(menuOpen) {
-        closeMenu();
-      }
-    });
-  })();
-  </script>
-
   <!-- Breadcrumb -->
-  <div class="breadcrumb py-4 bg-gray-50 border-b border-gray-200">
-    <div class="container mx-auto px-4 md:px-8">
+  <div class="breadcrumb py-4" style="margin-top: 4.5rem; margin-left: auto; margin-right: auto; display: block;">
+    <div class="breadcrumb-align-left">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
           <li>
-            <a href="index.html" class="breadcrumb-item text-gray-500 flex items-center">
+            <a href="index.html" class="breadcrumb-item text-gray-500 hover:text-blue-600">
               <i class="fas fa-home mr-1"></i>Home
             </a>
           </li>
           <li>
-            <span class="breadcrumb-separator text-gray-300">/</span>
+            <span class="breadcrumb-separator text-gray-400">/</span>
           </li>
           <li>
-            <span class="breadcrumb-item text-gray-500">Careers</span>
+            <span class="breadcrumb-item text-blue-600 font-medium">Careers</span>
           </li>
         </ol>
       </nav>
     </div>
   </div>
+  <style>
+    @media (min-width: 900px) {
+      .breadcrumb-align-left {
+        margin-left: 68rem !important;
+        padding-left: 0 !important;
+        max-width: none !important;
+      }
+    }
+  </style>
 
+  <!-- Hero Section -->
+  <section class="careers-hero product-hero fade-in" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%); min-height: 400px; display: flex; align-items: center; position: relative; overflow: hidden;">
+    <div class="absolute inset-0 z-0" style="background: url('Career_Page_Background.png') center/cover no-repeat; opacity: 0.3;"></div>
+    <div class="product-hero-content text-white relative z-10 w-full flex flex-col items-center text-center py-14 md:py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Careers</h1>
+        <p class="text-xl md:text-2xl mb-8 leading-relaxed">
+          Join our team and build your future with <b>REIGN-NAN Sales Industry & General Contractor, Inc.</b>.<br>
+          Explore open positions and discover how you can grow your career with us.
+        </p>
+      </div>
+    </div>
+  </section>
   <!-- Careers Content Placeholder -->
   <!-- BEGIN Open Positions Section (matches index.html#openPositionsTab and products/services design) -->
   <main>
-    <section class="py-20 px-4 md:px-8 bg-gray-50 w-full" id="openPositionsTab">
+    <section class="py-20 px-4 md:px-8 bg-gray-50 w-full fade-in" id="openPositionsTab">
       <div class="w-full">
-        <div class="text-center mb-16 mt-24">
-          <div class="slide-in-right">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Open Positions</h1>
+        <div class="text-center mb-16 mt-24 slide-in-right">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Open Positions</h1>
             <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Join our dynamic team and contribute to building the future
             </p>
@@ -370,18 +187,46 @@
   </div>
   <!-- END Apply Section -->
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-8 mt-12">
+  <!-- Footer (from products.html) -->
+  <footer class="bg-gray-900 text-white py-12">
     <div class="container mx-auto px-4 md:px-8">
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-        <div class="mb-4 md:mb-0">
-          <img src="RSIGCI_LOGO_2.png" alt="RSIGCI Logo" class="h-10 mb-2">
-          <p class="text-sm">&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold mb-0">Company</h4>
+          <ul class="space-y-2 text-gray-400 mt-4">
+            <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Products</a></li>
+            <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
+          </ul>
         </div>
-        <div class="flex space-x-6">
-          <a href="privacy-policy.html" class="text-gray-300 hover:text-white text-sm">Privacy Policy</a>
-          <a href="terms-of-service.html" class="text-gray-300 hover:text-white text-sm">Terms of Service</a>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="contact-us.html" class="hover:text-white transition-colors">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+          </ul>
         </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+            <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+            <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
+        <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -412,6 +257,60 @@
               link.classList.remove('active');
             }
           });
+          // Hamburger menu script (runs after header is loaded)
+          (function() {
+            const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeSlideMenu = document.getElementById('closeSlideMenu');
+            let menuOpen = false;
+            function openMenu() {
+              menuOpen = true;
+              slideMenu.classList.add('open');
+              slideMenu.style.right = '0';
+              slideMenu.style.opacity = '1';
+              slideMenu.style.pointerEvents = 'auto';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+            }
+            function closeMenu() {
+              menuOpen = false;
+              slideMenu.classList.remove('open');
+              slideMenu.style.right = '-340px';
+              slideMenu.style.opacity = '0';
+              slideMenu.style.pointerEvents = 'none';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+            }
+            if (hamburgerMenuBtn) {
+              hamburgerMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(menuOpen) {
+                  closeMenu();
+                } else {
+                  openMenu();
+                }
+              });
+            }
+            if(closeSlideMenu) {
+              closeSlideMenu.onclick = function(e) {
+                e.stopPropagation();
+                closeMenu();
+              };
+            }
+            document.addEventListener('click', function(e) {
+              if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+                closeMenu();
+              }
+            });
+            if (slideMenu) {
+              slideMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+            window.addEventListener('resize', function() {
+              if(menuOpen) {
+                closeMenu();
+              }
+            });
+          })();
         });
     });
   </script>

@@ -26,7 +26,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+        background: url('Product_Page_Background.png') center/cover;
         opacity: 0.3;
         z-index: 1;
       }
@@ -34,6 +34,16 @@
       .product-hero-content {
         position: relative;
         z-index: 2;
+        text-align: left;
+        align-items: flex-start;
+        padding-left: 4rem;
+      }
+      @media (max-width: 900px) {
+        .product-hero-content {
+          text-align: center;
+          align-items: center;
+          padding-left: 0;
+        }
       }
       
       .breadcrumb {
@@ -161,225 +171,118 @@
           height: 140px;
         }
       }
+      @media (min-width: 900px) {
+        .product-hero-content {
+          padding-left: 0 !important;
+        }
+        .flex-1 {
+          padding-left: 0 !important;
+        }
+        .product-hero-content .max-w-4xl {
+          margin-left: -11rem !important;
+          padding-left: 0 !important;
+          text-align: left !important;
+        }
+      }
+      @media (max-width: 900px) {
+        .product-hero-content .max-w-4xl {
+          margin-left: 0 !important;
+          text-align: center !important;
+        }
+      }
+      @media (min-width: 900px) {
+        .breadcrumb-align-left {
+          margin-left: 68rem !important;
+          padding-left: 0 !important;
+          max-width: none !important;
+        }
+      }
     </style>
   </head>
   <body class="bg-gray-50 text-gray-800">
     <div id="header"></div>
-    <!-- Header / Navigation -->
-    <header>
-      <nav class="custom-header-nav relative flex items-center w-full px-4 py-2" style="min-height:64px;">
-        <div class="flex items-center w-full">
-          <div class="header-logo flex items-center min-w-[120px] z-10">
-            <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-10 w-auto" />
-          </div>
-          <ul class="header-nav-links flex text-base font-medium mx-auto absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="gap:0;">
-            <li><a class="header-link" href="about.html">About Us</a></li>
-            <li><a class="header-link active" href="products.html">Products</a></li>
-            <li><a class="header-link" href="services.html">Services</a></li>
-            <li><a class="header-link" href="careers.html">Careers</a></li>
-            <li><a href="contact-us.html" class="header-link" id="contactUsBtn">Contact Us</a></li>
-          </ul>
-          <div class="flex-1 flex justify-end items-center">
-            <button class="header-hamburger ml-4 z-10" aria-label="Open menu" id="hamburgerMenuBtn">
-              <span class="hamburger-icon"></span>
-            </button>
-          </div>
-        </div>
-        <!-- Slide-down menu -->
-        <div id="slideMenu" class="fixed bg-white shadow-lg transition-all duration-300 z-50 flex flex-col divide-y divide-gray-200"
-          style="top: 0; right: -340px; width: 320px; height: 100vh; opacity: 0; pointer-events: none;">
-          <button id="closeSlideMenu" class="hidden absolute top-4 right-4 text-3xl text-gray-500 hover:text-gray-800 focus:outline-none" aria-label="Close menu">&times;</button>
-          <a href="about.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">About Us</a>
-          <a href="products.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Products</a>
-          <a href="services.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Services</a>
-          <a href="careers.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Careers</a>
-          <a href="contact.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Contact Us</a>
-        </div>
-        <style>
-          .custom-header-nav { height: 64px; min-height: 64px; }
-          header, nav.custom-header-nav { height: 64px; min-height: 64px; }
-          .header-nav-links {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            gap: 0 !important;
-            z-index: 1;
-            height: 100%;
-          }
-          .header-link {
-            transition: color 0.18s;
-            border-radius: 0;
-            height: 64px;
-            padding: 0 2.2rem;
-            color: #1e293b;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            display: flex;
-            align-items: center;
-            min-height: 0;
-            box-sizing: border-box;
-            font-size: 1rem;
-            line-height: 1;
-            z-index: 1;
-          }
-          .header-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            width: 100%;
-            height: 64px;
-            background: rgba(0,0,0,0.10);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.18s;
-            z-index: 0;
-          }
-          .header-link:hover::before, .header-link:focus::before {
-            opacity: 1;
-          }
-          .header-link:hover, .header-link:focus {
-            color: #38bdf8; /* Tailwind sky-400 */
-            outline: none;
-          }
-          .header-link:active {
-            background: transparent !important;
-            color: #38bdf8 !important;
-            box-shadow: none !important;
-          }
-          .header-link.active,
-          .header-link[aria-current="page"] {
-            color: #1e293b; /* default text color, not blue */
-          }
-          .header-link.active::before,
-          .header-link[aria-current="page"]::before {
-            opacity: 1;
-          }
-          .header-hamburger {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 60;
-            position: relative;
-          }
-          @media (max-width: 700px) {
-            .header-hamburger {
-              display: flex !important;
-              position: relative;
-              z-index: 60;
-            }
-            #slideMenu {
-              display: none !important;
-            }
-            #slideMenu.open {
-              display: flex !important;
-            }
-          }
-          @media (min-width: 701px) {
-            #slideMenu {
-              display: none !important;
-            }
-          }
-          .header-hamburger:active, .header-hamburger:focus {
-            background: transparent !important;
-            box-shadow: none !important;
-            outline: none !important;
-          }
-          @media (max-width: 900px) {
-            .header-nav-links { gap: 1.2rem; }
-          }
-          @media (max-width: 700px) {
-            .header-nav-links { display: none !important; }
-          }
-          @media (max-width: 600px) {
-            .custom-header-nav { padding: 0.5rem 0.5rem; }
-            .header-nav-links { gap: 0.7rem; }
-          }
-          .glass-header {
-            background: rgba(30,41,59,0.85);
-            backdrop-filter: blur(14px);
-            border-bottom: 1.5px solid rgba(255,255,255,0.08);
-            box-shadow: 0 4px 24px rgba(30,41,59,0.08);
-          }
-        </style>
-      </nav>
-    </header>
     <script>
-      (function() {
-        const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
-        const slideMenu = document.getElementById('slideMenu');
-        const closeSlideMenu = document.getElementById('closeSlideMenu');
-        let menuOpen = false;
-        function openMenu() {
-          menuOpen = true;
-          slideMenu.classList.add('open');
-          slideMenu.style.right = '0';
-          slideMenu.style.opacity = '1';
-          slideMenu.style.pointerEvents = 'auto';
-        }
-        function closeMenu() {
-          menuOpen = false;
-          slideMenu.classList.remove('open');
-          if(window.innerWidth <= 700) {
-            slideMenu.style.right = '0';
-            slideMenu.style.opacity = '0';
-            slideMenu.style.pointerEvents = 'none';
-          } else {
-            slideMenu.style.right = '-340px';
-            slideMenu.style.opacity = '0';
-            slideMenu.style.pointerEvents = 'none';
-          }
-        }
-        if (hamburgerMenuBtn) {
-          hamburgerMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if(menuOpen) {
-              closeMenu();
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Set active nav link
+          const page = location.pathname.split('/').pop();
+          document.querySelectorAll('.header-link').forEach(link => {
+            if(link.getAttribute('href') === page) {
+              link.classList.add('active');
             } else {
-              openMenu();
+              link.classList.remove('active');
             }
           });
-        }
-        if(closeSlideMenu) {
-          closeSlideMenu.onclick = function(e) {
-            e.stopPropagation();
-            closeMenu();
-          };
-        }
-        document.addEventListener('click', function(e) {
-          if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
-            closeMenu();
-          }
+          // Hamburger menu script (runs after header is loaded)
+          (function() {
+            const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeSlideMenu = document.getElementById('closeSlideMenu');
+            let menuOpen = false;
+            function openMenu() {
+              menuOpen = true;
+              slideMenu.classList.add('open');
+              slideMenu.style.right = '0';
+              slideMenu.style.opacity = '1';
+              slideMenu.style.pointerEvents = 'auto';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+            }
+            function closeMenu() {
+              menuOpen = false;
+              slideMenu.classList.remove('open');
+              slideMenu.style.right = '-340px';
+              slideMenu.style.opacity = '0';
+              slideMenu.style.pointerEvents = 'none';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+            }
+            if (hamburgerMenuBtn) {
+              hamburgerMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(menuOpen) {
+                  closeMenu();
+                } else {
+                  openMenu();
+                }
+              });
+            }
+            if(closeSlideMenu) {
+              closeSlideMenu.onclick = function(e) {
+                e.stopPropagation();
+                closeMenu();
+              };
+            }
+            document.addEventListener('click', function(e) {
+              if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+                closeMenu();
+              }
+            });
+            if (slideMenu) {
+              slideMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+            window.addEventListener('resize', function() {
+              if(menuOpen) {
+                closeMenu();
+              }
+            });
+          })();
         });
-        if (slideMenu) {
-          slideMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-          });
-        }
-        window.addEventListener('resize', function() {
-          if(menuOpen) {
-            closeMenu();
-          }
-        });
-      })();
     </script>
-
     <!-- Breadcrumb -->
-    <div class="breadcrumb py-4">
-      <div class="container mx-auto px-4 md:px-8">
+    <div class="breadcrumb py-4" style="margin-top: 4.5rem; margin-left: auto; margin-right: auto; display: block;">
+      <div class="breadcrumb-align-left">
         <nav class="flex" aria-label="Breadcrumb">
           <ol class="flex items-center space-x-2">
             <li>
-              <a href="index.html" class="breadcrumb-item hover:text-blue-600">
+              <a href="index.html" class="breadcrumb-item text-gray-500 hover:text-blue-600">
                 <i class="fas fa-home mr-1"></i>Home
               </a>
             </li>
             <li>
-              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-separator text-gray-400">/</span>
             </li>
             <li>
               <span class="breadcrumb-item text-blue-600 font-medium">Product Index</span>
@@ -390,24 +293,20 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="product-hero">
-      <div class="container mx-auto px-4 md:px-8">
-        <div class="product-hero-content text-white">
-          <div class="max-w-4xl">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Product Index</h1>
-            <p class="text-xl md:text-2xl mb-8 leading-relaxed">
-              Discover our comprehensive range of mechanical seals, bearing protectors, and industrial equipment. 
-              Quality products designed for reliability and performance in demanding industrial environments.
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="#product-categories" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center">
-                <i class="fas fa-th-large mr-2"></i>Explore Products
-              </a>
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="bg-white bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center hover:bg-opacity-30 transition-all">
-                <i class="fas fa-play mr-2"></i>Journey Of A Seal
-              </a>
-            </div>
-          </div>
+    <section class="product-hero flex items-center justify-center fade-in" style="min-height: 400px;">
+      <div class="container mx-auto px-4 md:px-8 flex items-center justify-center" style="min-height: 400px;">
+        <div class="product-hero-content text-white relative z-10 flex flex-col items-center justify-center w-full max-w-4xl py-14 md:py-20">
+              <div class="w-full max-w-2xl mx-auto flex flex-col items-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 text-center w-full">Product Index</h1>
+                <p class="text-xl md:text-2xl mb-8 leading-relaxed text-center w-full">
+                  REIGN-NAN is a corporation engaged in the supply of industrial products, forging partnerships with global leaders as the exclusive distributor of AESSEAL PLC UK, an authorized dealer of Thomas & Betts USA, and a partner of EpiT Korea.
+                </p>
+                <div class="flex justify-center w-full">
+                  <a href="#product-categories" id="exploreProductsBtn" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center mx-auto">
+                    <i class="fas fa-th-large mr-2"></i>Explore Products
+                  </a>
+                </div>
+              </div>
         </div>
       </div>
     </section>
@@ -418,7 +317,7 @@
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Category of Product</h2>
           <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-            Choose from our extensive range of industrial products and solutions designed to meet your specific requirements.
+            We offer a comprehensive range of mechanical seals, bearing protectors, and industrial equipment—quality products designed for reliability and performance in demanding environments.
           </p>
         </div>
         <div class="card-grid">
@@ -492,7 +391,7 @@
     <!-- Removed the standalone Contact Us button here -->
 
     <!-- More Information Section -->
-    <section class="py-16 px-4 md:px-8 bg-white">
+    <section class="py-16 px-4 md:px-8 bg-white fade-in">
       <div class="container mx-auto">
         <div class="text-center">
           <div class="bg-white rounded-xl shadow-md p-8 max-w-4xl mx-auto mb-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
@@ -519,7 +418,7 @@
     </section>
 
     <!-- Social Media Section -->
-    <section class="py-12 px-4 md:px-8 bg-gray-100">
+    <section class="py-12 px-4 md:px-8 bg-gray-100 fade-in">
       <div class="container mx-auto">
         <div class="text-center mb-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-4">Follow Us</h3>
@@ -550,7 +449,11 @@
       <div class="container mx-auto px-4 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h4 class="text-lg font-semibold mb-4">Company</h4>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+              <h4 class="text-lg font-semibold mb-0">Company</h4>
+              
+              
+            </div>
             <ul class="space-y-2 text-gray-400">
               <li><a href="index.html#about" class="hover:text-white transition-colors">About Us</a></li>
               <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
@@ -583,65 +486,38 @@
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
           <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
-
-    <script>
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        });
-      });
-
-      // Add scroll animations
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
-
-      // Observe product category cards
-      document.querySelectorAll('.product-category-card').forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        card.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(card);
-      });
-    </script>
-    <script>
-      fetch('header.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('header').innerHTML = html;
-          // Set active nav link
-          const page = location.pathname.split('/').pop();
-          document.querySelectorAll('.header-link').forEach(link => {
-            if(link.getAttribute('href') === page) {
-              link.classList.add('active');
-            } else {
-              link.classList.remove('active');
-            }
-          });
-        });
-    </script>
   </body>
-</html> 
+<script>
+// Slide-down animation for Explore Products button
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('exploreProductsBtn');
+  var target = document.getElementById('product-categories');
+  if (btn && target) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.classList.add('slide-in-down');
+      setTimeout(function() {
+        target.classList.remove('slide-in-down');
+      }, 800);
+    });
+  }
+});
+// Add slide-in-down animation CSS
+var style = document.createElement('style');
+style.innerHTML = `
+  .slide-in-down {
+    animation: slideInDown 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  @keyframes slideInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+document.head.appendChild(style);
+</script> 

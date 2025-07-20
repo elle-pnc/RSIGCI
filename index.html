@@ -3,753 +3,529 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
-    <!-- SECURITY: Backend validation is still required for all uploads and user input. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://accounts.google.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.google.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.gstatic.com; img-src 'self' data: https://*; connect-src 'self' https://firestore.googleapis.com; frame-src https://www.google.com https://content.googleapis.com;" />
-    <meta name="keywords" content="RSIGCI, Reign-NAN, general contractor, mechanical seals, industrial equipment, careers, sales, construction, Philippines" />
-    <link rel="canonical" href="https://www.rsigci.com/" />
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Join Our Team | RSIGCI." />
-    <meta property="og:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
-    <meta property="og:image" content="RSIGCI_LOGO_2.png" />
-    <meta property="og:url" content="https://www.rsigci.com/" />
-    <meta property="og:type" content="website" />
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Join Our Team | RSIGCI." />
-    <meta name="twitter:description" content="Join a fast-growing general contracting and sales company. Explore careers in construction and sales. Apply now!" />
-    <meta name="twitter:image" content="RSIGCI_LOGO_2.png" />
-    <title>Join Our Team | RSIGCI.</title>
+    <meta name="description" content="REIGN-NAN Sales Industry & General Contractor, Inc. - Building the future, one project at a time. Explore our products, services, and career opportunities." />
+    <title>REIGN-NAN | Home</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
     <link rel="stylesheet" href="index.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js" defer></script>
-    <script src="firebase-config.js" defer></script>
-    <!-- Google Drive API -->
-    <script src="https://apis.google.com/js/api.js" defer></script>
-    <script src="https://accounts.google.com/gsi/client" defer></script>
-    <script src="google-drive-service.js" defer></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   </head>
   <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center loading-overlay">
-      <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm mx-4">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p class="text-lg font-semibold text-gray-800">Submitting Application...</p>
-        <p class="text-sm text-gray-600 mt-2">Please wait while we process your application</p>
-      </div>
-    </div>
-
-    <!-- Header / Navigation -->
-    <!-- BEGIN HEADER.HTML COPY -->
-<header>
-  <nav class="custom-header-nav relative flex items-center w-full px-4 py-2" style="min-height:64px;">
-    <div class="flex items-center w-full">
-      <div class="header-logo flex items-center min-w-[120px] z-10">
-        <img src="reignnan_logo_transparent.png" alt="REIGN-NAN Logo" class="h-10 w-auto" />
-      </div>
-      <ul class="header-nav-links flex text-base font-medium mx-auto absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style="gap:0;">
-        <li><a class="header-link" href="about.html">About Us</a></li>
-        <li><a class="header-link" href="products.html">Products</a></li>
-        <li><a class="header-link" href="services.html">Services</a></li>
-        <li><a class="header-link" href="careers.html">Careers</a></li>
-        <li><a href="contact.html" class="header-link" id="contactUsBtn">Contact Us</a></li>
-      </ul>
-      <div class="flex-1 flex justify-end items-center">
-        <button class="header-hamburger ml-4 z-10" aria-label="Open menu" id="hamburgerMenuBtn">
-          <span class="hamburger-icon"></span>
-        </button>
-      </div>
-    </div>
-    <!-- Slide-down menu -->
-    <div id="slideMenu" class="fixed bg-white shadow-lg transition-all duration-300 z-50 flex flex-col divide-y divide-gray-200"
-      style="top: 0; right: -340px; width: 320px; height: 100vh; opacity: 0; pointer-events: none;">
-      <button id="closeSlideMenu" class="hidden absolute top-4 right-4 text-3xl text-gray-500 hover:text-gray-800 focus:outline-none" aria-label="Close menu">&times;</button>
-      <a href="about.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">About Us</a>
-      <a href="products.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Products</a>
-      <a href="services.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Services</a>
-      <a href="careers.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Careers</a>
-      <a href="contact.html" class="py-4 px-8 text-lg text-gray-800 text-left hover:bg-gray-100 transition w-full block">Contact Us</a>
-    </div>
-    <style>
-      .custom-header-nav { height: 64px; min-height: 64px; }
-      header, nav.custom-header-nav { height: 64px; min-height: 64px; }
-      .header-nav-links {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        gap: 0 !important;
-        z-index: 1;
-        height: 100%;
-      }
-      .header-link {
-        transition: color 0.18s;
-        border-radius: 0;
-        height: 64px;
-        padding: 0 2.2rem;
-        color: #1e293b;
-        text-decoration: none;
-        font-weight: 500;
-        position: relative;
-        display: flex;
-        align-items: center;
-        min-height: 0;
-        box-sizing: border-box;
-        font-size: 1rem;
-        line-height: 1;
-        z-index: 1;
-      }
-      .header-link::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        width: 100%;
-        height: 64px;
-        background: rgba(0,0,0,0.10);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.18s;
-        z-index: 0;
-      }
-      .header-link:hover::before, .header-link:focus::before {
-        opacity: 1;
-      }
-      .header-link:hover, .header-link:focus {
-        color: #38bdf8; /* Tailwind sky-400 */
-        outline: none;
-      }
-      .header-link:active {
-        background: transparent !important;
-        color: #38bdf8 !important;
-        box-shadow: none !important;
-      }
-      .header-link.active,
-      .header-link[aria-current="page"] {
-        color: #1e293b; /* default text color, not blue */
-      }
-      .header-link.active::before,
-      .header-link[aria-current="page"]::before {
-        opacity: 1;
-      }
-      .header-hamburger {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 60;
-        position: relative;
-      }
-      @media (max-width: 700px) {
-        .header-hamburger {
-          display: flex !important;
-          position: relative;
-          z-index: 60;
-        }
-        #slideMenu {
-          display: none !important;
-        }
-        #slideMenu.open {
-          display: flex !important;
-        }
-      }
-      @media (min-width: 701px) {
-        #slideMenu {
-          display: none !important;
-        }
-      }
-      .header-hamburger:active, .header-hamburger:focus {
-        background: transparent !important;
-        box-shadow: none !important;
-        outline: none !important;
-      }
-      @media (max-width: 900px) {
-        .header-nav-links { gap: 1.2rem; }
-      }
-      @media (max-width: 700px) {
-        .header-nav-links { display: none !important; }
-      }
-      @media (max-width: 600px) {
-        .custom-header-nav { padding: 0.5rem 0.5rem; }
-        .header-nav-links { gap: 0.7rem; }
-      }
-      .glass-header {
-        background: rgba(30,41,59,0.85);
-        backdrop-filter: blur(14px);
-        border-bottom: 1.5px solid rgba(255,255,255,0.08);
-        box-shadow: 0 4px 24px rgba(30,41,59,0.08);
-      }
-    </style>
-  </nav>
-</header>
-<!-- END HEADER.HTML COPY -->
-<script>
-(function() {
-  const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
-  const slideMenu = document.getElementById('slideMenu');
-  const closeSlideMenu = document.getElementById('closeSlideMenu');
-  let menuOpen = false;
-  function openMenu() {
-    menuOpen = true;
-    slideMenu.classList.add('open');
-    slideMenu.style.right = '0';
-    slideMenu.style.opacity = '1';
-    slideMenu.style.pointerEvents = 'auto';
-  }
-  function closeMenu() {
-    menuOpen = false;
-    slideMenu.classList.remove('open');
-    if(window.innerWidth <= 700) {
-      slideMenu.style.right = '0';
-      slideMenu.style.opacity = '0';
-      slideMenu.style.pointerEvents = 'none';
-    } else {
-      slideMenu.style.right = '-340px';
-      slideMenu.style.opacity = '0';
-      slideMenu.style.pointerEvents = 'none';
-    }
-  }
-  if (hamburgerMenuBtn) {
-    hamburgerMenuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      if(menuOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-  }
-  if(closeSlideMenu) {
-    closeSlideMenu.onclick = function(e) {
-      e.stopPropagation();
-      closeMenu();
-    };
-  }
-  document.addEventListener('click', function(e) {
-    if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
-      closeMenu();
-    }
-  });
-  if (slideMenu) {
-    slideMenu.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-  }
-  window.addEventListener('resize', function() {
-    if(menuOpen) {
-      closeMenu();
-    }
-  });
-})();
-</script>
-
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full bg-blue-900 z-40 transform translate-x-full transition-transform duration-300 md:hidden" aria-label="Mobile navigation menu" role="navigation">
-      <div class="flex flex-col items-center justify-center h-full space-y-8">
-        <a id="mobileAboutBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#about" aria-label="Our Company">Our Company</a>
-        <a id="mobileProductsBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="products.html" aria-label="Products">Products</a>
-        <a id="mobileServicesBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="services.html" aria-label="Services">Services</a>
-        <a id="mobileCareersBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#openPositions" aria-label="Careers">Careers</a>
-        <a id="mobileApplyBtn" class="text-white text-2xl hover:text-orange-300 transition-colors" href="#apply" aria-label="Apply">Apply</a>
-      </div>
-    </div>
+    <div id="header"></div>
+    <script>
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Set active nav link
+          const page = location.pathname.split('/').pop();
+          document.querySelectorAll('.header-link').forEach(link => {
+            if(link.getAttribute('href') === page) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+          // Hamburger menu script (runs after header is loaded)
+          (function() {
+            const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeSlideMenu = document.getElementById('closeSlideMenu');
+            let menuOpen = false;
+            function openMenu() {
+              menuOpen = true;
+              slideMenu.classList.add('open');
+              slideMenu.style.right = '0';
+              slideMenu.style.opacity = '1';
+              slideMenu.style.pointerEvents = 'auto';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+            }
+            function closeMenu() {
+              menuOpen = false;
+              slideMenu.classList.remove('open');
+              slideMenu.style.right = '-340px';
+              slideMenu.style.opacity = '0';
+              slideMenu.style.pointerEvents = 'none';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+            }
+            if (hamburgerMenuBtn) {
+              hamburgerMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(menuOpen) {
+                  closeMenu();
+                } else {
+                  openMenu();
+                }
+              });
+            }
+            if(closeSlideMenu) {
+              closeSlideMenu.onclick = function(e) {
+                e.stopPropagation();
+                closeMenu();
+              };
+            }
+            document.addEventListener('click', function(e) {
+              if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+                closeMenu();
+              }
+            });
+            if (slideMenu) {
+              slideMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+            window.addEventListener('resize', function() {
+              if(menuOpen) {
+                closeMenu();
+              }
+            });
+          })();
+        });
+    </script>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="heroSection">
-      <img src="RSIGCI_Main.png" alt="Background" class="hero-bg-image fade-image show" id="heroImageMain" />
-      <img src="RSIGCI_Second.jpg" alt="Background 2" class="hero-bg-image fade-image" id="heroImageSecond" />
-      <div class="hero-container hero-content-on-top">
-        <!-- Left: Text and Buttons -->
-        <div class="hero-left">
-          <h1 class="hero-title">Join Our Team of<br>Builders and Closers</h1>
-          <p class="hero-description">Our company is engaged in the supply of mechanical seals, bearing protectors, packing and gaskets, and electrical and mechanical equipment and parts for industrial use. We are also engaged in insulation and commissioning, which is part of after-sales service.</p>
-          <div class="hero-buttons">
-            <button id="exploreOpportunitiesBtn" class="hero-btn hero-btn-green"><i class="fas fa-search"></i> Explore Opportunities</button>
-            <button id="applyNowBtn" class="hero-btn hero-btn-blue"><i class="fas fa-briefcase"></i> Apply Now</button>
+    <section class="product-hero relative" style="background: url('TEST_BG1.svg') center/cover no-repeat; min-height: 100vh;">
+      <div class="container mx-auto px-4 md:px-8 relative z-10" style="position: relative; z-index: 2;">
+        <div class="flex flex-col items-center text-center py-20 md:py-32">
+          <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">Welcome to REIGN-NAN Sales Industry & General Contractor, Inc.</h1>
+          <p class="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto drop-shadow">We are your trusted partner for industrial equipment, mechanical seals, and construction solutions in the Philippines.<br>Discover our commitment to quality, innovation, and service excellence.</p>
+          <p class="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto drop-shadow opacity-90">With over 28 years of experience in sales industry and general contractual services, REIGN-NAN is dedicated to delivering excellence, reliability, and innovation for every client.</p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="#about" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white transition-all">
+              <i class="fas fa-info-circle mr-2"></i>Learn More
+            </a>
+            <a href="#careers" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center bg-green-600 hover:bg-green-700 text-white transition-all">
+              <i class="fas fa-briefcase mr-2"></i>Join Our Team
+            </a>
           </div>
         </div>
-        <!-- Right: Circular Image with Overlays -->
-        <div class="hero-right">
-          <!-- overlays removed, image is now behind -->
-        </div>
-      </div>
-      <div class="hero-see-more-wrapper">
-        <a href="#about" class="hero-see-more" id="seeMoreBtn">See More About Our Company</a>
-        <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
       </div>
     </section>
 
-    <!-- Breadcrumb -->
-    <div id="breadcrumb" class="breadcrumb py-4 bg-gray-50 border-b border-gray-200">
+    <!-- Company Introduction -->
+    <section id="about" class="py-20 px-4 md:px-8 bg-white">
+      <div class="container mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Who We Are</h2>
+        <p class="text-lg text-gray-700 mb-8">Since 1997, <b>REIGN-NAN Sales Industry & General Contractor, Inc.</b> has delivered quality products and services to industrial and commercial clients. We specialize in mechanical seals, bearing protectors, packing and gaskets, and a wide range of electrical and mechanical equipment. Our expertise extends to insulation, commissioning, and after-sales service.</p>
+        <a href="about.html" class="text-blue-600 hover:underline font-semibold">Read more about our company &rarr;</a>
+      </div>
+    </section>
+
+    <!-- Product & Service Categories -->
+    <section class="py-20 px-4 md:px-8 bg-gray-50">
+      <div class="container mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What We Offer</h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">Explore our comprehensive range of industrial products and services designed to meet your needs.</p>
+        </div>
+        <div class="flex justify-center mb-8">
+          <div class="tab-bar flex rounded-full bg-white border border-gray-200 shadow-sm overflow-hidden">
+            <button id="productsTab" class="tab-btn px-8 py-3 font-semibold text-lg focus:outline-none transition-all tab-active">Products</button>
+            <button id="servicesTab" class="tab-btn px-8 py-3 font-semibold text-lg focus:outline-none transition-all">Services</button>
+          </div>
+        </div>
+        <div id="productsGrid" class="card-grid fade-in-tab">
+          <div class="card">
+            <div class="card-banner" style="background-image: url('seal_support-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Seal Support Systems</div>
+              <div class="card-desc">CE certified assemblies, advanced technology, and global support for industrial sealing needs.</div>
+              <a href="products.html#seal-support" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('gland_packing-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Gland Packing</div>
+              <div class="card-desc">Comprehensive range of packing for all requirements, with exceptional resilience and conformity.</div>
+              <a href="products.html#gland-packing" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('gas_seals-removebg-preview.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Gas Seals</div>
+              <div class="card-desc">Complete range of gas seals for compressors, pumps, and reactors, designed for challenging duties.</div>
+              <a href="products.html#gas-seals" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <a href="products.html" class="card card-see-all flex flex-col items-center justify-center text-center transition hover:shadow-xl">
+            <span class="see-all-icon mb-3"><i class="fas fa-box-open fa-2x"></i></span>
+            <span class="see-all-title font-bold text-blue-700 text-lg mb-1">See All Products</span>
+            <span class="see-all-desc text-blue-500 text-sm mb-3">Explore our full product range</span>
+            <span class="see-all-btn inline-flex items-center px-6 py-2 rounded-full bg-blue-600 text-white font-semibold text-base shadow hover:bg-blue-700 transition">View All Products <i class="fas fa-arrow-right ml-2"></i></span>
+          </a>
+        </div>
+        <div id="servicesGrid" class="card-grid fade-in-tab" style="display:none;">
+          <div class="card">
+            <div class="card-banner" style="background-image: url('Painting.jpg'); background-size: cover;"></div>
+            <div class="card-content">
+              <div class="card-title">Painting</div>
+              <div class="card-desc">Metal Protective Coating, Concrete Protective Coating, Waterproofing, and Fireproofing</div>
+              <a href="services.html#painting" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('Insulation_and_Cladding.png'); background-size: cover;"></div>
+            <div class="card-content">
+              <div class="card-title">Insulation and Cladding</div>
+              <div class="card-desc">Perlite Insulation, Cementitious Cladding, and Aluminum Jacketing</div>
+              <a href="services.html#insulation" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-banner" style="background-image: url('Mechanical.png'); background-size: cover;"></div>
+            <div class="card-content">
+              <div class="card-title">Mechanical</div>
+              <div class="card-desc">Tank Fabrication, Pipe Laying, Conveying System, and Sandblasting</div>
+              <a href="services.html#mechanical" class="btn-learn-more mt-auto">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+          </div>
+          <a href="services.html" class="card card-see-all flex flex-col items-center justify-center text-center transition hover:shadow-xl">
+            <span class="see-all-icon mb-3"><i class="fas fa-cogs fa-2x"></i></span>
+            <span class="see-all-title font-bold text-green-700 text-lg mb-1">See All Services</span>
+            <span class="see-all-desc text-green-500 text-sm mb-3">Explore our full service offering</span>
+            <span class="see-all-btn inline-flex items-center px-6 py-2 rounded-full bg-green-600 text-white font-semibold text-base shadow hover:bg-green-700 transition">View All Services <i class="fas fa-arrow-right ml-2"></i></span>
+          </a>
+        </div>
+        <div class="flex justify-center mt-10 gap-4">
+          <a id="viewProductsBtn" href="products.html" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-lg">
+            <i class="fas fa-box mr-2"></i>View All Products
+          </a>
+          <a id="viewServicesBtn" href="services.html" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center bg-green-600 hover:bg-green-700 text-white transition-all shadow-lg" style="display:none;">
+            <i class="fas fa-cogs mr-2"></i>View All Services
+          </a>
+        </div>
+        <style>
+          .tab-bar { min-width: 320px; }
+          .tab-btn {
+            background: none;
+            border: none;
+            color: #2563eb;
+            border-radius: 0;
+            transition: background 0.18s, color 0.18s, font-weight 0.18s;
+            font-weight: 500;
+            outline: none;
+          }
+          .tab-btn.tab-active {
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+          }
+          .tab-btn:not(.tab-active):hover {
+            background: #f3f4f6;
+            color: #174ea6;
+          }
+          .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            padding: 0 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 0;
+          }
+          .card {
+            background: #fff;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s, transform 0.3s;
+            border: 1px solid #e5e7eb;
+            min-height: 320px;
+          }
+          .card:hover {
+            box-shadow: 0 12px 32px rgba(44, 62, 80, 0.16);
+            transform: translateY(-6px) scale(1.02);
+          }
+          .card-banner {
+            width: 100%;
+            height: 180px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #f3f6fa;
+            border-radius: 1.25rem 1.25rem 0 0;
+            margin-bottom: 0;
+          }
+          .card-content {
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+            align-items: flex-start;
+          }
+          .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 0.7rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+          }
+          .card-desc {
+            color: #5a6a85;
+            font-size: 1.01rem;
+            line-height: 1.7;
+            font-family: 'Inter', Arial, sans-serif;
+            margin-bottom: 1.2rem;
+          }
+          .fade-in-tab {
+            opacity: 1;
+            animation: fadeInTab 0.5s;
+          }
+          @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @media (max-width: 900px) {
+            .card-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+          }
+          @media (max-width: 600px) {
+            .card-grid { grid-template-columns: 1fr; gap: 16px; }
+            .tab-bar { min-width: 0; width: 100%; }
+          }
+          .card-more {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #f3f6fa 60%, #e0e7ef 100%);
+            color: #2563eb;
+            font-size: 1.1rem;
+            font-weight: 600;
+            opacity: 1;
+            pointer-events: none;
+            min-height: 120px;
+            box-shadow: none;
+            border: 1.5px dashed #b6c2d6;
+          }
+          .btn-learn-more {
+            display: inline-flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1.2rem;
+            text-decoration: none;
+            transition: color 0.18s;
+          }
+          .btn-learn-more:hover {
+            color: #174ea6;
+            text-decoration: underline;
+          }
+          .card-see-all {
+            background: linear-gradient(120deg, #e0e7ef 60%, #f3f6fa 100%);
+            border: 2px dashed #b6c2d6;
+            color: #2563eb;
+            min-height: 320px;
+            box-shadow: none;
+            cursor: pointer;
+            opacity: 1;
+            transition: box-shadow 0.2s, border-color 0.2s;
+          }
+          .card-see-all:hover {
+            border-color: #2563eb;
+            box-shadow: 0 8px 32px rgba(37,99,235,0.10);
+          }
+          .see-all-icon {
+            color: #2563eb;
+            font-size: 2.5rem;
+          }
+          .see-all-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+          }
+          .see-all-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+          }
+          .see-all-btn {
+            margin-top: 0.5rem;
+          }
+          .scroll-fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+          }
+          .scroll-fade-init {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+        </style>
+      </div>
+    </section>
+
+    <!-- Careers Callout -->
+    <section id="careers" class="py-20 px-4 md:px-8 bg-white">
+      <div class="container mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Join Our Team</h2>
+        <p class="text-lg text-gray-700 mb-8">We are always looking for talented individuals to join our growing team. Explore career opportunities and help us build the future together.</p>
+        <a href="careers.html" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-lg shadow transition-all text-lg inline-flex items-center justify-center">
+          <i class="fas fa-briefcase mr-2"></i>View Careers
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact & Social Section -->
+    <section class="py-16 px-4 md:px-8 bg-gray-100">
+      <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row gap-8 items-center md:items-start justify-between">
+          <div class="md:w-1/2 w-full mb-6 md:mb-0 md:pr-6 border-b md:border-b-0 md:border-r border-gray-200">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Contact Us</h3>
+            <p class="text-lg text-gray-700 mb-4">Have questions or need more information? Our team is ready to assist you.</p>
+            <form id="quickContactForm" class="bg-white rounded-xl shadow p-6 flex flex-col gap-4" style="max-width: 420px;">
+              <div>
+                <label for="contactName" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input type="text" id="contactName" name="contactName" required class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Your Name" />
+              </div>
+              <div>
+                <label for="contactEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email" id="contactEmail" name="contactEmail" required class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="you@email.com" />
+              </div>
+              <div>
+                <label for="contactMessage" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <textarea id="contactMessage" name="contactMessage" rows="4" required class="form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="How can we help you?"></textarea>
+              </div>
+              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow transition-all text-lg mt-2">Send Message</button>
+              <div id="quickContactSuccess" class="text-green-600 font-semibold mt-2 hidden">Thank you! Your message has been sent.</div>
+            </form>
+          </div>
+          <div class="md:w-1/2 w-full md:pl-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Follow Us</h3>
+            <div class="flex space-x-6">
+              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" target="_blank" class="social-media-icon facebook hover:scale-110" aria-label="Facebook">
+                <i class="fab fa-facebook-f text-2xl"></i>
+              </a>
+              <a href="#" class="social-media-icon linkedin hover:scale-110" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in text-2xl"></i>
+              </a>
+              <a href="https://youtu.be/_Hu_CT6jNnk" target="_blank" class="social-media-icon youtube hover:scale-110" aria-label="YouTube">
+                <i class="fab fa-youtube text-2xl"></i>
+              </a>
+              <a href="https://ph.indeed.com/cmp/Reign--nan-Sales-Industry-and-General-Contractor-Inc./reviews" target="_blank" class="social-media-icon indeed hover:scale-110" aria-label="Indeed Reviews">
+                <i class="fas fa-briefcase text-2xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer (from products.html) -->
+    <footer class="bg-gray-900 text-white py-12">
       <div class="container mx-auto px-4 md:px-8">
-        <nav class="flex" aria-label="Breadcrumb">
-          <ol class="flex items-center space-x-2">
-            <li>
-              <a href="index.html" class="breadcrumb-item text-gray-500 flex items-center">
-                <i class="fas fa-home mr-1"></i>Home
-              </a>
-            </li>
-            <li>
-              <span class="breadcrumb-separator text-gray-300">/</span>
-            </li>
-            <li>
-              <span id="breadcrumbCurrent" class="breadcrumb-item text-gray-500">Home</span>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-
-    <!-- Homepage Sections Wrapper -->
-    <div id="homepageSections" class="hidden w-full">
-      <!-- About Section -->
-      <section class="about-section" id="about">
-        <div class="about-cards-row">
-          <div class="about-card">
-            <div class="about-card-icon mission-icon"><i class="fas fa-bullseye"></i></div>
-            <div class="about-card-title">MISSION</div>
-            <div class="about-card-text">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</div>
-                </div>
-          <div class="about-card">
-            <div class="about-card-icon vision-icon"><i class="fas fa-eye"></i></div>
-            <div class="about-card-title">VISION</div>
-            <div class="about-card-text">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</div>
-              </div>
-          <div class="about-card">
-            <div class="about-card-icon values-icon"><i class="fas fa-gem"></i></div>
-            <div class="about-card-title">CORE VALUES</div>
-            <div class="about-card-text">
-              <ul class="about-values-list">
-                  <li>Integrity</li>
-                  <li>Teamwork</li>
-                  <li>Excellence</li>
-                  <li>Respect</li>
-                  <li>Professionalism</li>
-                </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Company Overview & Location Section -->
-      <section class="company-section">
-        <h2 class="company-title">REIGN-NAN Sales Industry & General Contractor, Inc.</h2>
-        <div class="company-address">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</div>
-        <div class="company-row">
-          <div class="company-card company-overview">
-            <div class="company-card-title">COMPANY OVERVIEW</div>
-            <div class="company-card-text">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.<br><br>With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.<br><br>Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</div>
-          </div>
-          <div class="company-card company-location">
-            <div class="company-card-title">COMPANY LOCATION</div>
-            <div class="company-card-map">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" width="100%" height="100%" style="border:0; border-radius: 1.5rem; min-height:250px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Leadership & Team Section -->
-      <section class="leadership-section">
-        <div class="leadership-row">
-          <div class="leadership-text">
-            <div class="leadership-title">LEADERSHIP & TEAM</div>
-            <div class="leadership-desc">Presided by <b>Mr. Nanding A. Bancoro</b> and managed by <b>Engr. Marieta A. Bancoro</b>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.</div>
-              </div>
-          <div class="leadership-image-wrapper">
-            <img src="Leadership.png" alt="Leadership Team" class="leadership-image" loading="lazy" /> <!-- Compress Leadership.png for faster load -->
-            </div>
-              </div>
-      </section>
-      <!-- Milestones Section -->
-      <section class="milestones-section">
-        <div class="milestone-blur-bg"></div>
-        <div class="milestone-focus-overlay"></div>
-        <!-- Minimalistic SVG left arrow -->
-        <button class="milestone-focus-arrow left" aria-label="Previous milestone">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L10 14L18 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <!-- Minimalistic SVG right arrow -->
-        <button class="milestone-focus-arrow right" aria-label="Next milestone">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L18 14L10 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <!-- Minimalistic SVG X close button -->
-        <button class="milestone-focus-close" aria-label="Close milestone modal" style="display:none;">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L20 20M20 8L8 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-        </button>
-        <!-- Milestone heading inside the panel -->
-        <div class="milestone-section-title" style="text-align:center; font-size:2rem; font-weight:700; margin-bottom:1.5rem; color:#174ea6;">Milestone</div>
-        <div class="milestones-container">
-          <button class="milestone-nav-btn milestone-nav-left" id="milestoneNavLeft" aria-label="Previous milestone">
-            <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                    </button>
-          <div class="milestones-gallery" id="milestonesGallery">
-            <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-            <div class="milestone-card" data-milestone="11"><span class="milestone-year-label" data-year="11"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /> <!-- Compress image.png for faster load --></div>
-          </div>
-          <button class="milestone-nav-btn milestone-nav-right" id="milestoneNavRight" aria-label="Next milestone">
-            <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                    </div>
-        <div class="milestones-dots-row" id="milestonesDots">
-          <span class="milestone-dot milestone-dot-active" data-milestone="0">1997</span>
-          <span class="milestone-dot" data-milestone="1">2003</span>
-          <span class="milestone-dot" data-milestone="2">2008</span>
-          <span class="milestone-dot" data-milestone="3">2008</span>
-          <span class="milestone-dot" data-milestone="4">2023</span>
-          <span class="milestone-dot" data-milestone="5">2010</span>
-          <span class="milestone-dot" data-milestone="6">2015</span>
-          <span class="milestone-dot" data-milestone="7">2018</span>
-          <span class="milestone-dot" data-milestone="8">2020</span>
-          <span class="milestone-dot" data-milestone="9">2022</span>
-                  </div>
-        <div class="milestone-info" id="milestoneInfo">
-          <div class="milestone-info-title"><b>Reign-NAN Sales Industry</b> was formed</div>
-          <div class="milestone-info-desc">Trading Company of Packing, Gasket, O-ring, Cords, and Engineering Plastics</div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Open Positions Tab -->
-    <section class="py-20 px-4 md:px-8 bg-gray-50 w-full hidden" id="openPositionsTab">
-      <div class="w-full">
-        <div class="text-center mb-16 mt-24">
-          <div class="slide-in-right">
-            <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Open Positions</h2>
-            <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Join our dynamic team and contribute to building the future
-            </p>
-          </div>
-        </div>
-        <div class="grid gap-4 md:gap-8 md:grid-cols-2 w-full" id="jobsContainer">
-          <!-- Jobs will be dynamically loaded here -->
-        </div>
-        
-        <!-- Pagination Controls -->
-        <div id="paginationControls" class="flex justify-center items-center mt-6 md:mt-10 space-x-1 md:space-x-2 hidden">
-          <button id="prevPageBtn" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
-            <i class="fas fa-chevron-left mr-1 md:mr-2"></i><span class="hidden md:inline">Previous</span>
-          </button>
-          <div id="pageNumbers" class="flex space-x-1">
-            <!-- Page numbers will be generated here -->
-          </div>
-          <button id="nextPageBtn" class="px-2 md:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
-            <span class="hidden md:inline">Next</span><i class="fas fa-chevron-right ml-1 md:ml-2"></i>
-          </button>
-        </div>
-        
-        <div class="flex justify-center mt-10">
-          <button id="backToHomeBtn" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg hover-lift">
-            <i class="fas fa-arrow-left mr-2"></i>Back to Home
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Products & Services Tab -->
-    <section class="py-20 px-4 md:px-8 bg-white w-full hidden" id="productsTab">
-      <div class="w-full">
-        <div class="text-center mb-16 mt-24">
-          <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-6">Our Products & Services</h2>
-          <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Discover what we offer to help you build and grow.</p>
-        </div>
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 w-full">
-          <!-- Supply of Mechanical Seals -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-1">
-            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-cog text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Supply of Mechanical Seals</h3>
-            <p class="text-gray-600 mb-4">High-quality mechanical seals for industrial applications, ensuring optimal performance and reliability in demanding environments.</p>
-          </div>
-          
-          <!-- Trading of Electrical and Mechanical Equipment -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-2">
-            <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-bolt text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Trading of Electrical and Mechanical Equipment</h3>
-            <p class="text-gray-600 mb-4">Comprehensive range of electrical and mechanical equipment for industrial and commercial applications.</p>
-          </div>
-          
-          <!-- Installation and Commissioning Services -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-3">
-            <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mb-4" style="background-color: #ea580c;">
-              <i class="fas fa-tools text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Installation and Commissioning Services</h3>
-            <p class="text-gray-600 mb-4">Professional installation and commissioning services to ensure optimal system performance and reliability.</p>
-          </div>
-          
-          <!-- Industrial Painting Works -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-4">
-            <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-paint-roller text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Industrial Painting Works</h3>
-            <p class="text-gray-600 mb-4">Specialized industrial painting services for protection and aesthetic enhancement of industrial facilities.</p>
-          </div>
-          
-          <!-- Steam Pipeline Cladding -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-5">
-            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-fire text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Steam Pipeline Cladding</h3>
-            <p class="text-gray-600 mb-4">Expert steam pipeline cladding services for thermal insulation and protection in high-temperature environments.</p>
-          </div>
-          
-          <!-- Sourcing and Maintenance -->
-          <div class="bg-gray-50 rounded-xl shadow-sm p-8 text-left hover-lift slide-in-right stagger-6">
-            <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-wrench text-xl text-white"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-blue-800">Sourcing and Maintenance</h3>
-            <p class="text-gray-600 mb-4">Comprehensive sourcing and maintenance services for industrial and commercial applications, ensuring optimal performance.</p>
-          </div>
-        </div>
-        
-        <!-- Global Sourcing Information -->
-        <div class="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 text-center">
-          <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i class="fas fa-globe text-2xl text-white"></i>
-          </div>
-          <h3 class="text-2xl font-bold text-blue-800 mb-4">Global Sourcing Network</h3>
-          <p class="text-gray-700 text-lg leading-relaxed max-w-4xl mx-auto">
-            RSGCI sources its products globally—from Europe, North America, Australia, Singapore, and other Asian countries—ensuring quality, reliability, and value.
-          </p>
-        </div>
-        <div class="flex justify-center mt-10">
-          <button id="backToHomeProductsBtn" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg hover-lift">
-            <i class="fas fa-arrow-left mr-2"></i>Back to Home
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Application Form Section (hidden by default) -->
-    <section class="py-20 px-4 md:px-8 bg-white w-full hidden" id="apply">
-      <div class="w-full max-w-2xl mx-auto">
-        <div class="text-center mb-12 mt-24">
-          <div class="fade-in">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Join Us?</h2>
-            <p class="text-xl text-gray-600">
-              Tell us about yourself and let's start building something amazing together
-            </p>
-          </div>
-        </div>
-        
-        <div class="fade-in stagger-1">
-          <form id="applicationForm" class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2" for="fullName">Full Name</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="fullNameError" style="display:none" aria-live="polite"></span>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2" for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="your.email@example.com" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="emailError" style="display:none" aria-live="polite"></span>
-              </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2" for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required aria-required="true" />
-                <span class="error-message" id="phoneError" style="display:none" aria-live="polite"></span>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2" for="position">Position Interest</label>
-                <select id="position" name="position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true">
-                  <option value="">Select a position</option>
-                  <option>Construction Site Supervisor</option>
-                  <option>Sales Account Executive</option>
-                  <option>Other</option>
-                </select>
-                <span class="error-message" id="positionError" style="display:none" aria-live="polite"></span>
-                <input type="text" id="otherPosition" name="otherPosition" placeholder="Please specify position" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg mt-2" style="display:none" aria-label="Other Position" />
-                <span class="error-message" id="otherPositionError" style="display:none" aria-live="polite"></span>
-              </div>
-            </div>
-            
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2" for="coverLetter">Cover Letter</label>
-              <textarea id="coverLetter" name="coverLetter" placeholder="Tell us why you'd be a great fit..." rows="4" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true"></textarea>
-              <div class="flex justify-between items-center mt-1">
-                <span id="coverLetterWordCount" class="text-xs text-gray-500">0/400 words</span>
-                <span id="coverLetterLimitWarning" class="text-xs text-red-500 hidden">Word limit reached!</span>
-              </div>
-              <span class="error-message" id="coverLetterError" style="display:none" aria-live="polite"></span>
-            </div>
-            
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2" for="resumeFile">Resume/CV</label>
-              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="dropZone" tabindex="0" aria-label="Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.">
-                <span id="dropZoneLabel" class="sr-only">Resume or CV upload area. Press Enter to browse files or drag and drop your resume here.</span>
-                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2" aria-label="Upload icon"></i>
-                <p class="text-gray-600">Drag and drop your resume here, or <span class="text-blue-600 cursor-pointer">browse files</span></p>
-                <input type="file" id="resumeFile" name="resumeFile" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-label="Resume or CV upload" />
-              </div>
-              <span class="file-error" id="resumeError" style="display:none" aria-live="polite"></span>
-            </div>
-            
-            <div class="flex justify-center my-4">
-              <div class="g-recaptcha" data-sitekey="6Lfnj3orAAAAAKf4SUrVhY_9tQBw1wR_xcvjfKcj" aria-label="reCAPTCHA"></div>
-            </div>
-            <span class="recaptcha-error" id="recaptchaError" style="display:none" aria-live="polite"></span>
-            <div class="flex items-center mb-2">
-              <input type="checkbox" id="policyAgreement" name="policyAgreement" class="mr-2" required aria-required="true" />
-              <label for="policyAgreement" class="text-sm text-gray-700">I agree to the <a href="privacy-policy.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Privacy Policy</a> and <a href="terms-of-service.html" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Terms of Service</a> <span class="text-red-500">*</span></label>
-            </div>
-            <span class="error-message" id="policyAgreementError" style="display:none"></span>
-            <button type="submit" id="submitBtn" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold pulse-glow" onclick="submitApplication(event)" aria-label="Submit Application">
-              <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>Submit Application
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Success Modal Overlay -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center transition-opacity duration-300" role="alertdialog" aria-modal="true" aria-labelledby="successModalTitle" aria-describedby="successModalDesc">
-      <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center relative animate-fade-in">
-        <div class="flex flex-col items-center">
-          <div class="mb-5">
-            <i class="fas fa-check-circle text-green-500 text-5xl"></i>
-          </div>
-          <h2 id="successModalTitle" class="text-2xl font-bold text-green-600 mb-2">Thank you for applying!</h2>
-          <p id="successModalDesc" class="text-gray-700 mb-6">We've received your application.<br>Our team will review it and contact you soon.</p>
-          <button id="successBackBtn" class="btn-primary px-6 py-3 rounded-lg text-white font-medium">Back to Home</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 w-full">
-      <div class="w-full px-4 md:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
-          <!-- Company Info -->
-          <div class="lg:col-span-1">
-            <h3 class="text-xl font-bold mb-4">REIGN-NAN Sales Industry & General Contractor, Inc.</h3>
-            <p class="text-gray-400">Building the future, one project at a time.</p>
-          </div>
-          
-          <!-- Quick Links -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Quick Links</h4>
-            <ul class="space-y-2 text-gray-400">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-lg font-semibold mb-0">Company</h4>
+            <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10 mt-2" style="display: block; margin-left: auto; margin-right: auto;" />
+            <ul class="space-y-2 text-gray-400 mt-4">
               <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Products</a></li>
               <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#apply" class="hover:text-white transition-colors">Apply Now</a></li>
-              <li><a href="admin.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
             </ul>
           </div>
-          
-          <!-- Contact Info -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Contact</h4>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Support</h4>
             <ul class="space-y-2 text-gray-400">
-              <li><i class="fas fa-envelope mr-2" aria-hidden="true"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400" aria-label="Email recruitment@rsigci.com">recruitment@rsigci.com</a></li>
-              <li><i class="fas fa-phone mr-2" aria-hidden="true"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400" aria-label="Copy phone number to clipboard">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard" aria-label="Copy phone number to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
-              <li><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
+              <li><a href="contact-us.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
             </ul>
           </div>
-          
-          <!-- Social Media -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Follow Us</h4>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
-                <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
-                <span class="sr-only">LinkedIn</span>
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener" aria-label="Facebook">
-                <i class="fab fa-facebook text-xl" aria-hidden="true"></i>
-                <span class="sr-only">Facebook</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
-                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
-                <span class="sr-only">Twitter</span>
-              </a>
-            </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+            </ul>
           </div>
-          
-          <!-- Google Maps Embed -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Location</h4>
-            <div class="rounded-lg overflow-hidden shadow-lg">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" 
-                width="100%" 
-                height="200" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Company Location Map"
-                aria-label="Company Location Map">
-              </iframe>
-            </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+            </ul>
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
           <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
-
-    <script src="index.js" defer></script>
     <script>
-// Breadcrumb section mapping
-const sectionMap = [
-  { id: 'about', label: 'About Us' },
-  { id: 'products', label: 'Products & Services' },
-  { id: 'openPositions', label: 'Careers' },
-  { id: 'apply', label: 'Apply' }
-];
+      // Add tab switching for What We Offer section
+      const productsTab = document.getElementById('productsTab');
+      const servicesTab = document.getElementById('servicesTab');
+      const productsGrid = document.getElementById('productsGrid');
+      const servicesGrid = document.getElementById('servicesGrid');
+      const viewProductsBtn = document.getElementById('viewProductsBtn');
+      const viewServicesBtn = document.getElementById('viewServicesBtn');
 
-function updateBreadcrumb() {
-  let current = 'Home';
-  for (const section of sectionMap) {
-    const el = document.getElementById(section.id);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= 80 && rect.bottom > 80) {
-        current = section.label;
-        break;
+      function activateTab(tab) {
+        if(tab === 'products') {
+          productsTab.classList.add('tab-active');
+          servicesTab.classList.remove('tab-active');
+          productsGrid.style.display = '';
+          servicesGrid.style.display = 'none';
+          viewProductsBtn.style.display = '';
+          viewServicesBtn.style.display = 'none';
+          productsGrid.classList.add('fade-in-tab');
+          servicesGrid.classList.remove('fade-in-tab');
+        } else {
+          servicesTab.classList.add('tab-active');
+          productsTab.classList.remove('tab-active');
+          productsGrid.style.display = 'none';
+          servicesGrid.style.display = '';
+          viewProductsBtn.style.display = 'none';
+          viewServicesBtn.style.display = '';
+          servicesGrid.classList.add('fade-in-tab');
+          productsGrid.classList.remove('fade-in-tab');
+        }
       }
-    }
-  }
-  document.getElementById('breadcrumbCurrent').textContent = current;
-  // Hide breadcrumb if Home/Home
-  const breadcrumbDiv = document.getElementById('breadcrumb');
-  if (current === 'Home') {
-    breadcrumbDiv.style.display = 'none';
-  } else {
-    breadcrumbDiv.style.display = '';
-  }
-}
+      productsTab.addEventListener('click', function() { activateTab('products'); });
+      servicesTab.addEventListener('click', function() { activateTab('services'); });
 
-window.addEventListener('scroll', updateBreadcrumb);
-window.addEventListener('DOMContentLoaded', updateBreadcrumb);
-</script>
+      // Scroll-triggered fade-in animation for main sections (only animate once)
+      (function() {
+        const animatedSections = [
+          document.querySelector('.product-hero'), // Hero Section
+          document.getElementById('about'), // About Section
+          document.querySelector('section.py-20.bg-gray-50'), // What We Offer
+          document.getElementById('careers'), // Careers Section
+          document.querySelector('section.py-16.bg-gray-100') // Contact/Social Section
+        ].filter(Boolean);
+        animatedSections.forEach(sec => sec.classList.add('scroll-fade-init'));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('scroll-fade-animated')) {
+              entry.target.classList.add('scroll-fade-in', 'scroll-fade-animated');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        animatedSections.forEach(sec => observer.observe(sec));
+      })();
+
+      // Add simple contact form handler
+      const quickContactForm = document.getElementById('quickContactForm');
+      if (quickContactForm) {
+        quickContactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // For now, just show a success message. Replace with real backend/email logic as needed.
+          document.getElementById('quickContactSuccess').classList.remove('hidden');
+          quickContactForm.reset();
+          setTimeout(() => {
+            document.getElementById('quickContactSuccess').classList.add('hidden');
+          }, 4000);
+        });
+      }
+    </script>
   </body>
-</html>
+</html> 
