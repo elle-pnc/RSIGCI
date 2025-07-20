@@ -720,48 +720,70 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('phone').setAttribute('aria-invalid', 'false');
     }
     if (!position) {
-      document.getElementById('position').classList.add('form-input-error');
-      document.getElementById('positionError').textContent = 'Please select a position.';
-      document.getElementById('positionError').style.display = 'block';
-      document.getElementById('position').setAttribute('aria-invalid', 'true');
+      var positionEl = document.getElementById('position');
+      if (positionEl) positionEl.classList.add('form-input-error');
+      var positionErrorEl = document.getElementById('positionError');
+      if (positionErrorEl) {
+        positionErrorEl.textContent = 'Please select a position.';
+        positionErrorEl.style.display = 'block';
+      }
+      if (positionEl) positionEl.setAttribute('aria-invalid', 'true');
       hasError = true;
     } else if (position === 'Other' && !otherPosition) {
-      document.getElementById('otherPosition').classList.add('form-input-error');
-      document.getElementById('otherPositionError').textContent = 'Please specify the position.';
-      document.getElementById('otherPositionError').style.display = 'block';
-      document.getElementById('otherPosition').setAttribute('aria-invalid', 'true');
+      var otherPositionEl = document.getElementById('otherPosition');
+      if (otherPositionEl) otherPositionEl.classList.add('form-input-error');
+      var otherPositionErrorEl = document.getElementById('otherPositionError');
+      if (otherPositionErrorEl) {
+        otherPositionErrorEl.textContent = 'Please specify the position.';
+        otherPositionErrorEl.style.display = 'block';
+      }
+      if (otherPositionEl) otherPositionEl.setAttribute('aria-invalid', 'true');
       hasError = true;
-      document.getElementById('position').setAttribute('aria-invalid', 'false');
+      if (positionEl) positionEl.setAttribute('aria-invalid', 'false');
     } else {
-      document.getElementById('position').setAttribute('aria-invalid', 'false');
-      if (position === 'Other') {
-        document.getElementById('otherPosition').setAttribute('aria-invalid', 'false');
+      if (positionEl) positionEl.setAttribute('aria-invalid', 'false');
+      if (position === 'Other' && otherPositionEl) {
+        otherPositionEl.setAttribute('aria-invalid', 'false');
       }
     }
     if (!coverLetterValue) {
-      document.getElementById('coverLetter').classList.add('form-input-error');
-      document.getElementById('coverLetterError').textContent = 'Cover letter is required.';
-      document.getElementById('coverLetterError').style.display = 'block';
-      document.getElementById('coverLetter').setAttribute('aria-invalid', 'true');
+      var coverLetterEl = document.getElementById('coverLetter');
+      if (coverLetterEl) coverLetterEl.classList.add('form-input-error');
+      var coverLetterErrorEl = document.getElementById('coverLetterError');
+      if (coverLetterErrorEl) {
+        coverLetterErrorEl.textContent = 'Cover letter is required.';
+        coverLetterErrorEl.style.display = 'block';
+      }
+      if (coverLetterEl) coverLetterEl.setAttribute('aria-invalid', 'true');
       hasError = true;
     } else {
-      document.getElementById('coverLetter').setAttribute('aria-invalid', 'false');
+      var coverLetterEl = document.getElementById('coverLetter');
+      if (coverLetterEl) coverLetterEl.setAttribute('aria-invalid', 'false');
     }
     if (!file) {
-      document.getElementById('resumeError').textContent = 'Please upload your resume or CV.';
-      document.getElementById('resumeError').style.display = 'block';
-      document.getElementById('resumeFile').setAttribute('aria-invalid', 'true');
+      var resumeErrorEl = document.getElementById('resumeError');
+      if (resumeErrorEl) {
+        resumeErrorEl.textContent = 'Please upload your resume or CV.';
+        resumeErrorEl.style.display = 'block';
+      }
+      var resumeFileEl = document.getElementById('resumeFile');
+      if (resumeFileEl) resumeFileEl.setAttribute('aria-invalid', 'true');
       hasError = true;
     } else {
-      document.getElementById('resumeFile').setAttribute('aria-invalid', 'false');
+      var resumeFileEl = document.getElementById('resumeFile');
+      if (resumeFileEl) resumeFileEl.setAttribute('aria-invalid', 'false');
     }
-    const policyAgreement = document.getElementById('policyAgreement');
-    if (!policyAgreement.checked) {
-      document.getElementById('policyAgreementError').textContent = 'You must agree to the Privacy Policy and Terms of Service.';
-      document.getElementById('policyAgreementError').style.display = 'block';
+    var policyAgreement = document.getElementById('policyAgreement');
+    if (!policyAgreement || !policyAgreement.checked) {
+      var policyAgreementErrorEl = document.getElementById('policyAgreementError');
+      if (policyAgreementErrorEl) {
+        policyAgreementErrorEl.textContent = 'You must agree to the Privacy Policy and Terms of Service.';
+        policyAgreementErrorEl.style.display = 'block';
+      }
       hasError = true;
     } else {
-      document.getElementById('policyAgreementError').style.display = 'none';
+      var policyAgreementErrorEl = document.getElementById('policyAgreementError');
+      if (policyAgreementErrorEl) policyAgreementErrorEl.style.display = 'none';
     }
     if (hasError) return;
     let application = {
@@ -773,17 +795,19 @@ document.addEventListener('DOMContentLoaded', function() {
       resume: file.name
     };
     const loadingOverlay = document.getElementById('loadingOverlay');
-    loadingOverlay.classList.remove('hidden');
+    if (loadingOverlay) loadingOverlay.classList.remove('hidden');
     const button = document.getElementById('submitBtn');
-    const originalText = button.innerHTML;
-    const originalClasses = button.className;
-    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting Application...';
-    button.disabled = true;
-    button.className = originalClasses.replace('pulse-glow', '') + ' bg-gray-500';
+    const originalText = button ? button.innerHTML : '';
+    const originalClasses = button ? button.className : '';
+    if (button) {
+      button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting Application...';
+      button.disabled = true;
+      button.className = originalClasses.replace('pulse-glow', '') + ' bg-gray-500';
+    }
     try {
       console.log('Submitting application with file upload to Google Drive:', application);
       console.log('File to upload:', file);
-      if (file) {
+      if (file && loadingOverlay) {
         loadingOverlay.querySelector('p').textContent = 'Uploading file to Google Drive and submitting application...';
         const progressContainer = document.createElement('div');
         progressContainer.className = 'mt-4';
@@ -816,9 +840,11 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Application submitted successfully with ID:', appId);
       window.uploadedFile = null;
       showSuccessModal();
-      loadingOverlay.classList.add('hidden');
-      form.style.display = 'none';
-      form.reset();
+      if (loadingOverlay) loadingOverlay.classList.add('hidden');
+      if (form) {
+        form.style.display = 'none';
+        form.reset();
+      }
       const dropZone = document.getElementById('dropZone');
       if (dropZone) {
         dropZone.innerHTML = `
@@ -837,9 +863,12 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     } catch (error) {
       console.error('Error submitting application:', error);
-      loadingOverlay.classList.add('hidden');
-      button.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Submission Failed! Try Again';
-      button.className = originalClasses.replace('pulse-glow', '') + ' bg-red-600';
+      if (loadingOverlay) loadingOverlay.classList.add('hidden');
+      if (button) {
+        button.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Submission Failed! Try Again';
+        button.className = originalClasses.replace('pulse-glow', '') + ' bg-red-600';
+        button.disabled = false;
+      }
       let errorMessage = `Failed to submit application: ${error.message}`;
       if (error.message.includes('timeout') || error.message.includes('network')) {
         errorMessage += '\n\nTroubleshooting tips:\n';
@@ -850,9 +879,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       alert(errorMessage);
       setTimeout(() => {
-        button.innerHTML = originalText;
-        button.className = originalClasses;
-        button.disabled = false;
+        if (button) {
+          button.innerHTML = originalText;
+          button.className = originalClasses;
+          button.disabled = false;
+        }
       }, 3000);
     }
   }

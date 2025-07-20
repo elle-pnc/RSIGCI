@@ -7,11 +7,10 @@
   <title>Careers | RSIGCI</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<<<<<<< HEAD
   <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
-=======
+
   <link rel="icon" type="image/png" href="RSIGCI_Logo.png">
->>>>>>> e3713ad06a5de9e8c4e6284c1e97021f97890482
+
   <link rel="stylesheet" href="index.css">
 </head>
 <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
@@ -229,7 +228,7 @@
         </div>
       </div>
       <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-        <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
+        <img src="RSIGCI_W.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
         <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
       </div>
     </div>
@@ -237,6 +236,7 @@
 
   <!-- Scripts for dynamic job loading -->
   <!-- Firebase JS SDKs (must come before firebase-config.js) -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
@@ -316,19 +316,6 @@
             });
           })();
         });
-      // Resume upload click/keyboard handler
-      const dropZone = document.getElementById('dropZone');
-      const resumeFile = document.getElementById('resumeFile');
-      if (dropZone && resumeFile) {
-        dropZone.addEventListener('click', function() {
-          resumeFile.click();
-        });
-        dropZone.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            resumeFile.click();
-          }
-        });
-      }
     });
   </script>
 </body>
