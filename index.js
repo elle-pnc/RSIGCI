@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Mobile Menu Functions ---
   function toggleMobileMenu() {
-    const menu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.header-hamburger');
+    const menu = document.getElementById('slideMenu');
+    const hamburger = document.getElementById('hamburgerMenuBtn');
     const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     menu.classList.toggle('translate-x-full');
     if (!menu.classList.contains('translate-x-full')) {
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function closeMobileMenu() {
-    const menu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.header-hamburger');
+    const menu = document.getElementById('slideMenu');
+    const hamburger = document.getElementById('hamburgerMenuBtn');
     menu.classList.add('translate-x-full');
     document.body.style.overflow = '';
     document.removeEventListener('keydown', trapFocusInMobileMenu);
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function trapFocusInMobileMenu(e) {
-    const menu = document.getElementById('mobileMenu');
+    const menu = document.getElementById('slideMenu');
     if (menu.classList.contains('translate-x-full')) return;
     const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const focusableEls = Array.from(menu.querySelectorAll(focusableSelectors)).filter(el => !el.disabled && el.offsetParent !== null);
@@ -75,11 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
   window.closeMobileMenu = closeMobileMenu;
 
   // --- Attach event listeners for hamburger and mobile menu close button ---
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
   if (hamburgerBtn) {
     hamburgerBtn.addEventListener('click', toggleMobileMenu);
   }
-  const mobileMenuCloseBtn = document.getElementById('mobileMenuCloseBtn');
+  const mobileMenuCloseBtn = document.getElementById('closeSlideMenu');
   if (mobileMenuCloseBtn) {
     mobileMenuCloseBtn.addEventListener('click', closeMobileMenu);
   }
@@ -1153,16 +1153,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   // Update info box with milestone data
   function updateMilestoneInfo(index) {
-    if (milestoneData[index]) {
-      milestoneInfo.querySelector('.milestone-info-title').innerHTML = milestoneData[index].title;
-      milestoneInfo.querySelector('.milestone-info-desc').textContent = milestoneData[index].desc;
-    }
+    if (!milestoneInfo) return;
+    const title = milestoneInfo.querySelector('.milestone-info-title');
+    const desc = milestoneInfo.querySelector('.milestone-info-desc');
+    if (title) title.innerHTML = milestoneData[index].title;
+    if (desc) desc.textContent = milestoneData[index].desc;
   }
 
   // Reset to default state
   function resetMilestoneInfo() {
-    milestoneInfo.querySelector('.milestone-info-title').innerHTML = '<b>REIGN-NAN Achievements</b>';
-    milestoneInfo.querySelector('.milestone-info-desc').textContent = 'Explore our journey through the years';
+    if (!milestoneInfo) return;
+    const title = milestoneInfo.querySelector('.milestone-info-title');
+    const desc = milestoneInfo.querySelector('.milestone-info-desc');
+    if (title) title.innerHTML = '<b>REIGN-NAN Achievements</b>';
+    if (desc) desc.textContent = 'Explore our journey through the years';
   }
 
   // Update active states
@@ -1193,64 +1197,75 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }
 
   function updateNavigationButtons() {
-    milestoneNavLeft.disabled = currentMilestoneIndex === 0;
-    milestoneNavRight.disabled = currentMilestoneIndex === milestoneCards.length - 1;
+    if (typeof milestoneNavLeft !== 'undefined' && milestoneNavLeft) {
+      milestoneNavLeft.disabled = currentMilestoneIndex === 0;
+    }
+    if (typeof milestoneNavRight !== 'undefined' && milestoneNavRight) {
+      milestoneNavRight.disabled = currentMilestoneIndex === milestoneCards.length - 1;
+    }
   }
 
   // Event listeners for navigation buttons
-  milestoneNavLeft.addEventListener('click', () => {
-    if (currentMilestoneIndex > 0) {
-      scrollToMilestone(currentMilestoneIndex - 1);
-    }
-  });
-
-  milestoneNavRight.addEventListener('click', () => {
-    if (currentMilestoneIndex < milestoneCards.length - 1) {
-      scrollToMilestone(currentMilestoneIndex + 1);
-    }
-  });
+  if (typeof milestoneNavLeft !== 'undefined' && milestoneNavLeft) {
+    milestoneNavLeft.addEventListener('click', () => {
+      if (currentMilestoneIndex > 0) {
+        scrollToMilestone(currentMilestoneIndex - 1);
+      }
+    });
+  }
+  if (typeof milestoneNavRight !== 'undefined' && milestoneNavRight) {
+    milestoneNavRight.addEventListener('click', () => {
+      if (currentMilestoneIndex < milestoneCards.length - 1) {
+        scrollToMilestone(currentMilestoneIndex + 1);
+      }
+    });
+  }
 
   // Event listeners for milestone cards
-  milestoneCards.forEach((card, index) => {
-    card.addEventListener('mouseenter', () => {
-      updateActiveStates(index);
-      updateMilestoneInfo(index);
-    });
-
-    card.addEventListener('mouseleave', () => {
-      updateActiveStates(currentMilestoneIndex);
-      if (currentMilestoneIndex === index) {
-        updateMilestoneInfo(index);
-      } else {
-        resetMilestoneInfo();
+  if (typeof milestoneCards !== 'undefined' && Array.isArray(milestoneCards)) {
+    milestoneCards.forEach((card, index) => {
+      if (card) {
+        card.addEventListener('mouseenter', () => {
+          updateActiveStates(index);
+          updateMilestoneInfo(index);
+        });
+        card.addEventListener('mouseleave', () => {
+          updateActiveStates(currentMilestoneIndex);
+          if (currentMilestoneIndex === index) {
+            updateMilestoneInfo(index);
+          } else {
+            resetMilestoneInfo();
+          }
+        });
+        card.addEventListener('click', () => {
+          scrollToMilestone(index);
+        });
       }
     });
-
-    card.addEventListener('click', () => {
-      scrollToMilestone(index);
-    });
-  });
+  }
 
   // Event listeners for milestone dots
-  milestoneDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      scrollToMilestone(index);
-    });
-
-    dot.addEventListener('mouseenter', () => {
-      updateActiveStates(index);
-      updateMilestoneInfo(index);
-    });
-
-    dot.addEventListener('mouseleave', () => {
-      updateActiveStates(currentMilestoneIndex);
-      if (currentMilestoneIndex === index) {
-        updateMilestoneInfo(index);
-      } else {
-        resetMilestoneInfo();
+  if (typeof milestoneDots !== 'undefined' && Array.isArray(milestoneDots)) {
+    milestoneDots.forEach((dot, index) => {
+      if (dot) {
+        dot.addEventListener('click', () => {
+          scrollToMilestone(index);
+        });
+        dot.addEventListener('mouseenter', () => {
+          updateActiveStates(index);
+          updateMilestoneInfo(index);
+        });
+        dot.addEventListener('mouseleave', () => {
+          updateActiveStates(currentMilestoneIndex);
+          if (currentMilestoneIndex === index) {
+            updateMilestoneInfo(index);
+          } else {
+            resetMilestoneInfo();
+          }
+        });
       }
     });
-  });
+  }
 
   // Initialize
   updateYearLabels();
@@ -1458,8 +1473,8 @@ if (milestonesSection && milestoneFocusOverlay && milestoneCardsArr.length) {
 }
 
 function setArrowButtonsEnabled(enabled) {
-  if (milestoneFocusArrowLeft) milestoneFocusArrowLeft.disabled = !enabled || focusedMilestoneIdx === 0;
-  if (milestoneFocusArrowRight) milestoneFocusArrowRight.disabled = !enabled || focusedMilestoneIdx === milestoneCardsArr.length - 1;
+  if (typeof milestoneNavLeft !== 'undefined' && milestoneNavLeft) milestoneFocusArrowLeft.disabled = !enabled || focusedMilestoneIdx === 0;
+  if (typeof milestoneNavRight !== 'undefined' && milestoneNavRight) milestoneFocusArrowRight.disabled = !enabled || focusedMilestoneIdx === milestoneCardsArr.length - 1;
 }
 
   // --- Initialize Everything ---
@@ -1579,4 +1594,61 @@ function setArrowButtonsEnabled(enabled) {
       unfocusMilestone();
     });
   }
+
+  // Add skip to content link at the top of the body
+  document.body.insertAdjacentHTML('afterbegin', '<a href="#mainContent" class="skip-link">Skip to main content</a>');
+
+  // Smooth scrolling for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.focus({ preventScroll: true });
+      }
+    });
+  });
+
+  // Intersection Observer for fade-in/slide-in on all main sections
+  const animatedSections = Array.from(document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right'));
+  animatedSections.forEach(sec => sec.classList.add('scroll-fade-init'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('scroll-fade-animated')) {
+        entry.target.classList.add('scroll-fade-in', 'scroll-fade-animated');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  animatedSections.forEach(sec => observer.observe(sec));
+
+  // Loading overlay logic for async actions (example usage: show/hide overlay)
+  window.showLoadingOverlay = function() {
+    let overlay = document.querySelector('.loading-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'loading-overlay';
+      overlay.innerHTML = '<div class="spinner"></div>';
+      document.body.appendChild(overlay);
+    }
+    overlay.style.display = 'flex';
+    overlay.style.opacity = '1';
+  };
+  window.hideLoadingOverlay = function() {
+    const overlay = document.querySelector('.loading-overlay');
+    if (overlay) {
+      overlay.style.opacity = '0';
+      setTimeout(() => { overlay.style.display = 'none'; }, 300);
+    }
+  };
+  // Usage: call showLoadingOverlay() before async, hideLoadingOverlay() after
+
+  // Ensure focus trap for modals and mobile menu (already present, but ensure ARIA roles/labels)
+  // Example: document.getElementById('mobileMenu').setAttribute('role', 'dialog');
+  // Add ARIA attributes to modals if not present
+  const modals = document.querySelectorAll('[role="dialog"]');
+  modals.forEach(modal => {
+    if (!modal.hasAttribute('aria-modal')) modal.setAttribute('aria-modal', 'true');
+  });
 }); 

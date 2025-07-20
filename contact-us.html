@@ -27,27 +27,106 @@
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen">
   <div id="header"></div>
+  <script>
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header').innerHTML = html;
+        // Set active nav link
+        const page = location.pathname.split('/').pop();
+        document.querySelectorAll('.header-link').forEach(link => {
+          if(link.getAttribute('href') === page) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+        // Hamburger menu script (runs after header is loaded)
+        (function() {
+          const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+          const slideMenu = document.getElementById('slideMenu');
+          const closeSlideMenu = document.getElementById('closeSlideMenu');
+          let menuOpen = false;
+          function openMenu() {
+            menuOpen = true;
+            slideMenu.classList.add('open');
+            slideMenu.style.right = '0';
+            slideMenu.style.opacity = '1';
+            slideMenu.style.pointerEvents = 'auto';
+            if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+          }
+          function closeMenu() {
+            menuOpen = false;
+            slideMenu.classList.remove('open');
+            slideMenu.style.right = '-340px';
+            slideMenu.style.opacity = '0';
+            slideMenu.style.pointerEvents = 'none';
+            if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+          }
+          if (hamburgerMenuBtn) {
+            hamburgerMenuBtn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              if(menuOpen) {
+                closeMenu();
+              } else {
+                openMenu();
+              }
+            });
+          }
+          if(closeSlideMenu) {
+            closeSlideMenu.onclick = function(e) {
+              e.stopPropagation();
+              closeMenu();
+            };
+          }
+          document.addEventListener('click', function(e) {
+            if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+              closeMenu();
+            }
+          });
+          if (slideMenu) {
+            slideMenu.addEventListener('click', function(e) {
+              e.stopPropagation();
+            });
+          }
+          window.addEventListener('resize', function() {
+            if(menuOpen) {
+              closeMenu();
+            }
+          });
+        })();
+      });
+  </script>
   <!-- Breadcrumb -->
-  <div class="breadcrumb py-4 bg-gray-50 border-b border-gray-200">
-    <div class="container mx-auto px-4 md:px-8">
+  <div class="breadcrumb py-4" style="margin-top: 4.5rem; margin-left: auto; margin-right: auto; display: block;">
+    <div class="breadcrumb-align-left">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2">
           <li>
-            <a href="index.html" class="breadcrumb-item text-gray-500 flex items-center">
+            <a href="index.html" class="breadcrumb-item text-gray-500 hover:text-blue-600">
               <i class="fas fa-home mr-1"></i>Home
             </a>
           </li>
           <li>
-            <span class="breadcrumb-separator text-gray-300">/</span>
+            <span class="breadcrumb-separator text-gray-400">/</span>
           </li>
           <li>
-            <span class="breadcrumb-item text-gray-500">Contact Us</span>
+            <span class="breadcrumb-item text-blue-600 font-medium">Contact Us</span>
           </li>
         </ol>
       </nav>
     </div>
   </div>
-  <section class="py-20 px-4 md:px-8 bg-white w-full">
+  <style>
+    @media (min-width: 900px) {
+      .breadcrumb-align-left {
+        margin-left: 68rem !important;
+        padding-left: 0 !important;
+        max-width: none !important;
+      }
+    }
+  </style>
+  <section class="py-20 px-4 md:px-8 bg-white w-full fade-in">
     <div class="w-full max-w-2xl mx-auto">
       <div class="bg-white rounded-xl shadow-md p-8">
         <div class="mb-4">
@@ -111,21 +190,48 @@
       </div>
     </div>
   </section>
-  <script>
-    fetch('header.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('header').innerHTML = html;
-        // Set active nav link
-        const page = location.pathname.split('/').pop();
-        document.querySelectorAll('.header-link').forEach(link => {
-          if(link.getAttribute('href') === page) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      });
-  </script>
+  <!-- Footer (from products.html) -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4 md:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h4 class="text-lg font-semibold mb-0">Company</h4>
+          <ul class="space-y-2 text-gray-400 mt-4">
+            <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Products</a></li>
+            <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="contact-us.html" class="hover:text-white transition-colors">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+            <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+            <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
+        <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html> 

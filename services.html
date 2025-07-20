@@ -7,7 +7,7 @@
     <title>Services | RSIGCI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+    <link rel="icon" type="image/png" href="RSIGCI_Logo.png">
     <link rel="stylesheet" href="index.css">
     <style>
       .service-hero {
@@ -62,9 +62,9 @@
       .card-banner {
         width: 100%;
         height: 180px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
         background-color: #f3f6fa;
         border-radius: 12px 12px 0 0;
         margin-bottom: 0;
@@ -144,22 +144,29 @@
           height: 140px;
         }
       }
+      @media (min-width: 900px) {
+        .breadcrumb-align-left {
+          margin-left: 68rem !important;
+          padding-left: 0 !important;
+          max-width: none !important;
+        }
+      }
     </style>
   </head>
-  <body class="bg-gray-50 text-gray-800" style="padding-top: 90px;">
+  <body class="bg-gray-50 text-gray-800">
     <div id="header"></div>
     <!-- Breadcrumb -->
-    <div class="breadcrumb py-4">
-      <div class="container mx-auto px-4 md:px-8">
+    <div class="breadcrumb py-4" style="margin-top: 4.5rem; margin-left: auto; margin-right: auto; display: block;">
+      <div class="breadcrumb-align-left">
         <nav class="flex" aria-label="Breadcrumb">
           <ol class="flex items-center space-x-2">
             <li>
-              <a href="index.html" class="breadcrumb-item hover:text-blue-600">
+              <a href="index.html" class="breadcrumb-item text-gray-500 hover:text-blue-600">
                 <i class="fas fa-home mr-1"></i>Home
               </a>
             </li>
             <li>
-              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-separator text-gray-400">/</span>
             </li>
             <li>
               <span class="breadcrumb-item text-blue-600 font-medium">Services</span>
@@ -170,20 +177,18 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="service-hero">
-      <div class="container mx-auto px-4 md:px-8">
-        <div class="service-hero-content text-white">
-          <div class="max-w-4xl">
-            <!-- Logo removed as requested -->
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Our Services</h1>
-            <p class="text-xl md:text-2xl mb-8 leading-relaxed">
-              Explore our professional services designed to support your industrial and commercial needs. We deliver quality, reliability, and expertise for every project.
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="#service-categories" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center">
-                <i class="fas fa-th-large mr-2"></i>Explore Services
-              </a>
-            </div>
+    <section class="hero fade-in" style="background-image: url('Services_Page_Background.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 z-0" style="opacity: 0.3;"></div>
+      <div class="product-hero-content text-white relative z-10 w-full flex flex-col items-center text-center py-14 md:py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">Our Services</h1>
+          <p class="text-xl md:text-2xl mb-8 leading-relaxed">
+            Explore our professional services designed to support your industrial and commercial needs. We deliver quality, reliability, and expertise for every project.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="#service-categories" id="exploreServicesBtn" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center">
+              <i class="fas fa-th-large mr-2"></i>Explore Services
+            </a>
           </div>
         </div>
       </div>
@@ -197,11 +202,13 @@
           <p class="text-lg text-gray-600 max-w-3xl mx-auto">
             Choose from our extensive range of industrial services and solutions designed to meet your specific requirements.
           </p>
+          <img src="pcab-removebg-preview.png" alt="PCAB Certification" class="mx-auto my-8" style="max-width: 220px; height: auto;" />
+          <div class="text-center text-green-700 font-bold text-lg mb-8">PCAB Approved</div>
         </div>
         <div class="card-grid">
           <!-- Painting -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('Painting.jpg');"></div>
             <div class="card-content">
               <div class="card-title">Painting</div>
               <div class="card-desc">Metal Protective Coating, Concrete Protective Coating, Waterproofing, and Fireproofing</div>
@@ -209,7 +216,7 @@
           </div>
           <!-- Insulation and Cladding -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('Insulation_and_Cladding.png');"></div>
             <div class="card-content">
               <div class="card-title">Insulation and Cladding</div>
               <div class="card-desc">Perlite Insulation, Cementitious Cladding, and Aluminum Jacketing</div>
@@ -217,7 +224,7 @@
           </div>
           <!-- Mechanical -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('Mechanical.png');"></div>
             <div class="card-content">
               <div class="card-title">Mechanical</div>
               <div class="card-desc">Tank Fabrication, Pipe Laying, Conveying System, and Sandblasting</div>
@@ -225,7 +232,7 @@
           </div>
           <!-- ESP Maintenance -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('ESP_Maintenance.png');"></div>
             <div class="card-content">
               <div class="card-title">ESP Maintenance</div>
               <div class="card-desc">Inspection, Repair, Rehab/Retrofit, and Recommissioning</div>
@@ -233,7 +240,7 @@
           </div>
           <!-- Pump Rehabilitation -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('Pump_Rehabilitation.png');"></div>
             <div class="card-content">
               <div class="card-title">Pump Rehabilitation</div>
               <div class="card-desc">Rehabilitation, Reconditioning, Vibration Analysis, and Motor Rewinding</div>
@@ -241,10 +248,18 @@
           </div>
           <!-- Facility Maintenance -->
           <div class="card">
-            <div class="card-banner" style="background-image: url('image.png');"></div>
+            <div class="card-banner" style="background-image: url('Facility_Maintenance.png');"></div>
             <div class="card-content">
               <div class="card-title">Facility Maintenance</div>
               <div class="card-desc">Building Maintenance, Electrical Maintenance, HVAC, and Plumbing</div>
+            </div>
+          </div>
+          <!-- Civil Works -->
+          <div class="card">
+            <div class="card-banner" style="background-image: url('Civil_Works.png');"></div>
+            <div class="card-content">
+              <div class="card-title">Civil Works</div>
+              <div class="card-desc">Fit-out Works, Masonry, Carpentry, and Building Construction</div>
             </div>
           </div>
         </div>
@@ -252,7 +267,7 @@
     </section>
 
     <!-- More Information Section -->
-    <section class="py-16 px-4 md:px-8 bg-white">
+    <section class="py-16 px-4 md:px-8 bg-white fade-in">
       <div class="container mx-auto">
         <div class="text-center">
           <div class="bg-white rounded-xl shadow-md p-8 max-w-4xl mx-auto mb-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
@@ -279,7 +294,7 @@
     </section>
 
     <!-- Social Media Section -->
-    <section class="py-12 px-4 md:px-8 bg-gray-100">
+    <section class="py-12 px-4 md:px-8 bg-gray-100 fade-in">
       <div class="container mx-auto">
         <div class="text-center mb-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-4">Follow Us</h3>
@@ -305,13 +320,13 @@
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (from products.html) -->
     <footer class="bg-gray-900 text-white py-12">
       <div class="container mx-auto px-4 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h4 class="text-lg font-semibold mb-4">Company</h4>
-            <ul class="space-y-2 text-gray-400">
+            <h4 class="text-lg font-semibold mb-0">Company</h4>
+            <ul class="space-y-2 text-gray-400 mt-4">
               <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
               <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
               <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
@@ -343,70 +358,12 @@
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
           <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
 
-    <script>
-      (function() {
-        const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
-        const slideMenu = document.getElementById('slideMenu');
-        const closeSlideMenu = document.getElementById('closeSlideMenu');
-        let menuOpen = false;
-        function openMenu() {
-          menuOpen = true;
-          slideMenu.classList.add('open');
-          slideMenu.style.right = '0';
-          slideMenu.style.opacity = '1';
-          slideMenu.style.pointerEvents = 'auto';
-        }
-        function closeMenu() {
-          menuOpen = false;
-          slideMenu.classList.remove('open');
-          if(window.innerWidth <= 700) {
-            slideMenu.style.right = '0';
-            slideMenu.style.opacity = '0';
-            slideMenu.style.pointerEvents = 'none';
-          } else {
-            slideMenu.style.right = '-340px';
-            slideMenu.style.opacity = '0';
-            slideMenu.style.pointerEvents = 'none';
-          }
-        }
-        if (hamburgerMenuBtn) {
-          hamburgerMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if(menuOpen) {
-              closeMenu();
-            } else {
-              openMenu();
-            }
-          });
-        }
-        if(closeSlideMenu) {
-          closeSlideMenu.onclick = function(e) {
-            e.stopPropagation();
-            closeMenu();
-          };
-        }
-        document.addEventListener('click', function(e) {
-          if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
-            closeMenu();
-          }
-        });
-        if (slideMenu) {
-          slideMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-          });
-        }
-        window.addEventListener('resize', function() {
-          if(menuOpen) {
-            closeMenu();
-          }
-        });
-      })();
-    </script>
     <script>
       fetch('header.html')
         .then(response => response.text())
@@ -421,7 +378,92 @@
               link.classList.remove('active');
             }
           });
+          // Hamburger menu script (runs after header is loaded)
+          (function() {
+            const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeSlideMenu = document.getElementById('closeSlideMenu');
+            let menuOpen = false;
+            function openMenu() {
+              menuOpen = true;
+              slideMenu.classList.add('open');
+              slideMenu.style.right = '0';
+              slideMenu.style.opacity = '1';
+              slideMenu.style.pointerEvents = 'auto';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+            }
+            function closeMenu() {
+              menuOpen = false;
+              slideMenu.classList.remove('open');
+              slideMenu.style.right = '-340px';
+              slideMenu.style.opacity = '0';
+              slideMenu.style.pointerEvents = 'none';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+            }
+            if (hamburgerMenuBtn) {
+              hamburgerMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(menuOpen) {
+                  closeMenu();
+                } else {
+                  openMenu();
+                }
+              });
+            }
+            if(closeSlideMenu) {
+              closeSlideMenu.onclick = function(e) {
+                e.stopPropagation();
+                closeMenu();
+              };
+            }
+            document.addEventListener('click', function(e) {
+              if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+                closeMenu();
+              }
+            });
+            if (slideMenu) {
+              slideMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+            window.addEventListener('resize', function() {
+              if(menuOpen) {
+                closeMenu();
+              }
+            });
+          })();
         });
     </script>
   </body>
-</html> 
+<script>
+// Slide-down animation for Explore Services button
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('exploreServicesBtn');
+  var target = document.getElementById('service-categories');
+  if (btn && target) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.classList.add('slide-in-down');
+      setTimeout(function() {
+        target.classList.remove('slide-in-down');
+      }, 800);
+    });
+  }
+});
+// Add slide-in-down animation CSS if not present
+if (!document.getElementById('slideInDownStyle')) {
+  var style = document.createElement('style');
+  style.id = 'slideInDownStyle';
+  style.innerHTML = `
+    .slide-in-down {
+      animation: slideInDown 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+</script> 

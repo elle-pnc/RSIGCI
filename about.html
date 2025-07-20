@@ -7,67 +7,637 @@
     <title>About Us | RSIGCI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="RSIGCI_LOGO_2.png">
+    <link rel="icon" type="image/png" href="RSIGCI_Logo.png">
     <link rel="stylesheet" href="index.css">
+    <style>
+  /* Milestone Focus Overlay Styles */
+  .milestone-blur-bg,
+  .milestone-focus-overlay {
+    display: none;
+  }
+  .milestone-focus-active .milestone-blur-bg {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+  }
+  .milestone-focus-active .milestone-focus-overlay {
+    display: flex;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    align-items: center;
+    justify-content: center;
+    z-index: 1010;
+    pointer-events: none;
+  }
+  .milestone-focus-modal {
+    display: none;
+  }
+  .milestone-focus-active .milestone-focus-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1020;
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    padding: 2rem 1rem 1.5rem 1rem;
+    width: 95vw;
+    max-width: 420px;
+    min-height: 340px;
+    pointer-events: auto;
+  }
+  .milestone-focus-active .milestones-section > *:not(.milestone-blur-bg):not(.milestone-focus-overlay):not(.milestone-focus-modal) {
+    filter: blur(2px) grayscale(0.2);
+    pointer-events: none;
+    user-select: none;
+  }
+  .milestone-focus-arrow {
+    display: none;
+  }
+  .milestone-focus-active .milestone-focus-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    box-shadow: none;
+    width: 36px; height: 36px;
+    z-index: 1030;
+    cursor: pointer;
+    color: #174ea6;
+    font-size: 2rem;
+    transition: background 0.2s;
+  }
+  .milestone-focus-active .milestone-focus-arrow.left {
+    left: 8px;
+  }
+  .milestone-focus-active .milestone-focus-arrow.right {
+    right: 8px;
+  }
+  .milestone-focus-close {
+    display: none;
+  }
+  .milestone-focus-active .milestone-focus-close {
+    display: block;
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #333;
+    font-size: 2rem;
+    z-index: 1040;
+    padding: 0;
+    line-height: 1;
+    border-radius: 0;
+  }
+  .milestone-focus-active .milestone-focus-close svg {
+    width: 32px; height: 32px;
+    display: block;
+  }
+  .milestone-focus-modal-content {
+    width: 100%;
+    text-align: center;
+    margin-top: 2.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    box-sizing: border-box;
+    transition: opacity 0.35s cubic-bezier(.4,0,.2,1);
+    opacity: 1;
+  }
+  .milestone-focus-modal-content.fade-out {
+    opacity: 0;
+  }
+  .milestone-focus-modal-content.fade-in {
+    opacity: 1;
+  }
+  .milestone-focus-modal-img {
+    width: 100%;
+    max-width: 320px;
+    min-width: 0;
+    box-sizing: border-box;
+    border-radius: 1.1rem;
+    margin: 0 auto 1.2rem auto;
+    box-shadow: 0 4px 24px rgba(30,64,175,0.10), 0 1.5px 8px rgba(30,64,175,0.08);
+    border: 1.5px solid #e5e7eb;
+    background: #f8fafc;
+    transition: box-shadow 0.2s;
+  }
+  .milestone-focus-modal-img:active,
+  .milestone-focus-modal-img:focus {
+    box-shadow: 0 8px 32px rgba(30,64,175,0.18);
+  }
+  .milestone-focus-modal-year {
+    margin-bottom: 0.7rem;
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #174ea6;
+    letter-spacing: 0.04em;
+    text-shadow: 0 1px 8px rgba(30,64,175,0.08);
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  .milestone-focus-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  .milestone-focus-modal-desc {
+    font-size: 1.08rem;
+    color: #334155;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    white-space: pre-line;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  .milestone-focus-arrow {
+    background: #222;
+    border-radius: 50%;
+    border: none;
+    width: 48px;
+    height: 48px;
+    color: #fff;
+    font-size: 2.1rem;
+    box-shadow: 0 2px 8px rgba(30,41,59,0.18);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1030;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    opacity: 0.96;
+    outline: none;
+  }
+  .milestone-focus-arrow:active,
+  .milestone-focus-arrow:focus {
+    background: #174ea6;
+    color: #fff;
+    opacity: 1;
+  }
+  .milestone-focus-arrow.left {
+    left: 0.5rem;
+  }
+  .milestone-focus-arrow.right {
+    right: 0.5rem;
+  }
+  .milestone-focus-arrow:disabled {
+    opacity: 0.35 !important;
+    background: #e5e7eb !important;
+    color: #b6c2d6 !important;
+    cursor: not-allowed !important;
+  }
+  .milestone-focus-close {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 2.1rem;
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    z-index: 1040;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    transition: background 0.18s;
+    outline: none;
+    display: block;
+  }
+  .milestone-focus-close:active,
+  .milestone-focus-close:focus {
+    background: #e0e7ef;
+    color: #174ea6;
+  }
+  @media (max-width: 600px) {
+    .milestone-focus-modal {
+      max-width: 98vw;
+      min-width: 0;
+      padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+    }
+    .milestone-focus-modal-img {
+      max-width: 96vw;
+    }
+    .milestone-focus-arrow.left {
+      left: 0.1rem;
+    }
+    .milestone-focus-arrow.right {
+      right: 0.1rem;
+    }
+    .milestone-focus-close {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+    .milestone-dot {
+      width: 2px !important;
+      height: 2px !important;
+      margin: 0 3px !important;
+    }
+  }
+  /* Force milestone focus arrows to show in modal, override index.css */
+  .milestone-focus-active #milestoneFocusModal .milestone-focus-arrow {
+    display: flex !important;
+    opacity: 1 !important;
+  }
+
+    /* Modern Glassmorphism Focus Modal Styles */
+    .milestone-focus-active .milestone-focus-modal {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(18px) saturate(1.2);
+      box-shadow: 0 8px 32px rgba(30,64,175,0.18), 0 1.5px 8px rgba(30,64,175,0.10);
+      border-radius: 1.5rem;
+      border: 1.5px solid rgba(30,64,175,0.08);
+      transition: box-shadow 0.3s cubic-bezier(.4,0,.2,1), background 0.3s cubic-bezier(.4,0,.2,1);
+      animation: fadeInModal 0.35s cubic-bezier(.4,0,.2,1);
+      max-width: 420px;
+      min-width: 280px;
+      width: 95vw;
+      padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+      overflow-y: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    @media (max-width: 600px) {
+      .milestone-focus-modal {
+        max-width: 98vw;
+        min-width: 0;
+        width: 98vw;
+        padding: 1.2rem 0.1rem 1.2rem 0.1rem;
+      }
+    }
+    .milestone-focus-modal-logo {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 1.2rem auto;
+      filter: drop-shadow(0 2px 8px rgba(30,64,175,0.10));
+      background: transparent;
+    }
+    @media (max-width: 600px) {
+      .milestone-focus-modal-logo {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 0.8rem;
+      }
+    }
+    .milestone-focus-modal-content {
+      width: 100%;
+      text-align: center;
+      margin-top: 1.2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem 0.5rem 0.5rem;
+    }
+    .milestone-focus-img-container {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto 1.2rem auto;
+      background: #222; /* match film strip dark theme */
+      border: 2.5px solid #222; /* dark gray border */
+      border-radius: 1.4rem;
+      box-shadow: 0 2px 12px rgba(30,64,175,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .milestone-focus-modal-img,
+    .milestone-img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-width: 0;
+      min-height: 0;
+      box-sizing: border-box;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px rgba(30,64,175,0.10);
+      border: 2.5px solid #222; /* dark gray border */
+      background: #f8fafc;
+      transition: box-shadow 0.2s;
+      object-fit: cover;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+    .milestone-focus-modal-img:active,
+    .milestone-focus-modal-img:focus {
+      box-shadow: 0 8px 32px rgba(30,64,175,0.18);
+    }
+    .milestone-focus-modal-year {
+      margin-top: 0.2rem;
+      margin-bottom: 1.1rem;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #174ea6;
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 8px rgba(30,64,175,0.08);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    .milestone-focus-modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-top: 0.2rem;
+    }
+    .milestone-focus-modal-desc {
+      font-size: 1.08rem;
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 1.1rem;
+      margin-top: 0.5rem;
+      white-space: pre-line;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    .milestone-focus-arrow {
+      background: #174ea6 !important;
+      border-radius: 50%;
+      border: none;
+      width: 44px;
+      height: 44px;
+      color: #fff !important;
+      font-size: 2.1rem;
+      box-shadow: 0 2px 8px rgba(30,64,175,0.18);
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1030;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      opacity: 0.98;
+      outline: none;
+    }
+    .milestone-focus-arrow:active,
+    .milestone-focus-arrow:focus {
+      background: #123a8c;
+      color: #fff;
+      opacity: 1;
+    }
+    .milestone-focus-arrow.left {
+      left: 0.2rem;
+    }
+    .milestone-focus-arrow.right {
+      right: 0.2rem;
+    }
+    .milestone-focus-arrow:disabled {
+      opacity: 0.35 !important;
+      background: #e5e7eb !important;
+      color: #b6c2d6 !important;
+      cursor: not-allowed !important;
+    }
+    .milestone-focus-close {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 2.1rem;
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      z-index: 1040;
+      padding: 0.2rem;
+      border-radius: 0.5rem;
+      transition: background 0.18s;
+      outline: none;
+      display: block;
+    }
+    .milestone-focus-close:active,
+    .milestone-focus-close:focus {
+      background: #e0e7ef;
+      color: #174ea6;
+    }
+    @media (max-width: 600px) {
+      .milestone-focus-modal {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+      }
+      .milestone-focus-modal-img {
+        max-width: 92vw;
+      }
+      .milestone-focus-arrow.left {
+        left: 0.1rem;
+      }
+      .milestone-focus-arrow.right {
+        right: 0.1rem;
+      }
+      .milestone-focus-close {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+    }
+    .milestone-card {
+      background: #2d3748 !important; /* slightly lighter dark gray for contrast */
+      border: 2px solid #333 !important; /* subtle dark border */
+      box-shadow: none !important;
+    }
+    .milestone-card.active,
+    .milestone-card:hover {
+      border-color: #555 !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    .milestones-gallery {
+      position: relative;
+      background: #222;
+      border: 4px solid #111;
+      border-radius: 1.5rem;
+      padding: 2.5rem 0.5rem;
+      display: flex;
+      align-items: center;
+      overflow-x: hidden;
+      box-shadow: 0 4px 24px rgba(30,41,59,0.10);
+      /* transition removed from here */
+      min-height: 420px;
+      height: 420px;
+      max-height: 420px;
+    }
+    .milestones-gallery-inner {
+      display: flex;
+      align-items: center;
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    @media (min-width: 769px) {
+      .milestone-card {
+        filter: blur(2px);
+        transition: filter 0.2s;
+      }
+      .milestone-card.active {
+        filter: none;
+      }
+      .milestones-gallery::before,
+      .milestones-gallery::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 18px;
+        display: flex;
+        pointer-events: none;
+        z-index: 2;
+        background-repeat: repeat-x;
+        background-size: 32px 18px;
+      }
+      .milestones-gallery::before {
+        top: -22px;
+        background-image: repeating-radial-gradient(circle at 16px 9px, #fff 0 6px, transparent 7px 32px);
+      }
+      .milestones-gallery::after {
+        bottom: -22px;
+        background-image: repeating-radial-gradient(circle at 16px 9px, #fff 0 6px, transparent 7px 32px);
+      }
+    }
+    .milestone-year-label {
+      background: #222 !important;
+      color: #fff !important;
+      border-radius: 1rem;
+      padding: 0.2em 0.9em;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .milestone-card {
+      height: 360px !important;
+      min-height: 360px !important;
+      max-height: 360px !important;
+      width: 340px !important;
+      min-width: 340px !important;
+      max-width: 340px !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .milestone-img {
+      height: 80% !important;
+      width: 90% !important;
+      max-height: 290px !important;
+      max-width: 95% !important;
+      object-fit: cover;
+      margin: 0 auto;
+      display: block;
+    }
+  </style>
   </head>
   <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
     <div id="header"></div>
     <!-- Breadcrumb -->
-    <div class="breadcrumb py-4 bg-gray-50 border-b border-gray-200">
-      <div class="container mx-auto px-4 md:px-8">
+    <div class="breadcrumb py-4" style="margin-top: 4.5rem; margin-left: auto; margin-right: auto; display: block;">
+      <div class="breadcrumb-align-left">
         <nav class="flex" aria-label="Breadcrumb">
           <ol class="flex items-center space-x-2">
             <li>
-              <a href="index.html" class="breadcrumb-item text-gray-500 flex items-center">
+              <a href="index.html" class="breadcrumb-item text-gray-500 hover:text-blue-600">
                 <i class="fas fa-home mr-1"></i>Home
               </a>
             </li>
             <li>
-              <span class="breadcrumb-separator text-gray-300">/</span>
+              <span class="breadcrumb-separator text-gray-400">/</span>
             </li>
             <li>
-              <span class="breadcrumb-item text-gray-500">About Us</span>
+              <span class="breadcrumb-item text-blue-600 font-medium">About Us</span>
             </li>
           </ol>
         </nav>
       </div>
     </div>
-
-    <!-- Company Overview & Location Section -->
-    <section class="company-section">
-      <h2 class="company-title">REIGN-NAN Sales Industry & General Contractor, Inc.</h2>
-      <div class="company-address">3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</div>
-      <div class="company-row">
-        <div class="company-card company-overview">
-          <div class="company-card-title">COMPANY OVERVIEW</div>
-          <div class="company-card-text">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, REIGN-NAN Sales Industry & General Contractor, Inc. (RSGCI) has grown from a single proprietorship into a reputable corporation committed to providing high-quality products and services for industrial and commercial applications.<br><br>With over two decades of experience in the industry, RSGCI is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.<br><br>Originally known as REIGN-NAN Sales Industry, the company officially became a corporation on September 26, 2008, reflecting its rapid growth and diversification. Registered under SEC No. CS200815149, the company continues to thrive through its core operations in sourcing, trading, installation, commissioning, industrial painting, and cladding works for steam pipelines.</div>
-        </div>
-        <div class="company-card company-location">
-          <div class="company-card-title">COMPANY LOCATION</div>
-          <div class="company-card-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" width="100%" height="100%" style="border:0; border-radius: 1.5rem; min-height:250px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
+    <style>
+      @media (min-width: 900px) {
+        .breadcrumb-align-left {
+          margin-left: 68rem !important;
+          padding-left: 0 !important;
+          max-width: none !important;
+        }
+      }
+    </style>
+    <!-- Hero Section -->
+    <section class="about-hero product-hero fade-in" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%); min-height: 400px; display: flex; align-items: center; position: relative; overflow: hidden;">
+      <div class="absolute inset-0 z-0" style="background: url('Main_BG.svg') center/cover no-repeat; opacity: 0.3;"></div>
+      <div class="product-hero-content text-white relative z-10 w-full flex flex-col items-center text-center py-14 md:py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">About Us</h1>
+          <p class="text-xl md:text-2xl mb-8 leading-relaxed">
+            Learn more about our mission, vision, values, leadership, and company history.<br>
+            Discover how <b>REIGN-NAN Sales Industry & General Contractor, Inc.</b> has become a trusted partner for industrial and commercial clients since 1997.
+          </p>
         </div>
       </div>
     </section>
-    <!-- About Us Section -->
-    <section class="about-section" id="about">
-      <div class="about-cards-row">
-        <div class="about-card">
-          <div class="about-card-icon mission-icon"><i class="fas fa-bullseye"></i></div>
-          <div class="about-card-title">MISSION</div>
-          <div class="about-card-text">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</div>
+    <!-- Company Overview and Map Side-by-Side Wrapper -->
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-8 items-stretch">
+      <section class="company-overview-section py-10 md:py-14 bg-gray-50 flex-1 w-full h-full fade-in">
+        <div class="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center flex-1 h-full min-h-[340px] max-w-lg mx-auto">
+          <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4">Company Overview</h2>
+          <p class="text-gray-700 text-base md:text-lg leading-relaxed">Founded in 1997 by Mr. Nanding A. Bancoro and Engr. Marieta A. Bancoro in Cabuyao, Laguna, <b>REIGN-NAN Sales Industry & General Contractor, Inc.</b> has grown from a single proprietorship into a reputable corporation providing high-quality products and services for industrial and commercial applications. With over two decades of experience, <b>REIGN-NAN</b> is now a trusted sourcing company, supplier of mechanical seals, and provider of technical services tailored to the unique needs of its clients.</p>
         </div>
-        <div class="about-card">
-          <div class="about-card-icon vision-icon"><i class="fas fa-eye"></i></div>
-          <div class="about-card-title">VISION</div>
-          <div class="about-card-text">REIGN-NAN Sales Industry & General Contractor, Inc. strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</div>
+      </section>
+      <section class="company-map-section py-10 md:py-14 bg-gray-50 flex-1 w-full h-full fade-in">
+        <div class="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center flex-1 h-full" style="width:511.99px; height:424.06px; max-width:100%;">
+          <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4">Our Location</h2>
+          <div class="w-full h-full flex-1 flex items-center justify-center" style="width:511.99px; height:424.06px; max-width:100%;">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" 
+              width="511.99" 
+              height="424.06" 
+              style="border:0; border-radius: 1.2rem; width: 511.99px; height: 330px; display: block; min-height:220px; max-width:100%;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Company Location Map"
+              aria-label="Company Location Map">
+            </iframe>
+          </div>
         </div>
-        <div class="about-card">
-          <div class="about-card-icon values-icon"><i class="fas fa-gem"></i></div>
-          <div class="about-card-title">CORE VALUES</div>
-          <div class="about-card-text">
-            <ul class="about-values-list">
+      </section>
+    </div>
+    <!-- Mission, Vision, Values Section -->
+    <section class="mission-vision-values-section py-10 md:py-14 bg-white fade-in">
+      <div class="max-w-5xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="about-card bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center text-center">
+            <div class="about-card-icon mission-icon mb-2 text-3xl text-blue-700"><i class="fas fa-bullseye"></i></div>
+            <div class="about-card-title text-xl font-bold mb-2">MISSION</div>
+            <div class="about-card-text text-gray-700">In order to realize our Vision, we are committed to exceed the expectations of our customers, whom we define as partners, and fellow employees. We will accomplish this by working closely with our customers to maximize efficiency in the procurement process resulting to cost effectiveness in order to yield maximum return which benefits we intend to share with our customers thereby enhancing our competitiveness from the price perspective. In this way we will ensure that our profit, quality and growth goals are met.</div>
+          </div>
+          <div class="about-card bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center text-center">
+            <div class="about-card-icon vision-icon mb-2 text-3xl text-blue-700"><i class="fas fa-eye"></i></div>
+            <div class="about-card-title text-xl font-bold mb-2">VISION</div>
+            <div class="about-card-text text-gray-700"> <b>REIGN-NAN Sales Industry & General Contractor, Inc.</b> strives to be recognized as a leading sourcing company, supplier of Mechanical Seal and maintenance provider for industrial and commercial applications. We uphold the highest standards of quality and service to satisfy our clients.</div>
+          </div>
+          <div class="about-card bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center text-center">
+            <div class="about-card-icon values-icon mb-2 text-3xl text-blue-700"><i class="fas fa-gem"></i></div>
+            <div class="about-card-title text-xl font-bold mb-2">CORE VALUES</div>
+            <ul class="about-values-list text-gray-700 text-base md:text-lg space-y-1">
               <li>Integrity</li>
               <li>Teamwork</li>
               <li>Excellence</li>
@@ -79,19 +649,19 @@
       </div>
     </section>
     <!-- Leadership & Team Section -->
-    <section class="leadership-section">
-      <div class="leadership-row">
-        <div class="leadership-text">
-          <div class="leadership-title">LEADERSHIP & TEAM</div>
-          <div class="leadership-desc">Presided by <b>Mr. Nanding A. Bancoro</b> and managed by <b>Engr. Marieta A. Bancoro</b>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.</div>
+    <section class="leadership-section py-10 md:py-14 bg-gray-50 fade-in">
+      <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-8">
+        <div class="flex-1 flex flex-col items-center md:items-start">
+          <div class="leadership-title text-2xl md:text-3xl font-bold text-blue-900 mb-2">Leadership & Team</div>
+          <div class="leadership-desc text-gray-700 text-base md:text-lg mb-4">Presided by <b>Mr. Nanding A. Bancoro</b> and managed by <b>Engr. Marieta A. Bancoro</b>, the company is composed of highly trained and experienced personnel committed to customer satisfaction. Our team works closely with clients to understand their needs and recommend the most suitable products and services.</div>
         </div>
-        <div class="leadership-image-wrapper">
-          <img src="Leadership.png" alt="Leadership Team" class="leadership-image" loading="lazy" />
+        <div class="flex-1 flex justify-center md:justify-end">
+          <img src="Leadership.png" alt="Leadership Team" class="leadership-image rounded-xl shadow-lg w-64 md:w-80" loading="lazy" />
         </div>
       </div>
     </section>
     <!-- Milestones Section -->
-    <section class="milestones-section">
+    <section class="milestones-section fade-in">
       <div class="milestone-blur-bg"></div>
       <div class="milestone-focus-overlay"></div>
       <!-- Minimalistic SVG left arrow -->
@@ -113,34 +683,36 @@
           <i class="fas fa-chevron-left" aria-hidden="true"></i>
         </button>
         <div class="milestones-gallery" id="milestonesGallery">
-          <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
-          <div class="milestone-card" data-milestone="11"><span class="milestone-year-label" data-year="11"></span><img src="image.png" alt="Milestone" class="milestone-img" loading="lazy" /></div>
+          <div class="milestones-gallery-inner" id="milestonesGalleryInner">
+            <div class="milestone-card" data-milestone="0"><span class="milestone-year-label" data-year="0"></span><img src="1997.png" alt="Milestone 1997" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="1"><span class="milestone-year-label" data-year="1"></span><img src="2000.png" alt="Milestone 2000" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="2"><span class="milestone-year-label" data-year="2"></span><img src="2003.png" alt="Milestone 2003" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="3"><span class="milestone-year-label" data-year="3"></span><img src="2008.png" alt="Milestone 2008" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="4"><span class="milestone-year-label" data-year="4"></span><img src="2010.png" alt="Milestone 2010" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="5"><span class="milestone-year-label" data-year="5"></span><img src="2013.png" alt="Milestone 2013" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="6"><span class="milestone-year-label" data-year="6"></span><img src="2016.png" alt="Milestone 2016" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="7"><span class="milestone-year-label" data-year="7"></span><img src="2018.png" alt="Milestone 2018" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="8"><span class="milestone-year-label" data-year="8"></span><img src="2020.png" alt="Milestone 2020" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="9"><span class="milestone-year-label" data-year="9"></span><img src="2022.png" alt="Milestone 2022" class="milestone-img" loading="lazy" /></div>
+            <div class="milestone-card" data-milestone="10"><span class="milestone-year-label" data-year="10"></span><img src="2023.png" alt="Milestone 2023" class="milestone-img" loading="lazy" /></div>
+          </div>
         </div>
         <button class="milestone-nav-btn milestone-nav-right" id="milestoneNavRight" aria-label="Next milestone">
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
       </div>
       <div class="milestones-dots-row" id="milestonesDots">
-        <span class="milestone-dot milestone-dot-active" data-milestone="0">1997</span>
-        <span class="milestone-dot" data-milestone="1">2003</span>
-        <span class="milestone-dot" data-milestone="2">2008</span>
-        <span class="milestone-dot" data-milestone="3">2008</span>
-        <span class="milestone-dot" data-milestone="4">2023</span>
-        <span class="milestone-dot" data-milestone="5">2010</span>
-        <span class="milestone-dot" data-milestone="6">2015</span>
-        <span class="milestone-dot" data-milestone="7">2018</span>
-        <span class="milestone-dot" data-milestone="8">2020</span>
-        <span class="milestone-dot" data-milestone="9">2022</span>
+        <span class="milestone-dot milestone-dot-active" data-milestone="0"></span>
+        <span class="milestone-dot" data-milestone="1"></span>
+        <span class="milestone-dot" data-milestone="2"></span>
+        <span class="milestone-dot" data-milestone="3"></span>
+        <span class="milestone-dot" data-milestone="4"></span>
+        <span class="milestone-dot" data-milestone="5"></span>
+        <span class="milestone-dot" data-milestone="6"></span>
+        <span class="milestone-dot" data-milestone="7"></span>
+        <span class="milestone-dot" data-milestone="8"></span>
+        <span class="milestone-dot" data-milestone="9"></span>
+        <span class="milestone-dot" data-milestone="10"></span>
       </div>
       <div class="milestone-info" id="milestoneInfo">
         <div class="milestone-info-title"><b>Reign-NAN Sales Industry</b> was formed</div>
@@ -148,75 +720,46 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 w-full">
-      <div class="w-full px-4 md:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
-          <!-- Company Info -->
-          <div class="lg:col-span-1">
-            <h3 class="text-xl font-bold mb-4">REIGN-NAN Sales Industry & General Contractor, Inc.</h3>
-            <p class="text-gray-400">Building the future, one project at a time.</p>
-          </div>
-          
-          <!-- Quick Links -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Quick Links</h4>
-            <ul class="space-y-2 text-gray-400">
-              <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
-              <li><a href="apply.html" class="hover:text-white transition-colors">Apply Now</a></li>
-              <li><a href="admin.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
+    <!-- Footer (from products.html) -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-lg font-semibold mb-0">Company</h4>
+            <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10 mt-2" style="display: block; margin-left: auto; margin-right: auto;" />
+            <ul class="space-y-2 text-gray-400 mt-4">
+              <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Products</a></li>
+              <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
             </ul>
           </div>
-          
-          <!-- Contact Info -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Contact</h4>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Support</h4>
             <ul class="space-y-2 text-gray-400">
-              <li><i class="fas fa-envelope mr-2" aria-hidden="true"></i><a href="https://mail.google.com/mail/?view=cm&to=recruitment@rsigci.com" target="_blank" rel="noopener" class="hover:underline text-gray-400" aria-label="Email recruitment@rsigci.com">recruitment@rsigci.com</a></li>
-              <li><i class="fas fa-phone mr-2" aria-hidden="true"></i><span id="phoneNumber" class="cursor-pointer hover:underline text-gray-400" aria-label="Copy phone number to clipboard">+63 917 703 5897</span><svg id="copyClipboard" xmlns="http://www.w3.org/2000/svg" class="inline ml-2 cursor-pointer align-middle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="Copy to clipboard" aria-label="Copy phone number to clipboard"><rect x="9" y="9" width="13" height="13" rx="2" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/><rect x="3" y="3" width="13" height="13" rx="2" fill="#fff" stroke="#6b7280" stroke-width="2"/></svg></li>
-              <li><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i><span>3rd Floor MAB Building, Block 19 Lot 2, Unit 7 & 8, Matalino Street, corner Magsipag Street, Cabuyao 4025, Laguna, Philippines</span></li>
+              <li><a href="contact-us.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Technical Support</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
             </ul>
           </div>
-          
-          <!-- Social Media -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Follow Us</h4>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
-                <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
-                <span class="sr-only">LinkedIn</span>
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=100064029901209&sk=about" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener" aria-label="Facebook">
-                <i class="fab fa-facebook text-xl" aria-hidden="true"></i>
-                <span class="sr-only">Facebook</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
-                <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
-                <span class="sr-only">Twitter</span>
-              </a>
-            </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Sitemap</a></li>
+            </ul>
           </div>
-          
-          <!-- Google Maps Embed -->
-          <div class="lg:col-span-1">
-            <h4 class="font-semibold mb-4">Location</h4>
-            <div class="rounded-lg overflow-hidden shadow-lg">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3866.889167757339!2d121.13029257517037!3d14.259685385332194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d88240f57e1f%3A0xcef84d52f5e1539a!2sReign-Nan%20Sales%20Industry%20%26%20General%20Contractor%20Inc.!5e0!3m2!1sen!2sph!4v1752556417911!5m2!1sen!2sph" 
-                width="100%" 
-                height="200" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Company Location Map"
-                aria-label="Company Location Map">
-              </iframe>
-            </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><i class="fas fa-envelope mr-2"></i><a href="mailto:recruitment@rsigci.com" class="hover:text-white transition-colors">recruitment@rsigci.com</a></li>
+              <li><i class="fas fa-phone mr-2"></i>+63 917 703 5897</li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i>Cabuyao, Laguna</li>
+            </ul>
           </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <img src="rsigci_w.svg" alt="RSIGCI Logo" class="h-10" style="display: inline-block; margin: 0;" />
           <p>&copy; 2025 REIGN-NAN Sales Industry & General Contractor, Inc. All rights reserved.</p>
         </div>
       </div>
@@ -235,7 +778,248 @@
               link.classList.remove('active');
             }
           });
+          // Hamburger menu script (runs after header is loaded)
+          (function() {
+            const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
+            const slideMenu = document.getElementById('slideMenu');
+            const closeSlideMenu = document.getElementById('closeSlideMenu');
+            let menuOpen = false;
+            function openMenu() {
+              menuOpen = true;
+              slideMenu.classList.add('open');
+              slideMenu.style.right = '0';
+              slideMenu.style.opacity = '1';
+              slideMenu.style.pointerEvents = 'auto';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'block';
+            }
+            function closeMenu() {
+              menuOpen = false;
+              slideMenu.classList.remove('open');
+              slideMenu.style.right = '-340px';
+              slideMenu.style.opacity = '0';
+              slideMenu.style.pointerEvents = 'none';
+              if(closeSlideMenu) closeSlideMenu.style.display = 'none';
+            }
+            if (hamburgerMenuBtn) {
+              hamburgerMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(menuOpen) {
+                  closeMenu();
+                } else {
+                  openMenu();
+                }
+              });
+            }
+            if(closeSlideMenu) {
+              closeSlideMenu.onclick = function(e) {
+                e.stopPropagation();
+                closeMenu();
+              };
+            }
+            document.addEventListener('click', function(e) {
+              if(menuOpen && !slideMenu.contains(e.target) && e.target !== hamburgerMenuBtn) {
+                closeMenu();
+              }
+            });
+            if (slideMenu) {
+              slideMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+            window.addEventListener('resize', function() {
+              if(menuOpen) {
+                closeMenu();
+              }
+            });
+          })();
         });
+    </script>
+    <script>
+      // --- Milestone Functionality (from old index.js) ---
+      document.addEventListener('DOMContentLoaded', function() {
+        // Define milestone data (update as needed)
+        window.milestoneData = [
+          {
+            year: '1997',
+            title: '<b>Humble Beginnings</b>',
+            desc: 'REIGN-NAN Sales Industry was established as a trading company offering packing materials, gaskets, o-rings, cords, and engineering plastics.'
+          },
+          {
+            year: '2000',
+            title: '<b>Expansion to Services</b>',
+            desc: 'REIGN-NAN ventured beyond trading, beginning insulation and cladding services for industrial applications.'
+          },
+          {
+            year: '2003',
+            title: '<b>First Headquarters Constructed</b>',
+            desc: 'Completion of REIGN-NAN’s first building marked a major step in company infrastructure and growth.'
+          },
+          {
+            year: '2008',
+            title: '<b>Official Incorporation & Strategic Partnerships</b>',
+            desc: 'REIGN-NAN Sales Industry & General Contractor, Inc. was incorporated under the SEC.\nAlso appointed as the exclusive distributor of AESSEAL and tapped by Wyeth as an in-house contractor.'
+          },
+          {
+            year: '2010',
+            title: '<b>Industry Presence Strengthened</b>',
+            desc: 'Became a prominent participant in the PSME PhilMachinery Exhibition, reinforcing the company’s reputation in the mechanical engineering industry.'
+          },
+          {
+            year: '2013',
+            title: '<b>International Recognition & ESP Division Launched</b>',
+            desc: 'REIGN-NAN received the International Quality Crown Award in London.\nLaunched the ESP (Equipment, Services, and Parts) business line to diversify offerings.'
+          },
+          {
+            year: '2016',
+            title: '<b>Major Hot Insulation Contract</b>',
+            desc: 'Secured a significant contract for hot insulation and cladding, demonstrating continued technical growth and trust in industrial sectors.'
+          },
+          {
+            year: '2018',
+            title: '<b>Global Collaborations</b>',
+            desc: 'Formed key partnerships with international firms:<br>KC Cottrell (South Korea)<br>TAPC (Australia)<br>These partnerships strengthened REIGN-NAN’s global sourcing and service capabilities.'
+          },
+          {
+            year: '2020',
+            title: '<b>Landmark Projects Amid Challenges</b>',
+            desc: 'Awarded contracts with:<br>JG Summit Petrochemical Corporation (JGSPC) for scaffolding services<br>Philippine Geothermal Production Company for civil and mechanical maintenance (MSA)'
+          },
+          {
+            year: '2022',
+            title: '<b>Recognitions & Long-Term Contracts</b>',
+            desc: 'Received the “Best Bearing Supplier” recognition.\nAlso secured a 3-year industrial painting contract with JG Summit, showcasing long-term client trust.'
+          },
+          {
+            year: '2023',
+            title: '<b>Continued Project Acquisition</b>',
+            desc: 'Awarded contracts for Building & Grounds Maintenance and another Insulation and Cladding project—highlighting consistent project wins.'
+          }
+        ];
+        // DOM assignments
+        const milestoneCards = document.querySelectorAll('.milestone-card');
+        const milestoneInfo = document.getElementById('milestoneInfo');
+        const milestoneDots = document.querySelectorAll('.milestone-dot');
+        const milestoneNavLeft = document.getElementById('milestoneNavLeft');
+        const milestoneNavRight = document.getElementById('milestoneNavRight');
+        const milestonesGallery = document.getElementById('milestonesGallery');
+        const milestonesGalleryInner = document.getElementById('milestonesGalleryInner');
+        // Initialize year labels
+        function updateYearLabels() {
+          milestoneCards.forEach((card, index) => {
+            const yearLabel = card.querySelector('.milestone-year-label');
+            if (yearLabel && window.milestoneData[index]) {
+              yearLabel.textContent = window.milestoneData[index].year;
+            }
+          });
+        }
+        // Update info box with milestone data
+        function updateMilestoneInfo(index) {
+          if (window.milestoneData[index]) {
+            milestoneInfo.querySelector('.milestone-info-title').innerHTML = window.milestoneData[index].title;
+            milestoneInfo.querySelector('.milestone-info-desc').textContent = window.milestoneData[index].desc.replace(/<br>/g, '\n');
+          }
+        }
+        // Reset to default state
+        function resetMilestoneInfo() {
+          milestoneInfo.querySelector('.milestone-info-title').innerHTML = '<b>REIGN-NAN Achievements</b>';
+          milestoneInfo.querySelector('.milestone-info-desc').textContent = 'Explore our journey through the years';
+        }
+        // Update active states
+        function updateActiveStates(activeIndex) {
+          milestoneCards.forEach((card, index) => {
+            card.classList.toggle('active', index === activeIndex);
+          });
+          milestoneDots.forEach((dot, index) => {
+            dot.classList.toggle('milestone-dot-active', index === activeIndex);
+          });
+        }
+        // Navigation functionality
+        let currentMilestoneIndex = 0;
+        function getCardWidth() {
+          // Get the width of a milestone card (including margin)
+          const card = milestoneCards[0];
+          if (!card) return 0;
+          const style = window.getComputedStyle(card);
+          const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+          return card.offsetWidth + margin;
+        }
+        function scrollToMilestone(index) {
+           const cardWidth = getCardWidth();
+           const galleryInner = milestonesGalleryInner;
+           const gallery = milestonesGallery;
+           if (galleryInner && cardWidth) {
+             // Center the focused card in the gallery
+             const galleryWidth = gallery.offsetWidth;
+             const totalCards = milestoneCards.length;
+             const centerOffset = (galleryWidth - cardWidth) / 2;
+             let offset = index * cardWidth - centerOffset;
+             // Clamp offset so first/last card don't leave empty space
+             const maxOffset = cardWidth * totalCards - galleryWidth;
+             if (offset < 0) offset = 0;
+             if (offset > maxOffset) offset = maxOffset;
+             galleryInner.style.transform = `translateX(-${offset}px)`;
+             currentMilestoneIndex = index;
+             updateActiveStates(index);
+             updateMilestoneInfo(index);
+             updateNavigationButtons();
+           }
+        }
+        function updateNavigationButtons() {
+          if (milestoneNavLeft) milestoneNavLeft.disabled = currentMilestoneIndex === 0;
+          if (milestoneNavRight) milestoneNavRight.disabled = currentMilestoneIndex === milestoneCards.length - 1;
+        }
+        // Event listeners for navigation buttons
+        if (milestoneNavLeft) milestoneNavLeft.addEventListener('click', () => {
+          if (currentMilestoneIndex > 0) {
+            scrollToMilestone(currentMilestoneIndex - 1);
+          }
+        });
+        if (milestoneNavRight) milestoneNavRight.addEventListener('click', () => {
+          if (currentMilestoneIndex < milestoneCards.length - 1) {
+            scrollToMilestone(currentMilestoneIndex + 1);
+          }
+        });
+        // Event listeners for milestone cards
+        milestoneCards.forEach((card, index) => {
+          card.addEventListener('mouseenter', () => {
+            updateActiveStates(index);
+            updateMilestoneInfo(index);
+          });
+          card.addEventListener('mouseleave', () => {
+            updateActiveStates(currentMilestoneIndex);
+            if (currentMilestoneIndex === index) {
+              updateMilestoneInfo(index);
+            } else {
+              resetMilestoneInfo();
+            }
+          });
+          card.addEventListener('click', () => {
+            scrollToMilestone(index);
+          });
+        });
+        // Event listeners for milestone dots
+        milestoneDots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            scrollToMilestone(index);
+          });
+          dot.addEventListener('mouseenter', () => {
+            updateActiveStates(index);
+            updateMilestoneInfo(index);
+          });
+          dot.addEventListener('mouseleave', () => {
+            updateActiveStates(currentMilestoneIndex);
+            if (currentMilestoneIndex === index) {
+              updateMilestoneInfo(index);
+            } else {
+              resetMilestoneInfo();
+            }
+          });
+        });
+        // Initialize
+        updateYearLabels();
+        updateNavigationButtons();
+        resetMilestoneInfo();
+      });
     </script>
   </body>
 </html> 

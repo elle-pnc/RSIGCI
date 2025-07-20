@@ -1183,6 +1183,14 @@ body {
     font-size: 0.97rem;
     margin-bottom: 0.7rem;
   }
+  .milestone-dot {
+    width: 6px !important;
+    height: 6px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 2px !important;
+    padding: 0 !important;
+  }
 }
 @media (max-width: 900px) {
   .about-cards-row, .company-row, .leadership-row {
@@ -1863,10 +1871,15 @@ html {
 } 
 
 /* --- UX and Touch Improvements --- */
-.btn-primary:active, .header-link:active, #mobileMenu a:active {
+.btn-primary:active {
   background: #ea580c !important;
   color: #fff !important;
   box-shadow: 0 0 0 2px #f97316 inset;
+}
+.header-link:active, .header-link.active, #mobileMenu a:active {
+  background: #e5e7eb !important;
+  color: #2563eb !important;
+  box-shadow: none !important;
 }
 @media (max-width: 600px) {
   .btn-primary, .header-link, #mobileMenu a, button, .milestone-nav-btn {
@@ -1890,4 +1903,117 @@ html {
   background: none !important;
   color: #fff !important;
   text-decoration: none !important;
+} 
+
+/* Fix: Always show current page in breadcrumb as blue */
+.breadcrumb-item.text-blue-600 {
+  color: #2563eb !important;
+} 
+
+/* --- UX ENHANCEMENTS --- */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: 600;
+  transition: top 0.3s;
+}
+.skip-link:focus {
+  top: 6px;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+@keyframes slideInLeft {
+  to { opacity: 1; transform: translateX(0); }
+}
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: slideInRight 0.8s ease-out forwards;
+}
+@keyframes slideInRight {
+  to { opacity: 1; transform: translateX(0); }
+}
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 0 0 #2563eb44; }
+  to { box-shadow: 0 0 16px 8px #2563eb33; }
+}
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+button, .btn-primary, .header-link, a, input[type="submit"] {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+button:focus, .btn-primary:focus, .header-link:focus, a:focus, input[type="submit"]:focus {
+  outline: 2px solid #174ea6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(33, 125, 187, 0.25);
+  background: #eaf6ff;
+  color: #174ea6 !important;
+  z-index: 2;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hover-lift:hover, .floating, .pulse-glow { animation: none !important; transform: none !important; }
+}
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,41,59,0.18);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  transition: opacity 0.3s;
+}
+.loading-overlay .spinner {
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #2563eb;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 } 
